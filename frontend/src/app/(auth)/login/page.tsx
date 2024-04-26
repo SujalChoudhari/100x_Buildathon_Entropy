@@ -6,6 +6,7 @@ import google from "../assests/google.png";
 import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useRef } from "react";
 
 const Stars = ({ x, y }: { x: number; y: number }) => {
   return (
@@ -81,47 +82,47 @@ const Bg = () => {
 const LogIn = () => {
 
   const router = useRouter();
-  const onLoginClick = () => {
-    console.log('Login clicked');
-    async function login(username: string, password: string) {
-      try {
-        const response = await axios.post('http://localhost:8000/token',
-          {
-            username, // form_data.username
-            password  // form_data.password
-          }, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded', // This is crucial for OAuth2PasswordRequestForm
-          }
-        });
-
-        const { access_token, token_type } = response.data;
-        localStorage.setItem('accessToken', access_token);
-        console.log('Login successful.');
-        console.log('Access token:', access_token);
-        console.log('Token type:', token_type);
-
-        // navigate to dashboard in next js
-        router.push('/dashboard')
-
-      } catch (error: any) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          console.error('Error:', error.response.status);
-          console.error('Details:', error.response.data);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.error('No response received:', error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.error('Request setup error:', error.message);
+  const mailRef = useRef(null);
+  const passRef = useRef(null);
+  const onLoginClick = async () => {
+    const email = mailRef.current.value || '';
+    const password = passRef.current.value || '';
+    try {
+      const response = await axios.post('http://localhost:8000/token',
+        {
+          username: email, // form_data.username
+          password: password  // form_data.password
+        }, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded', // This is crucial for OAuth2PasswordRequestForm
         }
+      });
 
-        throw error; // Re-throw the error for further handling if needed
+      const { access_token, token_type } = response.data;
+      localStorage.setItem('accessToken', access_token);
+      console.log('Login successful.');
+      console.log('Access token:', access_token);
+      console.log('Token type:', token_type);
+
+      // navigate to dashboard in next js
+      router.push('/dashboard')
+
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Error:', error.response.status);
+        console.error('Details:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Request setup error:', error.message);
       }
+
+      throw error; // Re-throw the error for further handling if needed
     }
 
-    login("user@example.com", "pass");
   }
   return (
 
@@ -193,6 +194,7 @@ const LogIn = () => {
                 <div className="bg-gradient-to-r from-cyan-400 to-cyan-50 rounded-[6px] p-[1px] shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                   <input
                     type="email"
+                    ref={mailRef}
                     className="w-full h-[32px] bg-gray-900/80 block rounded-[5px] outline-none px-3 text-white/90 text-sm font-light"
                   />
                 </div>
@@ -201,6 +203,7 @@ const LogIn = () => {
                 <label className="text-white/90 text-xs">Password</label>
                 <div className="bg-gradient-to-r from-cyan-400 to-cyan-50 rounded-[6px] p-[1px] shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                   <input
+                    ref={passRef}
                     type="password"
                     className="w-full h-[32px] bg-gray-900/80 block rounded-[5px] outline-none px-3 text-white/90 text-sm font-light"
                   />
