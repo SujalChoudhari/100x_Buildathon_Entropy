@@ -4,13 +4,11 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
-
+from database import Database
 class ChatBot:
-    def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
-        # Initialize the chat model and memory
+    def __init__(self, uri, db_name, temperature=0, model_name="Llama3-8b-8192"):
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
         self.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-        # Define the prompt template with memory
         self.prompt = ChatPromptTemplate.from_template(
             template="""You are a sales chatbot whose primary purpose is to try to increase the company sales using proposals provided to you.
             If the user has any query or needs help you are also going to solve that query based upon the information you have and try to pitch a sales proposal
@@ -20,21 +18,24 @@ class ChatBot:
             {chat_history}
             User said: {text}.
             """
-            # The proposal provided to you is {proposal}. 
         )
-        # Combine memory with the LLMChain
         self.chain = LLMChain(
             llm=self.chat,
             prompt=self.prompt,
             memory=self.memory
         )
+        self.db = Database(uri, db_name)
 
     def invoke(self, text):
-        # Create input to chain including memory context
         inputs = {"text": text, "chat_history": self.memory}
-        # Get the AI response
         ai_response = self.chain(inputs)
         return ai_response["text"]
+
+    def get_sessions_by_user_id(self, user_id, limit=10):
+        return self.db.get_sessions_by_user_id(user_id, limit)
+
+    def append_session(self, session):
+        self.db.append_session(session)
 
 
 def main():
