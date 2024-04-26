@@ -1,7 +1,3 @@
-Here’s a document outlining the rules for GitHub contributions, including the branching structure and comments semantics. This can serve as a guideline for your team to ensure consistency and clarity when collaborating on a project.
-
----
-
 # GitHub Contribution Guidelines
 
 ## Branch Structure
@@ -62,7 +58,3 @@ To maintain a clean and organized repository, our project uses the following bra
   - Communicate with team members regularly about progress and issues.
   - Follow project conventions and coding standards.
   - Respect others' time and efforts; be responsive to feedback and changes.
-
----
-
-These guidelines should help your team maintain a consistent workflow and promote effective collaboration. Feel free to adapt them to fit your specific project requirements.
