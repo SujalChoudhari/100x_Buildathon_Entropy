@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, UploadFile
 from utils.auth import oauth2_scheme, is_admin, get_current_user
 from typing import List
 
-from analytics import get_analytics
-from upload import upload_to_db
-from ingest import ingest
+from .analytics import get_analytics
+from .upload import upload_to_db
+from .ingest import ingest
 
 router = APIRouter(
     prefix="/admin",
