@@ -2,10 +2,11 @@ from pinecone import Pinecone
 import os
 from langchain.document_loaders import PyPDFDirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
 from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
 from langchain_pinecone import PineconeVectorStore
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.chains.question_answering import load_qa_chain
+
 from dotenv import load_dotenv
 import asyncio
 
@@ -21,7 +22,7 @@ pc = Pinecone(api_key=PINECONE_API_KEY)
 
 # Embeddings and LLM setup
 llm = OpenAI(openai_api_key=OPENAI_API_KEY)
-embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+embeddings=OpenAIEmbeddings(api_key=os.environ['OPENAI_API_KEY'])
 
 # Class to handle PDF and Pinecone operations
 class PDFProcessor:
@@ -44,7 +45,7 @@ class PDFProcessor:
     def create_index(self, docs):
         self.index = PineconeVectorStore.from_documents(
             docs,
-            index_name="data",
+            index_name=self.index_name,
             embedding=embeddings
         )
 
