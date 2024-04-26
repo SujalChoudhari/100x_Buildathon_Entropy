@@ -1,0 +1,8 @@
+openai==1.5.0
+langchain
+unstructured==0.11.5
+tiktoken==0.5.2
+pypdf==3.17.3
+sentence-transformers
+python-dotenv
+langchain-pinecone
