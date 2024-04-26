@@ -38,3 +38,11 @@ async def ingest(
 ):
     ingest(current_user)
     return
+
+
+@router.get("/generate_proposal")
+async def generate_proposal(
+    current_user: dict = Depends(get_current_user), _: str = Depends(is_admin)
+):
+    generate_proposal(current_user)
+    pass
