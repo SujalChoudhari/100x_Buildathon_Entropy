@@ -18,13 +18,14 @@ load_dotenv()
 # API keys for OpenAI and Pinecone
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-
+from langchain_cohere import CohereEmbeddings
+os.environ["COHERE_API_KEY"] =os.getenv("COHERE_API_KEY")
 # Set up Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
 # Embeddings and LLM setup
 llm = ChatGroq(temperature=0, model_name="Llama3-8b-8192")
-embeddings=OpenAIEmbeddings(api_key=os.environ['OPENAI_API_KEY'])
+embeddings=CohereEmbeddings()
 llm2 = ChatOpenAI(temperature=0)
 
 # Class to handle PDF and Pinecone operations
@@ -38,7 +39,7 @@ class PDFProcessor:
         documents = loader.load()
         return documents
 
-    def split_docs(self, documents, chunk_size=1000, chunk_overlap=20):
+    def split_docs(self, documents, chunk_size=1000, chunk_overlap=180):
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size, chunk_overlap=chunk_overlap
         )
@@ -59,15 +60,15 @@ class PDFProcessor:
             self.index_name, embeddings
         )
 
-    def get_similar_docs(self, query, k=2):
-        if self.index is None:
-            raise ValueError("Index is not initialized.")
-        return self.index.similarity_search(query, k=k)
+    # def get_similar_docs(self, query, k=2):
+    #     if self.index is None:
+    #         raise ValueError("Index is not initialized.")
+    #     return self.index.similarity_search(query, k=k)
 
-    def get_answer(self, query, chain):
-        relevant_docs = self.get_similar_docs(query)
-        response = chain.run(input_documents=relevant_docs, question=query)
-        return response
+    # def get_answer(self, query, chain):
+    #     relevant_docs = self.get_similar_docs(query)
+    #     response = chain.run(input_documents=relevant_docs, question=query)
+    #     return response
     def retrieve(self, question):
         retriever_from_llm = MultiQueryRetriever.from_llm(
             retriever=self.index.as_retriever(), llm=llm
@@ -79,6 +80,7 @@ class PDFProcessor:
 async def ingest(directory, index_name):
     pdf = PDFProcessor(index_name)
     documents = pdf.load_docs(directory)
+    # print(documents)
     docs = pdf.split_docs(documents)
     pdf.create_index(docs)
     print(pdf.index_name)
@@ -93,11 +95,14 @@ async def query(index_name, question):
     # print(response)
     # return response
     response = pdf.retrieve(question)
-    print(response)
+    return response
 
 async def main():
-    question = "What are the approaches to Task Decomposition?"
-    await query("dataa", question)
+    question = "OverHeating laptops"
+    
+    answer=await query("test", question)
+    for doc in answer:
+        print(str(doc.metadata["page"]) + ":", doc.page_content[:300])
 
 # Call the main function within an event loop
 asyncio.run(main())
