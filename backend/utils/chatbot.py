@@ -9,7 +9,6 @@ from langchain_core.prompts import (
 from langchain.memory import ConversationBufferMemory
 class ChatBot:
     def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
-        dotenv.load_dotenv()
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
         self.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
         self.prompt = ChatPromptTemplate.from_template(
@@ -32,14 +31,11 @@ class ChatBot:
 
 
 def main():
-    
-    connection_string= os.getenv('CONNECTION_STRING')
+    dotenv.load_dotenv()
     bot = ChatBot()
     human_message, ai_message = bot.invoke("Sale on laptops", "I am Sujal")
-    human_message, ai_message = bot.invoke("Sale on laptops", "Whats my ame?")
+    human_message, ai_message = bot.invoke("Sale on laptops", "Whats my name?")
     print(human_message, ai_message)
-    # db = Database(connection_string, 'entropy')
-    # db.insert_messages([human_message, ai_message])
 
 if __name__ == "__main__":
     main()
