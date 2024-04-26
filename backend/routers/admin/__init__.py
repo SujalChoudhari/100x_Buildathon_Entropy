@@ -5,9 +5,8 @@ from utils.auth import oauth2_scheme, is_admin, get_current_user
 from typing import List
 
 from .analytics import get_analytics
-from .upload import upload_to_db
+from .upload import upload_to_db, copy_files_if_exist
 from .ingest import ingest
-
 router = APIRouter(
     prefix="/admin",
     tags=["admin"],
@@ -30,6 +29,9 @@ async def analytics(_: str = Depends(is_admin)):
 async def upload_pdf(pdf_files: List[UploadFile], _: str = Depends(is_admin)):
     return upload_to_db(pdf_files)
 
+@router.post("/selected_document_list")
+async def selected_document_list(filenames: List[str], _: str = Depends(is_admin)):
+    copy_files_if_exist(filenames)
 
 # ingest the pdfs
 @router.post("/ingest")
