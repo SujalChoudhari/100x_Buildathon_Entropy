@@ -77,6 +77,26 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = {"username": username}
+    except JWTError:
+        raise credentials_exception
+    user = get_user(users_db, username=token_data["username"])
+    if user is None:
+        raise credentials_exception
+    return user
+
+
 def is_admin(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -85,7 +105,11 @@ def is_admin(token: str = Depends(oauth2_scheme)):
         if user["type"] == USER_TYPE_ADMIN:
             return True
         else:
-            return False
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Unauthorized, Required Admin Permissions",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

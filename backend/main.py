@@ -4,7 +4,15 @@ from datetime import timedelta
 from jose import jwt, JWTError
 import uvicorn
 
-from utils.auth import ALGORITHM, SECRET_KEY, authenticate_user, create_access_token, oauth2_scheme, get_user, users_db
+from utils.auth import (
+    ALGORITHM,
+    SECRET_KEY,
+    authenticate_user,
+    create_access_token,
+    oauth2_scheme,
+    get_user,
+    users_db,
+)
 
 app = FastAPI()
 
@@ -15,6 +23,7 @@ from routers.admin import router as admin_router
 # Include Routers
 app.include_router(chat_router)
 app.include_router(admin_router)
+
 
 # Token endpoint for login
 @app.post("/token")
@@ -31,6 +40,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         data={"sub": user["email"]}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
 
 # Endpoint to get the current user based on the token
 @app.get("/me")
@@ -59,6 +69,7 @@ async def read_users_me(token: str = Depends(oauth2_scheme)):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+
 # Endpoint to check user type
 @app.get("/secure-route")
 async def secure_endpoint(current_user: dict = Depends(read_users_me)):
@@ -68,6 +79,7 @@ async def secure_endpoint(current_user: dict = Depends(read_users_me)):
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
 
 # Run the server
 if __name__ == "__main__":

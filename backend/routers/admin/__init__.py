@@ -1,7 +1,13 @@
 # routers/admin.py
-from fastapi import APIRouter, Depends, HTTPException, status
-from .analytics import get_analytics
-from utils.auth import oauth2_scheme, is_admin
+import base64
+from fastapi import APIRouter, Depends, UploadFile
+from utils.auth import oauth2_scheme, is_admin, get_current_user
+from typing import List
+
+from analytics import get_analytics
+from upload import upload_to_db
+from ingest import ingest
+
 router = APIRouter(
     prefix="/admin",
     tags=["admin"],
@@ -9,17 +15,26 @@ router = APIRouter(
     dependencies=[Depends(oauth2_scheme)],
 )
 
+
 @router.get("/")
 async def check():
     return {"message": "Admin Endpoint"}
 
+
 @router.get("/analytics")
-async def analytics(is_admin: str = Depends(is_admin)):
-    if is_admin:
-        return get_analytics()
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized, Required Admin Permissions",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+async def analytics(_: str = Depends(is_admin)):
+    return get_analytics()
+
+
+@router.post("/upload_pdf")
+async def upload_pdf(pdf_files: List[UploadFile], _: str = Depends(is_admin)):
+    return upload_to_db(pdf_files)
+
+
+# ingest the pdfs
+@router.post("/ingest")
+async def ingest(
+    current_user: dict = Depends(get_current_user), _: str = Depends(is_admin)
+):
+    ingest(current_user)
+    return
