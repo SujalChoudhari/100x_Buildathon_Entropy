@@ -1,7 +1,8 @@
-from utils.chatbot import ChatBot
 
-def respond(chatbot,message: str):
+from utils.vectorbase import query_index
+async def respond(chatbot, message: str):
+    document_data = await query_index(message)
+    print(document_data)
+    ai_msg = chatbot.invoke(text=message,document_data=document_data)
 
-    human_msg,ai_msg =  chatbot.invoke(proposal="Sale on laptops",text=message)
-
-    return ai_msg["content"]
+    return ai_msg

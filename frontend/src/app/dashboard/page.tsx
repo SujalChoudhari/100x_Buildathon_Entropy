@@ -1,8 +1,14 @@
-import React from 'react'
+import PDF from "../pdf/page";
 
-export default function Dashboard() {
+export default function Home() {
   return (
-    <div>page</div>
-  )
+    <div className="p-6">
+      <div className="text-xl font-semibold">Dashboard</div>
+      <div className="py-6 pr-6">
+        <hr />
+        <PDF/>
+        
+      </div>
+    </div>
+  );
 }
-
