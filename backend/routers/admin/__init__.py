@@ -7,7 +7,6 @@ from typing import List
 from .analytics import get_analytics
 from .upload import upload_to_db
 from .ingest import ingest
-
 router = APIRouter(
     prefix="/admin",
     tags=["admin"],
