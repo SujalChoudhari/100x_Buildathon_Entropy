@@ -6,6 +6,8 @@ from langchain.llms import OpenAI
 from langchain_pinecone import PineconeVectorStore
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains.question_answering import load_qa_chain
+from langchain.retrievers.multi_query import MultiQueryRetriever
+from langchain_openai import ChatOpenAI
 
 from dotenv import load_dotenv
 import asyncio
@@ -23,6 +25,7 @@ pc = Pinecone(api_key=PINECONE_API_KEY)
 # Embeddings and LLM setup
 llm = OpenAI(openai_api_key=OPENAI_API_KEY)
 embeddings=OpenAIEmbeddings(api_key=os.environ['OPENAI_API_KEY'])
+llm2 = ChatOpenAI(temperature=0)
 
 # Class to handle PDF and Pinecone operations
 class PDFProcessor:
@@ -65,6 +68,12 @@ class PDFProcessor:
         relevant_docs = self.get_similar_docs(query)
         response = chain.run(input_documents=relevant_docs, question=query)
         return response
+    def retrieve(self, question):
+        retriever_from_llm = MultiQueryRetriever.from_llm(
+            retriever=self.index.as_retriever(), llm=llm
+        )
+        response = retriever_from_llm.invoke(question)
+        return response
 
 # Function to create the index and store it on Pinecone
 async def ingest(directory, index_name):
@@ -79,7 +88,19 @@ async def ingest(directory, index_name):
 async def query(index_name, question):
     pdf = PDFProcessor(index_name)
     pdf.load_existing_index()
-    chain = load_qa_chain(llm, chain_type="stuff")
-    response = pdf.get_answer(question, chain)
+    # chain = load_qa_chain(llm, chain_type="stuff")
+    # response = pdf.get_answer(question, chain)
+    # print(response)
+    # return response
+    response = pdf.retrieve(question)
     print(response)
-    return response
+
+async def main():
+    question = "What are the approaches to Task Decomposition?"
+    await query("dataa", question)
+
+# Call the main function within an event loop
+asyncio.run(main())
+
+
+
