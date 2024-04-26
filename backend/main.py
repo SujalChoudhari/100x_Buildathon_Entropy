@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -21,6 +22,9 @@ from utils.auth import (
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="some_secret_key")
+app.add_middleware(
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
+)
 
 # Routers
 from routers.chat import router as chat_router
