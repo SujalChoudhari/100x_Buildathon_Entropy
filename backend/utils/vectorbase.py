@@ -8,7 +8,7 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains.question_answering import load_qa_chain
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_openai import ChatOpenAI
-
+from langchain_groq.chat_models import ChatGroq
 from dotenv import load_dotenv
 import asyncio
 
@@ -23,7 +23,7 @@ PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 pc = Pinecone(api_key=PINECONE_API_KEY)
 
 # Embeddings and LLM setup
-llm = OpenAI(openai_api_key=OPENAI_API_KEY)
+llm = ChatGroq(temperature=0, model_name="Llama3-8b-8192")
 embeddings=OpenAIEmbeddings(api_key=os.environ['OPENAI_API_KEY'])
 llm2 = ChatOpenAI(temperature=0)
 
