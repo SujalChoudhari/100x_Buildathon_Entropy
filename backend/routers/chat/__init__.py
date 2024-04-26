@@ -6,7 +6,6 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-
 @router.get("/")
 async def check():
     return {"message": "Hello World"}
