@@ -1,9 +1,14 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, Depends, HTTPException, status
+from starlette.middleware.sessions import SessionMiddleware
+from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import timedelta
 from jose import jwt, JWTError
 import uvicorn
-
 from utils.auth import (
     ALGORITHM,
     SECRET_KEY,
@@ -15,6 +20,7 @@ from utils.auth import (
 )
 
 app = FastAPI()
+app.add_middleware(SessionMiddleware, secret_key="some_secret_key")
 
 # Routers
 from routers.chat import router as chat_router
