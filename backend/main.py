@@ -1,4 +1,7 @@
 from dotenv import load_dotenv
+import bcrypt
+from pydantic import BaseModel, EmailStr
+
 load_dotenv()
 
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -21,6 +24,9 @@ from utils.auth import (
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="some_secret_key")
+app.add_middleware(
+    CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"]
+)
 
 # Routers
 from routers.chat import router as chat_router
@@ -46,6 +52,37 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         data={"sub": user["email"]}, expires_delta=access_token_expires
     )
     return {"access_token": access_token, "token_type": "bearer"}
+
+class UserRegister(BaseModel):
+    username: str
+    email: EmailStr
+    password: str  # Plain text password (will be hashed before storing)
+
+# Endpoint for user registration
+@app.post("/register", status_code=status.HTTP_201_CREATED)
+async def register_user(user: UserRegister):
+    # Check if the username already exists
+    if user.username in users_db:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Username already taken",
+        )
+
+    # Hash the password
+    hashed_password = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt())
+
+    # Store the new user in the database
+    users_db[user.username] = {
+        "username": user.username,
+        "email": user.email,
+        "hashed_password": hashed_password,
+    }
+
+    return {
+        "message": "User registered successfully",
+        "username": user.username,
+        "email": user.email,
+    }
 
 
 # Endpoint to get the current user based on the token
