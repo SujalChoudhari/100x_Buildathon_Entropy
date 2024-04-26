@@ -1,2 +1,2 @@
-def generate_proposa(current_user: dict):
+def generate_proposal(current_user: dict):
     pass
