@@ -33,11 +33,11 @@ async def upload_pdf(pdf_files: List[UploadFile], _: str = Depends(is_admin)):
 
 # ingest the pdfs
 @router.post("/ingest")
-async def ingest(
+async def ingest_pdfs(
     current_user: dict = Depends(get_current_user), _: str = Depends(is_admin)
 ):
-    ingest(current_user)
-    return
+    await ingest(current_user)
+    return {"message": "Ingested", "status": "Done"}
 
 
 @router.get("/generate_proposal")
