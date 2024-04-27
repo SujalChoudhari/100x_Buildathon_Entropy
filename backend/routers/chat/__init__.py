@@ -39,10 +39,14 @@ async def response(query: str, chatbot=Depends(get_chatbot)):
 
 @router.get("/close_session")
 async def close_session(request: Request):
+
+    current_chatbot = get_chatbot(request)
+    # Remove the ChatBot for the current session
     session_id = request.session.get("session_id")
     if session_id in chatbots:
         del chatbots[session_id]
 
-    #append your code here
+    if current_chatbot is not None:
+        await current_chatbot.append_session(session_id)
 
     return {"message": "Session closed"}
