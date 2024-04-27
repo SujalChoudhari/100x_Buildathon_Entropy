@@ -19,10 +19,13 @@ load_dotenv()
 # API keys for OpenAI and Pinecone
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+INDEX_NAME = "data"
+DIRECTORY = "input_documents"
 os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
 from langchain_cohere import CohereEmbeddings
-os.environ["COHERE_API_KEY"] =os.getenv("COHERE_API_KEY")
+
+os.environ["COHERE_API_KEY"] = os.getenv("COHERE_API_KEY")
 # Set up Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
 prompt=PromptTemplate(
@@ -72,9 +75,7 @@ class PDFProcessor:
 
     def create_index(self, docs):
         self.index = PineconeVectorStore.from_documents(
-            docs,
-            index_name=self.index_name,
-            embedding=embeddings
+            docs, index_name=self.index_name, embedding=embeddings
         )
 
     def load_existing_index(self):
@@ -101,36 +102,40 @@ class PDFProcessor:
         response = retriever_from_llm.invoke(question)
         return response
 
+
 # Function to create the index and store it on Pinecone
-async def ingest(directory, index_name):
-    pdf = PDFProcessor(index_name)
-    documents = pdf.load_docs(directory)
+async def ingest_dir():
+    pdf = PDFProcessor(INDEX_NAME)
+    documents = pdf.load_docs(DIRECTORY)
     # print(documents)
     docs = pdf.split_docs(documents)
     pdf.create_index(docs)
     print(pdf.index_name)
     return pdf.index_name
 
+
 # Function to query the existing Pinecone index
-async def query(index_name, question):
-    pdf = PDFProcessor(index_name)
+async def query_index(question):
+    pdf = PDFProcessor(INDEX_NAME)
     pdf.load_existing_index()
     # chain = load_qa_chain(llm, chain_type="stuff")
     # response = pdf.get_answer(question, chain)
     # print(response)
     # return response
+    valid_content = ""
     response = pdf.retrieve(question)
-    return response
-
-async def main():
-    question = "OverHeating laptops"
-    
-    answer=await query("test", question)
-    for doc in answer:
-        print(str(doc.metadata["page"]) + ":", doc.page_content[:300])
-
-# Call the main function within an event loop
-asyncio.run(main())
+    for doc in response:
+        valid_content += "\n-----\n" + doc.page_content
+    return valid_content
 
 
+# async def main():
+#     question = "OverHeating laptops"
 
+#     answer = await query_index(question)
+#     for doc in answer:
+#         print(str(doc.metadata["page"]) + ":", doc.page_content[:300])
+
+
+# # Call the main function within an event loop
+# asyncio.run(main())

@@ -3,27 +3,26 @@ from typing import List
 from fastapi import UploadFile
 
 
-def upload_to_db(files: List[UploadFile], destination_folder: str = "./all_documents"):
+def upload_to_db(file: UploadFile, destination_folder: str = "./all_documents"):
     # Ensure the folder exists
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
     # Save each file to the destination folder
-    for file in files:
-        # Read file content
-        content = file.file.read()
+    # Read file content
+    content = file.file.read()
 
-        # Get the original filename and create the full path
-        file_path = os.path.join(destination_folder, file.filename)
+    # Get the original filename and create the full path
+    file_path = os.path.join(destination_folder, file.filename)
 
-        # Save the file content to the file system
-        with open(file_path, "wb") as f:
-            f.write(content)
+    # Save the file content to the file system
+    with open(file_path, "wb") as f:
+        f.write(content)
 
-        # Close the UploadFile's internal file to release resources
-        file.file.close()
+    # Close the UploadFile's internal file to release resources
+    file.file.close()
 
-    return {"status": "success", "message": f"{len(files)} file(s) uploaded."}
+    return {"status": "success", "message": f"{file.filename} uploaded."}
 
 
 import os
@@ -64,3 +63,16 @@ def copy_files_if_exist(
         "message": f"{copied_files} file(s) copied.",
         "missing_files": [filename for filename in filenames if not os.path.exists(os.path.join(source_folder, filename))]
     }
+
+
+def get_list_of_all_docs() -> List[str]:
+    # Get a list of all files in the source folder
+    files = os.listdir("./all_documents")
+    # Return the list of filenames
+    return files
+
+def get_list_of_selected_docs() -> List[str]:
+    # Get a list of all files in the source folder
+    files = os.listdir("./input_documents")
+    # Return the list of filenames
+    return files
