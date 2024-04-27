@@ -2876,7 +2876,7 @@ react-dom@^18:
 
 react-html-props@^2.0.9:
   version "2.0.9"
-  resolved "https://registry.npmjs.org/react-html-props/-/react-html-props-2.0.9.tgz"
+  resolved "https://registry.yarnpkg.com/react-html-props/-/react-html-props-2.0.9.tgz#0070476137ea0d6141e094b0d32521c173ed2c47"
   integrity sha512-Q9wIP8hs4HFUb3CDh5tF1nKgZ4S9odU07tR/lZ+/9ePv+psxRy+mUn7ujjrCGwtrLA52AI41fXWr425yK1iyTA==
 
 react-icons@^5.1.0:
@@ -3130,6 +3130,7 @@ streamsearch@^1.1.0:
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==

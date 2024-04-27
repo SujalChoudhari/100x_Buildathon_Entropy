@@ -19,7 +19,7 @@ const CompletedGoals = ({ className, ...props }: DivProps) => {
       </div>
 
       <ActionlessAreaChart
-        height={130}
+        height={200}
         colors={["hsl(var(--primary))"]}
         chartCategories={["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]}
         chartSeries={[{ name: "Tasks", data: [70, 60, 90, 80, 100, 70, 80] }]}
