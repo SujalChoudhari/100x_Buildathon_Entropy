@@ -7,6 +7,8 @@ from typing import List
 from .analytics import get_analytics
 from .upload import upload_to_db, copy_files_if_exist, get_list_of_selected_docs, get_list_of_all_docs
 from .ingest import ingest
+from .sendbulk import send_mails
+
 router = APIRouter(
     prefix="/admin",
     tags=["admin"],
@@ -56,4 +58,11 @@ async def get_selected_docs(_: str = Depends(is_admin)):
 @router.get("/get_all_docs")
 async def get_all_docs(_: str = Depends(is_admin)):
     return get_list_of_all_docs()
+
+@router.post("/send_bulk_email")
+async def send_bulk_email(
+    template:str,
+    email_list: List[str], _: str = Depends(is_admin)
+):
+    send_mails(template,email_list)
 
