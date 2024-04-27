@@ -5,11 +5,14 @@ from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 
-from database import Database
+from utils.database import Database
+
 class ChatBot:
-    def __init__(self, uri, db_name, temperature=0, model_name="Llama3-8b-8192"):
+    def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
-        self.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+        self.memory = ConversationBufferMemory(
+            memory_key="chat_history", return_messages=True
+        )
         self.prompt = ChatPromptTemplate.from_template(
             template="""You are a sales assistant whose primary purpose is to try to increase the company sales using proposals provided to you.
             If the user has any query or needs help you are also going to solve that query based upon the information you have and try to pitch a sales proposal
@@ -21,20 +24,15 @@ class ChatBot:
             User said: {text}.
             """
         )
-        self.chain = LLMChain(
-            llm=self.chat,
-            prompt=self.prompt,
-            memory=self.memory
-        )
-        self.db = Database(db_name)
+        self.chain = LLMChain(llm=self.chat, prompt=self.prompt, memory=self.memory)
+        self.db = Database("entropy")
 
-    def invoke(self, text):
-    # Store the user's input in the session
-        user_input = {"user": "human", "message": text}
-        self.db.append_session(user_input)
+    def invoke(self, text, document_data=""):
+        inputs = {
+            "text": text + "Here are related documents from company:" + document_data,
+            "chat_history": self.memory,
+        }
 
-        # Generate the AI's response
-        inputs = {"text": text, "chat_history": self.memory}
         ai_response = self.chain(inputs)
 
         # Store the AI's response in the session
