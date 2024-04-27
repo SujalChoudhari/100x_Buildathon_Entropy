@@ -1,7 +1,8 @@
 from fastapi import Depends, Request
 from fastapi.routing import APIRouter
-
 from utils.chatbot import ChatBot
+from utils.database import Database
+
 from .response import respond
 
 router = APIRouter(
@@ -29,6 +30,8 @@ async def check():
 
 @router.post("/response")
 async def response(query: str, chatbot=Depends(get_chatbot)):
+    db = Database("entropy")
+    await db.update_endpoint("/chat/response")
     print(query)
     query = query.strip()
     return {"response": await respond(chatbot,query)}

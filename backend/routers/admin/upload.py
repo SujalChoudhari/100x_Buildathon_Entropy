@@ -2,7 +2,6 @@ import os
 from typing import List
 from fastapi import UploadFile
 
-
 def upload_to_db(file: UploadFile, destination_folder: str = "./all_documents"):
     # Ensure the folder exists
     if not os.path.exists(destination_folder):
