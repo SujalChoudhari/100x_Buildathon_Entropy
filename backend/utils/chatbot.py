@@ -30,7 +30,7 @@ class ChatBot:
     def invoke(self, text, document_data):
         # Create input for the chain, including memory context and document data
         inputs = {
-            "text": text + "\nRelated Data:\n" + document_data,
+            "text": text + "\nRelated Data Fetched from Companies database:\n" + document_data,
             "chat_history": self.memory,
         }
         # Get the AI response

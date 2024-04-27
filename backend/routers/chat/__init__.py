@@ -29,5 +29,6 @@ async def check():
 
 @router.post("/response")
 async def response(query: str, chatbot=Depends(get_chatbot)):
+    print(query)
     query = query.strip()
     return {"response": await respond(chatbot,query)}
