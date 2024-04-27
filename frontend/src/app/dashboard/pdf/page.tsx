@@ -16,6 +16,7 @@ import { Label } from '@/components/ui/label';
 import { UploadCloudIcon } from 'lucide-react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
+import KanbanBoard from '@/components/KanbanBoard'
 
 type Pdf = {
     id: string;
@@ -125,7 +126,7 @@ function PDF() {
 
     return (
         <>
-            <div className="flex bg-background flex-col items-center justify-center max-w-[500px] w-full mx-auto m-10">
+            <div className="flex bg-background flex-col items-center rounded-xl justify-center max-w-[500px] w-full mx-auto m-10">
                 <div className="max-w-[500px] w-full border border-slate-500 flex items-center bg-[#f0f0f0] flex-col p-5 rounded-xl">
                     <Label htmlFor="file-upload" className="bg-white rounded-xl relative flex flex-col items-center justify-center w-full p-6 cursor-pointer">
                         <div className="text-center">
@@ -188,6 +189,12 @@ function PDF() {
                     ))}
                 </TableBody>
             </Table>
+
+     <div  id='kanban' className='w-[80vw] mt-24'>
+      
+      <h1 className=' ml-14 text-lg font-extrabold'>Pdfs Board</h1>
+      <KanbanBoard />
+    </div>
         </>
     );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgePercent, LogOut } from "lucide-react";
+import { BadgePercent, LogOut, Voicemail } from "lucide-react";
 import Link from "next/link";
 import { PropsWithChildren, useState } from "react";
 import { FaSalesforce } from "react-icons/fa";
@@ -13,6 +13,7 @@ import {
   LuInbox,
   LuSettings,
   LuUsers,
+  LuVoicemail,
 } from "react-icons/lu";
 import { TbChevronLeft, TbDirection } from "react-icons/tb";
 
@@ -120,6 +121,15 @@ export const Sidebar = () => {
               leftSlot={<LuUsers />}
             >
               <span className="text-sm font-medium">Sales Chatbot</span>
+            </SidebarItem>
+            </Link>
+            <Link href="/dashboard/voice">
+            <SidebarItem
+              isCollapsed={isCollapsed}
+              className="px-2 py-1 opacity-70"
+              leftSlot={<LuVoicemail/>}
+            >
+              <span className="text-sm font-medium">Voice Call</span>
             </SidebarItem>
             </Link>
           </div>
