@@ -7,7 +7,6 @@ from langchain.memory import ConversationBufferMemory
 
 from utils.database import Database
 
-
 class ChatBot:
     def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
@@ -33,7 +32,13 @@ class ChatBot:
             "text": text + "Here are related documents from company:" + document_data,
             "chat_history": self.memory,
         }
+
         ai_response = self.chain(inputs)
+
+        # Store the AI's response in the session
+        ai_response_dict = {"user": "AI", "message": ai_response["text"]}
+        self.db.append_session(ai_response_dict)
+
         return ai_response["text"]
 
     def get_sessions_by_user_id(self, user_id, limit=10):
@@ -46,7 +51,8 @@ class ChatBot:
 def main():
     dotenv.load_dotenv()
     # Create the bot
-    bot = ChatBot()
+    uri=os.getenv("CONNECTION_STRING")
+    bot = ChatBot(uri,"entropy")
 
     # Add memory context
     response1 = bot.invoke("I am Sujal")
