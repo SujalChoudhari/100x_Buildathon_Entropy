@@ -5,7 +5,7 @@ from utils.auth import oauth2_scheme, is_admin, get_current_user
 from typing import List
 
 from .analytics import get_analytics
-from .upload import upload_to_db, copy_files_if_exist
+from .upload import upload_to_db, copy_files_if_exist, get_list_of_selected_docs, get_list_of_all_docs
 from .ingest import ingest
 router = APIRouter(
     prefix="/admin",
@@ -29,7 +29,7 @@ async def analytics(_: str = Depends(is_admin)):
 async def upload_pdf(pdf_files: List[UploadFile], _: str = Depends(is_admin)):
     return upload_to_db(pdf_files)
 
-@router.post("/selected_document_list")
+@router.post("/update_selected_docs")
 async def selected_document_list(filenames: List[str], _: str = Depends(is_admin)):
     copy_files_if_exist(filenames)
 
@@ -48,3 +48,12 @@ async def generate_proposal(
 ):
     generate_proposal(current_user)
     pass
+
+@router.get("/get_selected_docs")
+async def get_selected_docs(_: str = Depends(is_admin)):
+    return get_list_of_selected_docs()
+
+@router.get("/get_all_docs")
+async def get_all_docs(_: str = Depends(is_admin)):
+    return get_list_of_all_docs()
+

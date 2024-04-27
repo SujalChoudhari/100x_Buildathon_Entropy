@@ -64,3 +64,16 @@ def copy_files_if_exist(
         "message": f"{copied_files} file(s) copied.",
         "missing_files": [filename for filename in filenames if not os.path.exists(os.path.join(source_folder, filename))]
     }
+
+
+def get_list_of_all_docs() -> List[str]:
+    # Get a list of all files in the source folder
+    files = os.listdir("./all_documents")
+    # Return the list of filenames
+    return files
+
+def get_list_of_selected_docs() -> List[str]:
+    # Get a list of all files in the source folder
+    files = os.listdir("./input_documents")
+    # Return the list of filenames
+    return files
