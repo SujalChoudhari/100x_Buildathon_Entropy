@@ -20,6 +20,19 @@ class Database:
 
         # Return only the last 'limit' sessions
         return user_sessions[-limit:]
+    
+    def get_texts_by_user_id(self, user_id):
+    # Get the existing document
+        doc = self.chats.find_one()
+
+        # Filter the sessions by user ID
+        sessions = doc.get('sessions', [])
+        user_sessions = [session for session in sessions if session['user'] == user_id]
+
+        # Extract the text from each session
+        user_texts = [session['message'] for session in user_sessions]
+
+        return user_texts
     def append_session(self, session):
         # If there's no document, create one with an empty list
         if self.chats.count_documents({}) == 0:

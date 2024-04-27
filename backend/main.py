@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import bcrypt
 from pydantic import BaseModel, EmailStr
 from utils.database import Database
+from routers.admin.generate_proposal import summarize_pdf
 load_dotenv()
 
 from fastapi import FastAPI, Depends, HTTPException, status
