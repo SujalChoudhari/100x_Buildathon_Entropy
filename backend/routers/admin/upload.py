@@ -3,27 +3,26 @@ from typing import List
 from fastapi import UploadFile
 
 
-def upload_to_db(files: List[UploadFile], destination_folder: str = "./all_documents"):
+def upload_to_db(file: UploadFile, destination_folder: str = "./all_documents"):
     # Ensure the folder exists
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
     # Save each file to the destination folder
-    for file in files:
-        # Read file content
-        content = file.file.read()
+    # Read file content
+    content = file.file.read()
 
-        # Get the original filename and create the full path
-        file_path = os.path.join(destination_folder, file.filename)
+    # Get the original filename and create the full path
+    file_path = os.path.join(destination_folder, file.filename)
 
-        # Save the file content to the file system
-        with open(file_path, "wb") as f:
-            f.write(content)
+    # Save the file content to the file system
+    with open(file_path, "wb") as f:
+        f.write(content)
 
-        # Close the UploadFile's internal file to release resources
-        file.file.close()
+    # Close the UploadFile's internal file to release resources
+    file.file.close()
 
-    return {"status": "success", "message": f"{len(files)} file(s) uploaded."}
+    return {"status": "success", "message": f"{file.filename} uploaded."}
 
 
 import os

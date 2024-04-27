@@ -26,8 +26,8 @@ async def analytics(_: str = Depends(is_admin)):
 
 
 @router.post("/upload_pdf")
-async def upload_pdf(pdf_files: List[UploadFile], _: str = Depends(is_admin)):
-    return upload_to_db(pdf_files)
+async def upload_pdf(pdf_file: UploadFile, _: str = Depends(is_admin)):
+    return upload_to_db(pdf_file)
 
 @router.post("/update_selected_docs")
 async def selected_document_list(filenames: List[str], _: str = Depends(is_admin)):
