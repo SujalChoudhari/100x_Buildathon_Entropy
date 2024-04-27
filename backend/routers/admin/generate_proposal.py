@@ -3,7 +3,7 @@ import dotenv
 from langchain.prompts import ChatPromptTemplate
 from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
-
+from utils.markdown_to_html import markdown_to_html_file
 from utils.database import Database
 dotenv.load_dotenv()
 from langchain.chains.summarize import load_summarize_chain
@@ -38,6 +38,10 @@ prompt=ChatPromptTemplate.from_template(
     7)Next steps(should contain contact details and other necessary information)
 
     The generated proposal should be in markdown format.
+    You should use headers ,emphasis,list, images and tables wherever they are required to make the proposal more readable.
+    While you are listing products make sure they are tabulated and have proper headings.
+    Ensure that the table is formulated properly with each row on a new line.
+    Use proper heading sizes to make the proposal look pretty and readable.
     The following is the user queries :
     Only generate according to these if you find them relevant.
     ---------------------------
@@ -54,4 +58,9 @@ prompt=ChatPromptTemplate.from_template(
 summary=summarize_pdf("all_documents/")
 texts=get_user_texts()
 chain=LLMChain(llm=chat,prompt=prompt)
-print(chain.run({"user_queries":texts,"existing_proposal":summary}))
+md=chain.run({"user_queries":texts,"existing_proposal":summary})
+html=markdown_to_html_file(md)
+print(md)
+
+with open("all_documents/proposal.html", 'w', encoding='utf-8') as file:
+    file.write(html)

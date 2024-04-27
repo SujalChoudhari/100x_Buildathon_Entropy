@@ -1,7 +1,7 @@
 import markdown
 
 def markdown_to_html_file(markdown_text):
-    return markdown.markdown(markdown_text)
+    return markdown.markdown(markdown_text, extensions=["tables"])
 
 if __name__ == "__main__":
     # Example usage
