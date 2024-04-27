@@ -1,6 +1,7 @@
 "use client";
 
 import { BadgePercent, LogOut } from "lucide-react";
+import Link from "next/link";
 import { PropsWithChildren, useState } from "react";
 import { FaSalesforce } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
@@ -101,6 +102,7 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">PDF Injestion</span>
             </SidebarItem>
+            <Link href="/analytics">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -108,6 +110,7 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">Analytics</span>
             </SidebarItem>
+            </Link>
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"

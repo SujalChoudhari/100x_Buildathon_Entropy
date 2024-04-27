@@ -7,6 +7,9 @@ import SessionBrowser from "@/components/analytics/session-browser";
 import TopPerforming from "@/components/analytics/top-performing";
 import SalesCountry from "@/components/analytics/sales-country";
 import TopQueries from "@/components/analytics/top-queries";
+import RecentLeads from "@/components/analytics/recent-leads";
+import DealStatus from "@/components/analytics/deal-status";
+import ToDoList from "@/components/analytics/to-do-list";
 
 const Page = () => {
   return (
@@ -24,6 +27,9 @@ const Page = () => {
       </div>
       <SalesCountry className="col-span-12 lg:col-span-8" />
 
+      <RecentLeads className="col-span-12 lg:col-span-8" />
+      <ToDoList className="col-span-12 lg:col-span-4" />
+      
       <TopPerforming className="col-span-12 lg:col-span-6" />
       <TopQueries className="col-span-12 lg:col-span-6" />
     </div>
