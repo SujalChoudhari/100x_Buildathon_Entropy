@@ -2,6 +2,10 @@ import os
 import dotenv
 from langchain.prompts import ChatPromptTemplate
 from langchain_groq.chat_models import ChatGroq
+from langchain.globals import set_llm_cache
+from langchain.cache import InMemoryCache
+
+set_llm_cache(InMemoryCache())
 from langchain.chains import LLMChain
 from utils.markdown_to_html import markdown_to_html_file
 from utils.database import Database
@@ -17,7 +21,7 @@ def summarize_pdf(path):
     loader = PyPDFDirectoryLoader(path)
     docs = loader.load_and_split()
     chain = load_summarize_chain(chat, chain_type="refine")
-    summary = chain.run(docs)   
+    summary = chain.run(docs)  
     return summary
 
 def get_user_texts():
@@ -36,7 +40,7 @@ prompt=ChatPromptTemplate.from_template(
     5)Pricing 
     6)Timeline(optional)
     7)Next steps(should contain contact details and other necessary information)
-
+    Feel free to add any other details that you think are necessary.
     The generated proposal should be in markdown format.
     You should use headers ,emphasis,list, images and tables wherever they are required to make the proposal more readable.
     While you are listing products make sure they are tabulated and have proper headings.
