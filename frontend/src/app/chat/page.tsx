@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-// import ChatArea from '@/components/chat';
+import ChatArea from '@/components/chat';
+import PromptBox from '@/components/PromptBox';
 import axios from 'axios';
 import Chat from '@/components/chat';
-import PromptBox from '@/components/PromptBox';
 
 function page() {
 

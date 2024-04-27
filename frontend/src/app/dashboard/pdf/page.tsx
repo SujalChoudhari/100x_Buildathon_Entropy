@@ -82,7 +82,7 @@ function PDF() {
             });
 
             console.log("Documents updated successfully:", response.data);
-        } catch (error:any) {
+        } catch (error: any) {
             console.error("Error updating selected documents:", error.response ? error.response.data : error.message);
         }
     }
@@ -146,7 +146,12 @@ function PDF() {
                     </Label>
                     <Input id="file-upload" className="hidden" type="file" accept="application/pdf" multiple onChange={handleFileChange} />
 
-                    <Button className='mt-4' onClick={() => { uploadToCloud() }}>Upload to Cloud</Button>
+                    
+                    <button onClick={() => { uploadToCloud() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+                        <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span>
+                        <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span>
+                        Upload to Cloud
+                    </button>
                 </div>
             </div>
             <Table>
