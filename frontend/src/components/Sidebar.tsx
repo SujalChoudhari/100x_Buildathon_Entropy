@@ -95,6 +95,7 @@ export const Sidebar = () => {
             <hr />
           </div>
           <div className="flex flex-col gap-2">
+          <Link href="/dashboard/pdf">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -102,7 +103,8 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">PDF Injestion</span>
             </SidebarItem>
-            <Link href="/analytics">
+            </Link>
+            <Link href="/dashboard/analytics">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -116,7 +118,7 @@ export const Sidebar = () => {
               className="px-2 py-1 opacity-70"
               leftSlot={<LuUsers />}
             >
-              <span className="text-sm font-medium">User Chatbot</span>
+              <span className="text-sm font-medium">Sales Chatbot</span>
             </SidebarItem>
           </div>
         </div>
