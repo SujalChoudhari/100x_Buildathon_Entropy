@@ -16,7 +16,55 @@ import Linkedin from "@/components/icons/linkedin";
 import Twitter from "@/components/icons/twitter";
 import { Button } from "@/components/ui/button";
 
-const Visitor = ({ className, ...props }: DivProps) => {
+const Visitor = ({ className, analytics, ...props }: any) => {
+
+
+  interface visitorsProps {
+    id: string;
+    title: string;
+    category: string;
+    rate: number;
+    visit: number;
+    Icon: (props: SVGProps) => JSX.Element;
+    chart: { series: any[] };
+  }
+
+  const visitors: visitorsProps[] = [
+    {
+      id: nanoid(),
+      Icon: Dribble,
+      title: "Dribbble",
+      category: "Community",
+      rate: 70,
+      visit: 12350,
+      chart: {
+        series: [analytics?.chartSeries] || [],
+      },
+    },
+    {
+      id: nanoid(),
+      Icon: Linkedin,
+      title: "Linked In",
+      category: "Social Media",
+      rate: 60,
+      visit: 10275,
+      chart: {
+        series: [analytics?.chartSeries2] || [],
+      },
+    },
+    {
+      id: nanoid(),
+      Icon: Twitter,
+      title: "Twitter",
+      category: "Social Media",
+      rate: 50,
+      visit: 20348,
+      chart: {
+        series: [analytics?.chartSeries3] || [],
+      },
+    },
+  ];
+
   return (
     <div
       className={cn("shadow border border-border rounded-2xl", className)}
@@ -25,9 +73,9 @@ const Visitor = ({ className, ...props }: DivProps) => {
       <div className="p-6 pb-2 flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <h6 className="font-semibold">1,352</h6>
+            <h6 className="font-semibold">{analytics?.total}</h6>
             <span className="text-xs font-medium text-emerald-500 px-1 py-0.5 rounded-sm bg-card">
-              +2.5%
+              {analytics?.inPercent}
             </span>
           </div>
           <p className="text-sm text-secondary-foreground">Average Positions</p>
@@ -51,7 +99,7 @@ const Visitor = ({ className, ...props }: DivProps) => {
         </TableHeader>
 
         <TableBody>
-          {visitors.map((invoice) => (
+          {analytics && visitors.map((invoice) => (
             <TableRow
               key={invoice.id}
               className="text-sm font-medium border-border"
@@ -78,7 +126,7 @@ const Visitor = ({ className, ...props }: DivProps) => {
                   height={20}
                   colors={["#10B981"]}
                   strokeWidth={1}
-                  chartSeries={invoice.chart.series}
+                  chartSeries={invoice?.chart?.series}
                 />
               </TableCell>
             </TableRow>
@@ -88,54 +136,5 @@ const Visitor = ({ className, ...props }: DivProps) => {
     </div>
   );
 };
-
-// REACT CHART CATEGORIES LABEL
-const chartSeries = [{ name: "Tasks", data: [0, 30, 16, 70, 26, 30, 12] }];
-
-interface visitorsProps {
-  id: string;
-  title: string;
-  category: string;
-  rate: number;
-  visit: number;
-  Icon: (props: SVGProps) => JSX.Element;
-  chart: { series: any[] };
-}
-
-const visitors: visitorsProps[] = [
-  {
-    id: nanoid(),
-    Icon: Dribble,
-    title: "Dribbble",
-    category: "Community",
-    rate: 70,
-    visit: 12350,
-    chart: {
-      series: chartSeries,
-    },
-  },
-  {
-    id: nanoid(),
-    Icon: Linkedin,
-    title: "Linked In",
-    category: "Social Media",
-    rate: 60,
-    visit: 10275,
-    chart: {
-      series: chartSeries,
-    },
-  },
-  {
-    id: nanoid(),
-    Icon: Twitter,
-    title: "Twitter",
-    category: "Social Media",
-    rate: 50,
-    visit: 20348,
-    chart: {
-      series: chartSeries,
-    },
-  },
-];
 
 export default Visitor;

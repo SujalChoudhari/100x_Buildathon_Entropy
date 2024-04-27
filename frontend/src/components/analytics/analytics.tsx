@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { DivProps } from "react-html-props";
 
-const Analytics = ({ className, ...props }: DivProps) => {
+const Analytics = ({ className, analytics, ...props }: any) => {
   return (
     <div
       className={cn("shadow border border-border rounded-2xl", className)}
@@ -13,7 +13,7 @@ const Analytics = ({ className, ...props }: DivProps) => {
     >
       <div className="flex items-center justify-between mb-10">
         <div className="flex flex-wrap">
-          {analytics.map((item, ind) => (
+          {analytics?.details.map((item:any, ind:number) => (
             <div key={ind} className="p-6 hover:bg-card">
               <p className="text-sm font-medium text-secondary-foreground">
                 {item.title}
@@ -43,19 +43,13 @@ const Analytics = ({ className, ...props }: DivProps) => {
         <LineChart
           height={300}
           colors={["hsl(var(--primary))"]}
-          chartSeries={[{ name: "Sales", data: [6, 15, 10, 17, 20, 10, 15] }]}
-          chartCategories={["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]}
+          chartSeries={analytics?.chartSeries}
+          chartCategories={analytics?.chartCategories}
         />
       </div>
     </div>
   );
 };
 
-const analytics = [
-  { title: "Users", count: "12,060", result: 12.5 },
-  { title: "Sessions", count: "30,000", result: 5.56 },
-  { title: "Bounce Rate", count: "53%", result: -1.5 },
-  { title: "Session Duration", count: "3m 10s", result: -10.5 },
-];
 
 export default Analytics;

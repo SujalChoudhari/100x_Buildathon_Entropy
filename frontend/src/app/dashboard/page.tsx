@@ -1,3 +1,4 @@
+"use client";
 import Visitor from "@/components/analytics/visitor";
 import Analytics from "@/components/analytics/analytics";
 import CompletedGoals from "@/components/analytics/completed-goals";
@@ -10,29 +11,64 @@ import TopQueries from "@/components/analytics/top-queries";
 import RecentLeads from "@/components/analytics/recent-leads";
 import DealStatus from "@/components/analytics/deal-status";
 import ToDoList from "@/components/analytics/to-do-list";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  return (
-    
-    <div className="grid grid-cols-12 gap-7 w-full">
-      <AveragePositions className="col-span-12 lg:col-span-4" />
-      <Analytics className="col-span-12 lg:col-span-8" />
+  const [analytics, setAnalytics] = useState<any>({});
+  const router = useRouter()
 
-      <Visitor className="col-span-12 lg:col-span-8" />
-      <SessionBrowser className="col-span-12 lg:col-span-4" />
+  useEffect(() => {
+    const loadAnalytics = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/admin/analytics", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          }
+        })
+        setAnalytics(response.data)
+        console.log(response.data)
 
-      <div className="col-span-12 lg:col-span-4">
-        <CompletedGoals className="h-full max-h-[200px] overflow-hidden" />
-        <CompletedRates className="h-full max-h-[200px] overflow-hidden mt-7" />
+      }
+      // cathc unauthorized error
+      catch (error: any) {
+        if (error.response.status === 401) {
+          console.log("Unauthorized error")
+          router.push('/login')
+        }
+      }
+
+
+
+
+    }
+
+    loadAnalytics()
+  }, [])
+  return (<>
+    {analytics && (
+      <div className="grid grid-cols-12 gap-7 w-full">
+        <AveragePositions analytics={analytics.averagePos} className="col-span-12 lg:col-span-4" />
+        <Analytics analytics={analytics.analytics} className="col-span-12 lg:col-span-8" />
+
+        <Visitor analytics={analytics.visitors} className="col-span-12 lg:col-span-8" />
+        <SessionBrowser analytics={analytics.sessionBrowser} className="col-span-12 lg:col-span-4" />
+
+        <div className="col-span-12 lg:col-span-4">
+          <CompletedGoals analytics={analytics.sales} className="h-full max-h-[200px] overflow-hidden" />
+          <CompletedRates analytics={analytics.sales} className="h-full max-h-[200px] overflow-hidden mt-7" />
+        </div>
+        <SalesCountry analytics={analytics.sales} className="col-span-12 lg:col-span-8" />
+
+        <RecentLeads analytics={analytics.users} className="col-span-12 lg:col-span-8" />
+        <ToDoList className="col-span-12 lg:col-span-4" />
+
+        <TopPerforming className="col-span-12 lg:col-span-6" />
+        <TopQueries analytics={analytics.queries} className="col-span-12 lg:col-span-6" />
       </div>
-      <SalesCountry className="col-span-12 lg:col-span-8" />
-
-      <RecentLeads className="col-span-12 lg:col-span-8" />
-      <ToDoList className="col-span-12 lg:col-span-4" />
-      
-      <TopPerforming className="col-span-12 lg:col-span-6" />
-      <TopQueries className="col-span-12 lg:col-span-6" />
-    </div>
+    )}
+  </>
   );
 };
 
