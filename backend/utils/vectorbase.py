@@ -19,7 +19,7 @@ load_dotenv()
 # API keys for OpenAI and Pinecone
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-INDEX_NAME = "test"
+INDEX_NAME = os.getenv("INDEX_NAME")
 DIRECTORY = "input_documents"
 os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
