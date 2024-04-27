@@ -4,15 +4,12 @@ import os
 
 dotenv.load_dotenv()
 
-url = "https://api.vapi.ai/call/phone"
-
-headers = {
+def handle_call(phone_number, name):
+    url = "https://api.vapi.ai/call/phone"
+    headers = {
     "Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}",
     "Content-Type": "application/json"
-}
-
-
-def handle_call(phone_number, name):
+    }
     payload = {
     "assistantId": "84f7f221-5260-4133-881f-ebf169be0b2f",
     "customer": {"number": phone_number, "name": name},
@@ -26,4 +23,15 @@ def handle_call(phone_number, name):
     print(response.text)
     # return "Will be called shortly!"
 
-# handle_call("+918291025964", "Surabhi")
+def latest_summary():
+    url = "https://api.vapi.ai/call"
+    headers = {"Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"}
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        res = response.json()
+        print(res[0]["summary"])
+        return res[0]["summary"]
+    else:
+        return "Error!"
+
