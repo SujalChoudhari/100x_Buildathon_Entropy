@@ -1,15 +1,17 @@
-import uuid  # Using UUID to generate unique IDs in Python
+# Filtering key data to send to the frontend
+import uuid
 
-analytics = {
+
+analytics_summary = {
     "averagePos": {
         "chartSeries": {"name": "Sales", "data": [6, 15, 10, 17]},
-        "chartCategories": {["Sep 20", "Sep 21", "Sep 22", "Sep 23"]},
+        "chartCategories": ["Sep 20", "Sep 21", "Sep 22", "Sep 23"],
         "avgCount": "5.8",
         "avgPos": "+2.5%",
     },
     "analytics": {
-        "chartSeries": {[{"name": "Sales", "data": [6, 15, 10, 17, 20, 10, 15]}]},
-        "chartCategories": {["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]},
+        "chartSeries": [{"name": "Sales", "data": [6, 15, 10, 17, 20, 10, 15]}],
+        "chartCategories": ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
         "details": [
             {"title": "Users", "count": "12,060", "result": 12.5},
             {"title": "Sessions", "count": "30,000", "result": 5.56},
@@ -18,31 +20,8 @@ analytics = {
         ],
     },
     "visitors": {
-        "chartSeries": {
-            "name": "Visitors",
-            "data": [6, 15, 10, 17, 20, 10, 15],
-        },
-        "chartCategories": {["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]},
-        "details": {
-            "linkedIn": {
-                "title": "Users",
-                "count": "12,060",
-                "result": 40,
-                "chart": [6, 15, 10, 4, 20, 20, 10, 15],
-            },
-            "dribble": {
-                "title": "Sessions",
-                "count": "30,000",
-                "result": 34,
-                "chart": [20, 10, 15, 6, 15, 10, 17],
-            },
-            "twitter": {
-                "title": "Bounce Rate",
-                "count": "53%",
-                "result": 15,
-                "chart": [10, 15, 6, 15, 10, 17, 20],
-            },
-        },
+        "chartSeries": {"name": "Visitors", "data": [6, 15, 10, 17, 20, 10, 15]},
+        "chartCategories": ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
     },
     "sessionBrowser": [
         {
@@ -95,7 +74,6 @@ analytics = {
         },
         {
             "name": "Jorge R",
-            "status": "success",
             "country": "Brazil",
             "dealValue": "15,000",
         },
@@ -130,18 +108,6 @@ analytics = {
             "keyword": "Minimal Dashboard",
             "click": 986,
             "value": 75,
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "keyword": "Clean UI Template",
-            "click": 1028,
-            "value": 90,
-        },
-        {
-            "id": str(uuid.uuid4()),
-            "keyword": "Logistics Dashboard",
-            "click": 369,
-            "value": 87,
         },
     ],
 }
