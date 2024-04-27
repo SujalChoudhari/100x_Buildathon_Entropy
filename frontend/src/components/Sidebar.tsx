@@ -104,7 +104,7 @@ export const Sidebar = () => {
               <span className="text-sm font-medium">PDF Injestion</span>
             </SidebarItem>
             </Link>
-            <Link href="/dashboard/analytics">
+            <Link href="/dashboard">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -113,6 +113,7 @@ export const Sidebar = () => {
               <span className="text-sm font-medium">Analytics</span>
             </SidebarItem>
             </Link>
+            <Link href="/chat">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -120,6 +121,7 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">Sales Chatbot</span>
             </SidebarItem>
+            </Link>
           </div>
         </div>
         
