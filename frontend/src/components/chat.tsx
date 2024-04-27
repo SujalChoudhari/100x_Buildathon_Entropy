@@ -13,7 +13,7 @@ interface ChatProps {
 
 export default function Chat({ chatData }: ChatProps) {
     return (
-        <ScrollArea className="mt-6 min-h-max h-[460px]">
+        <ScrollArea className="mt-6 min-h-max h-[620px]">
             <div className="mx-auto max-w-2xl px-4">
                 {chatData && chatData.map((chat: any, index: number) => (
                     <React.Fragment key={index}>
