@@ -1,10 +1,13 @@
-import React from 'react'
+"use client";  
+import React, { useEffect, useState } from 'react'
 import ChatArea from '@/components/chat';
 import PromptBox from '@/components/PromptBox';
+import axios from 'axios';
+import Chat from '@/components/chat';
 
-function Chat() {
+function page() {
 
-    const [chatMessages, setChatMessages] = useState<string[]>([]);
+  const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [animatePrompt, setAnimatePrompt] = useState(false);
   const [browserURL, setBrowserURL] = useState("");
   const [timeMs, setTimeMs] = useState(null);
@@ -51,10 +54,10 @@ function Chat() {
       if (response.data.time_ms) {
         setTimeMs(response.data.time_ms);
       }
-    //   toast.success(`Successful interaction: ${timeMs}ms`)
+      //   toast.success(`Successful interaction: ${timeMs}ms`)
     } catch (error) {
-    //   console.error('Error sending input:', error);
-    //   toast.error("Failed to send Input. Try Again")
+      //   console.error('Error sending input:', error);
+      //   toast.error("Failed to send Input. Try Again")
     }
   };
 
@@ -69,15 +72,15 @@ function Chat() {
       }
     };
     resetChat();
-   
+
   }, []);
 
 
   return (
     <div>
-        <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
-              <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
-              
+      <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
+      <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
+
 
     </div>
   )
