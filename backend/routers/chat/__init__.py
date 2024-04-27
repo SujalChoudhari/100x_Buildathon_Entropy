@@ -35,3 +35,14 @@ async def response(query: str, chatbot=Depends(get_chatbot)):
     print(query)
     query = query.strip()
     return {"response": await respond(chatbot,query)}
+
+
+@router.get("/close_session")
+async def close_session(request: Request):
+    session_id = request.session.get("session_id")
+    if session_id in chatbots:
+        del chatbots[session_id]
+
+    #append your code here
+
+    return {"message": "Session closed"}
