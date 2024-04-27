@@ -4,7 +4,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
-from database import Database
+
+from utils.database import Database
 class ChatBot:
     def __init__(self, uri, db_name, temperature=0, model_name="Llama3-8b-8192"):
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
