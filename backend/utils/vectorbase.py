@@ -19,7 +19,7 @@ load_dotenv()
 # API keys for OpenAI and Pinecone
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-INDEX_NAME = "data"
+INDEX_NAME = "test"
 DIRECTORY = "input_documents"
 os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
@@ -133,8 +133,7 @@ async def query_index(question):
 #     question = "OverHeating laptops"
 
 #     answer = await query_index(question)
-#     for doc in answer:
-#         print(str(doc.metadata["page"]) + ":", doc.page_content[:300])
+#     print(answer)
 
 
 # # Call the main function within an event loop
