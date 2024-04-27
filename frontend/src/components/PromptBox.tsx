@@ -17,6 +17,7 @@ import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 // import toast from 'react-hot-toast';
 import axios from 'axios';
+import { Input } from './ui/input';
 
 function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }: { onSubmitPressed: any, animatePrompt: boolean, setAnimatePrompt: any, timeMs: any }) {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -74,11 +75,10 @@ function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }:
             }}
             transition={{ duration: 0.5, ease: 'easeInOut' }}
         >
-            <div id='inputs' className="mx-auto w-full sm:max-w-2xl sm:px-4">
+            <div id='inputs' className="mx-auto pt-6 w-full sm:max-w-2xl sm:px-4">
                 <div className="bg-background  space-y-4 flex flex-row items-center gap-2  border-t px-4  shadow-lg sm:rounded-xl sm:border md:py-4 ">
-                    <div className="rounded-lg border shadow-md mt-4">
-                        <input ref={inputRef} placeholder="Input Prompt." />
-                    </div>
+                    
+                    <Input ref={inputRef} className="flex-grow  border-gray-400 rounded-xl " placeholder="Ask your Sales Query" />
 
 
                     {/* ALL THE BUTTONS */}

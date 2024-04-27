@@ -4,6 +4,8 @@ import ChatArea from '@/components/chat';
 import PromptBox from '@/components/PromptBox';
 import axios from 'axios';
 import Chat from '@/components/chat';
+import { Vortex } from '@/components/ui/vortex';
+
 
 function page() {
 
@@ -58,10 +60,15 @@ function page() {
 
 
   return (
-    <div>
+    <>
+    <Vortex
+      >
+    <div className="h-screen flex flex-col">
       <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
       <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
     </div>
+    </Vortex>
+    </>
   )
 }
 
