@@ -14,7 +14,7 @@ headers = {
 
 def handle_call(phone_number, name):
     payload = {
-    "assistantId": "33be2b98-3db8-4135-b927-654a1cde5517",
+    "assistantId": "84f7f221-5260-4133-881f-ebf169be0b2f",
     "customer": {"number": phone_number, "name": name},
     "phoneNumber": {
         "twilioAuthToken": os.getenv("TWILIO_AUTH_TOKEN"),
