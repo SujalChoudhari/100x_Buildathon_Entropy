@@ -5,7 +5,7 @@ from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 
-from utils.database import Database
+from database import Database
 class ChatBot:
     def __init__(self, uri, db_name, temperature=0, model_name="Llama3-8b-8192"):
         self.chat = ChatGroq(temperature=temperature, model_name=model_name)
@@ -26,7 +26,7 @@ class ChatBot:
             prompt=self.prompt,
             memory=self.memory
         )
-        self.db = Database(uri, db_name)
+        self.db = Database(db_name)
 
     def invoke(self, text):
     # Store the user's input in the session
