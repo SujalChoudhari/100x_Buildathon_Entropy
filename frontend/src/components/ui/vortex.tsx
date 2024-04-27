@@ -9,7 +9,7 @@ interface VortexProps {
   containerClassName?: string;
   particleCount?: number;
   rangeY?: number;
-  baseHue?: number;
+  baseColor?: [number, number, number];
   baseSpeed?: number;
   rangeSpeed?: number;
   baseRadius?: number;
@@ -21,7 +21,7 @@ export const Vortex = (props: VortexProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef(null);
   const particleCount = props.particleCount || 700;
-  const particlePropCount = 9;
+  const particlePropCount = 11;
   const particlePropsLength = particleCount * particlePropCount;
   const rangeY = props.rangeY || 100;
   const baseTTL = 50;
@@ -30,8 +30,7 @@ export const Vortex = (props: VortexProps) => {
   const rangeSpeed = props.rangeSpeed || 1.5;
   const baseRadius = props.baseRadius || 1;
   const rangeRadius = props.rangeRadius || 2;
-  const baseHue = props.baseHue || 220;
-  const rangeHue = 100;
+  const baseColor = props.baseColor || [0, 0, 0];
   const noiseSteps = 3;
   const xOff = 0.00125;
   const yOff = 0.00125;
@@ -82,7 +81,7 @@ export const Vortex = (props: VortexProps) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let x, y, vx, vy, life, ttl, speed, radius, hue;
+    let x, y, vx, vy, life, ttl, speed, radius, color;
 
     x = rand(canvas.width);
     y = center[1] + randRange(rangeY);
@@ -92,9 +91,9 @@ export const Vortex = (props: VortexProps) => {
     ttl = baseTTL + rand(rangeTTL);
     speed = baseSpeed + rand(rangeSpeed);
     radius = baseRadius + rand(rangeRadius);
-    hue = baseHue + rand(rangeHue);
+    color = [baseColor[0] + rand(255 - baseColor[0]), baseColor[1] + rand(255 - baseColor[1]), baseColor[2] + rand(255 - baseColor[2])];
 
-    particleProps.set([x, y, vx, vy, life, ttl, speed, radius, hue], i);
+    particleProps.set([x, y, vx, vy, life, ttl, speed, radius, color[0], color[1], color[2]], i);
   };
 
   const draw = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
@@ -129,8 +128,10 @@ export const Vortex = (props: VortexProps) => {
       i6 = 5 + i,
       i7 = 6 + i,
       i8 = 7 + i,
-      i9 = 8 + i;
-    let n, x, y, vx, vy, life, ttl, speed, x2, y2, radius, hue;
+      i9 = 8 + i,
+      i10 = 8 + i,
+      i11 = 8 + i;
+    let n, x, y, vx, vy, life, ttl, speed, x2, y2, radius, color;
 
     x = particleProps[i];
     y = particleProps[i2];
@@ -143,9 +144,9 @@ export const Vortex = (props: VortexProps) => {
     x2 = x + vx * speed;
     y2 = y + vy * speed;
     radius = particleProps[i8];
-    hue = particleProps[i9];
+    color = [particleProps[i9], particleProps[i10], particleProps[i11]];
 
-    drawParticle(x, y, x2, y2, life, ttl, radius, hue, ctx);
+    drawParticle(x, y, x2, y2, life, ttl, radius, color, ctx);
 
     life++;
 
@@ -166,13 +167,13 @@ export const Vortex = (props: VortexProps) => {
     life: number,
     ttl: number,
     radius: number,
-    hue: number,
+    color: number[],
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineWidth = radius;
-    ctx.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`;
+    ctx.strokeStyle = `rgba(${color[0]},${color[1]},${color[2]},${fadeInOut(life, ttl)})`;
     ctx.beginPath();
     ctx.moveTo(x, y);
     ctx.lineTo(x2, y2);
@@ -204,13 +205,13 @@ export const Vortex = (props: VortexProps) => {
   ) => {
     ctx.save();
     ctx.filter = "blur(8px) brightness(200%)";
-    ctx.globalCompositeOperation = "lighter";
+    ctx.globalCompositeOperation = "darken";
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
 
     ctx.save();
     ctx.filter = "blur(4px) brightness(200%)";
-    ctx.globalCompositeOperation = "lighter";
+    ctx.globalCompositeOperation = "darken";
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
   };
@@ -220,7 +221,7 @@ export const Vortex = (props: VortexProps) => {
     ctx: CanvasRenderingContext2D
   ) => {
     ctx.save();
-    ctx.globalCompositeOperation = "lighter";
+    ctx.globalCompositeOperation = "darken";
     ctx.drawImage(canvas, 0, 0);
     ctx.restore();
   };
