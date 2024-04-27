@@ -29,8 +29,18 @@ class ChatBot:
         self.db = Database(uri, db_name)
 
     def invoke(self, text):
+    # Store the user's input in the session
+        user_input = {"user": "human", "message": text}
+        self.db.append_session(user_input)
+
+        # Generate the AI's response
         inputs = {"text": text, "chat_history": self.memory}
         ai_response = self.chain(inputs)
+
+        # Store the AI's response in the session
+        ai_response_dict = {"user": "AI", "message": ai_response["text"]}
+        self.db.append_session(ai_response_dict)
+
         return ai_response["text"]
 
     def get_sessions_by_user_id(self, user_id, limit=10):
@@ -43,7 +53,8 @@ class ChatBot:
 def main():
     dotenv.load_dotenv()
     # Create the bot
-    bot = ChatBot()
+    uri=os.getenv("CONNECTION_STRING")
+    bot = ChatBot(uri,"entropy")
 
     # Add memory context
     response1 = bot.invoke("I am Sujal")
