@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { DivProps } from "react-html-props";
 
-const TopQueries = ({ className, ...props }: DivProps) => {
+const TopQueries =  ({ className, analytics, ...props }: any) => {
   return (
     <div
       className={cn("shadow border border-border rounded-2xl", className)}
@@ -41,7 +41,7 @@ const TopQueries = ({ className, ...props }: DivProps) => {
         </TableHeader>
 
         <TableBody>
-          {queries.map((item) => (
+          {analytics&& analytics.map((item:any) => (
             <TableRow
               key={item.id}
               className="text-sm font-medium border-border"

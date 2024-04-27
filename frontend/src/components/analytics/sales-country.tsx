@@ -7,7 +7,7 @@ import SingleDot from "@/components/icons/single-dot";
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 
-const SalesCountry = ({ className, ...props }: DivProps) => {
+const SalesCountry = ({ className, analytics, ...props }: any) => {
   return (
     <div
       className={cn("shadow border border-border rounded-2xl p-6", className)}
@@ -26,7 +26,7 @@ const SalesCountry = ({ className, ...props }: DivProps) => {
 
       <div className="flex flex-col lg:flex-row items-center gap-9">
         <div className="w-full lg:w-[270px] flex flex-col gap-6">
-          {queries.map((item, ind) => (
+          {analytics && analytics?.percountry.map((item: any, ind: number) => (
             <div
               key={ind}
               className="w-full lg:w-[270px] group flex items-center justify-between text-sm font-medium text-secondary-foreground hover:text-primary"
@@ -38,11 +38,11 @@ const SalesCountry = ({ className, ...props }: DivProps) => {
 
               <div className="w-[calc(100%-100px)] flex items-center justify-between">
                 <Progress
-                  value={item.progress}
+                  value={item.count}
                   className="w-[calc(100%-40px)] h-2 bg-card [&>div]:bg-icon-muted group-hover:[&>div]:bg-primary"
                 />
 
-                <p className="w-10 text-right">{item.progress}%</p>
+                <p className="w-10 text-right">{item.count}%</p>
               </div>
             </div>
           ))}
@@ -56,14 +56,14 @@ const SalesCountry = ({ className, ...props }: DivProps) => {
   );
 };
 
-const queries = [
-  { name: "Australia", progress: 72 },
-  { name: "USA", progress: 62 },
-  { name: "RSA", progress: 92 },
-  { name: "Brazil", progress: 7 },
-  { name: "Japan", progress: 40 },
-  { name: "UAE", progress: 55 },
-  { name: "Thailand", progress: 50 },
-];
+// const queries = [
+//   { name: "Australia", progress: 72 },
+//   { name: "USA", progress: 62 },
+//   { name: "RSA", progress: 92 },
+//   { name: "Brazil", progress: 7 },
+//   { name: "Japan", progress: 40 },
+//   { name: "UAE", progress: 55 },
+//   { name: "Thailand", progress: 50 },
+// ];
 
 export default SalesCountry;

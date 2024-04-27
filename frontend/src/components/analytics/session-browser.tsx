@@ -10,7 +10,7 @@ import Opera from "@/components/icons/opera";
 import Yahoo from "@/components/icons/yahoo";
 import SingleDot from "@/components/icons/single-dot";
 
-const SessionBrowser = ({ className, ...props }: DivProps) => {
+const SessionBrowser = ({ className, analytics, ...props }: any) => {
   return (
     <div
       className={cn("shadow border border-border rounded-2xl", className)}
@@ -33,13 +33,15 @@ const SessionBrowser = ({ className, ...props }: DivProps) => {
 
       <Table className="mb-6 mt-7">
         <TableBody>
-          {visitors.map((invoice) => (
+          {analytics && analytics.map((invoice: any) => (
             <TableRow
               key={invoice.id}
               className="text-sm font-medium border-border"
             >
               <TableCell className="px-6 py-3.5 flex items-center">
-                <invoice.Icon className="w-5 h-5 mr-3" />
+                {
+                  invoice.icon == "Chrome" ? <Chrome className="w-5 h-5 mr-3" /> : invoice.icon == "Opera" ? <Opera className="w-5 h-5 mr-3" /> : <Yahoo className="w-5 h-5 mr-3" />
+                }
                 <p className="text-sm font-medium text-secondary-foreground">
                   {invoice.title}
                 </p>
@@ -53,10 +55,10 @@ const SessionBrowser = ({ className, ...props }: DivProps) => {
                       invoice.title === "Chrome"
                         ? "text-primary"
                         : invoice.title === "Opera"
-                        ? "text-emerald-500"
-                        : invoice.title === "Yahoo"
-                        ? "text-icon-muted"
-                        : "text-card"
+                          ? "text-emerald-500"
+                          : invoice.title === "Yahoo"
+                            ? "text-icon-muted"
+                            : "text-card"
                     )}
                   />
                   {invoice.rate}%
@@ -78,36 +80,5 @@ const SessionBrowser = ({ className, ...props }: DivProps) => {
   );
 };
 
-interface visitorsProps {
-  id: string;
-  title: string;
-  rate: number;
-  visit: number;
-  Icon: (props: SVGProps) => JSX.Element;
-}
-
-const visitors: visitorsProps[] = [
-  {
-    id: nanoid(),
-    Icon: Chrome,
-    title: "Chrome",
-    rate: 60,
-    visit: 3.19,
-  },
-  {
-    id: nanoid(),
-    Icon: Opera,
-    title: "Opera",
-    rate: 10,
-    visit: -1.98,
-  },
-  {
-    id: nanoid(),
-    Icon: Yahoo,
-    title: "Yahoo",
-    rate: 30,
-    visit: 2.23,
-  },
-];
 
 export default SessionBrowser;
