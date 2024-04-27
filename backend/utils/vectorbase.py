@@ -4,6 +4,7 @@ from langchain.document_loaders import PyPDFDirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.llms import OpenAI
 from langchain_pinecone import PineconeVectorStore
+from langchain.prompts import PromptTemplate
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains.question_answering import load_qa_chain
 from langchain.retrievers.multi_query import MultiQueryRetriever
@@ -20,16 +21,38 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 INDEX_NAME = "data"
 DIRECTORY = "input_documents"
+os.environ["LANGCHAIN_TRACING_V2"]="true"
+os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
 from langchain_cohere import CohereEmbeddings
 
 os.environ["COHERE_API_KEY"] = os.getenv("COHERE_API_KEY")
 # Set up Pinecone
 pc = Pinecone(api_key=PINECONE_API_KEY)
-
+prompt=PromptTemplate(
+    input_variables=["question"],
+    template=""" You are a customer care assistant given customers's query generate only relevant similiar queries to retriev from the document .
+    The Question is :
+    ---------------
+    : {question}
+    --------------
+    """,
+)
 # Embeddings and LLM setup
 llm = ChatGroq(temperature=0, model_name="Llama3-8b-8192")
-embeddings = CohereEmbeddings()
-llm2 = ChatOpenAI(temperature=0)
+embeddings=CohereEmbeddings()
+llm2 = llm|prompt
+prompt_template = PromptTemplate(
+    input_variables=["question"],
+    template="""
+    You are a customer care assistant who has access to sales proposal of the company .Your job is to listen to the customer's problem
+    then find generate 3 similiar problems  each seperated by a new line.
+    Only respond with the query and nothing else. No need to say hi, hello or anything else just generate the questions.
+    The customer's query is:
+    ----------------
+    {question}
+    ----------------
+"""
+)
 
 
 # Class to handle PDF and Pinecone operations
@@ -73,7 +96,8 @@ class PDFProcessor:
     #     return response
     def retrieve(self, question):
         retriever_from_llm = MultiQueryRetriever.from_llm(
-            retriever=self.index.as_retriever(), llm=llm
+            retriever=self.index.as_retriever(), llm=llm,
+            prompt=prompt_template,
         )
         response = retriever_from_llm.invoke(question)
         return response

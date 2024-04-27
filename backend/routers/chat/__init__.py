@@ -32,5 +32,6 @@ async def check():
 async def response(query: str, chatbot=Depends(get_chatbot)):
     db = Database("entropy")
     await db.update_endpoint("/chat/response")
+    print(query)
     query = query.strip()
     return {"response": await respond(chatbot,query)}
