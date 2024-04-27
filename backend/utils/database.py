@@ -4,10 +4,11 @@ import os
 
 
 class Database:
-    def __init__(self, uri, db_name):
-        self.client = MongoClient(uri)
+    def __init__(self, db_name):
+        self.client = MongoClient(os.environ['CONNECTION_STRING'])
         self.db = self.client[db_name]
         self.chats = self.db['chats']
+        self.endpoints = self.db["endpoints"]
 
     def get_sessions_by_user_id(self, user_id, limit=10):
         # Get the existing document
@@ -33,4 +34,9 @@ class Database:
 
         # Update the document
         self.chats.update_one({}, {'$set': {'sessions': sessions}})
+
+    async def update_endpoint(self, endpoint):
+        filter_query = {"endpoint": endpoint}
+        update_operation = {"$inc": {"count": 1}}
+        self.endpoints.update_one(filter_query, update_operation, upsert=True)
 
