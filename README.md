@@ -47,3 +47,11 @@ Architechture:
    pip install -r requirements.txt
 
 ## Usage
+
+
+
+## API Documentation
+
+
+
+## Demonstation Video
