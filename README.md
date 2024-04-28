@@ -35,6 +35,30 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
    Architechture Diagram
 ![WhatsApp Image 2024-04-28 at 10 49 01 PM](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/128281067/dce4d192-fb6a-4c67-b4a2-6821a36757c7)
 
+Certainly, here's a table format for the simplified breakdown:
+
+| Component            | Functionality                                                                        |
+|----------------------|--------------------------------------------------------------------------------------|
+| Admin Interface      | - Uploads embeddings to the database.                                                |
+|                      | - Fetches and stores data.                                                            |
+| Call Interface       | - Sends queries to the system.                                                        |
+|                      | - Receives and processes responses.                                                   |
+| Web UI Interface     | - Sends queries to the system.                                                        |
+|                      | - Receives and processes responses.                                                   |
+|                      | - Handles sales and analytics.                                                        |
+| Embeddings           | - Stored in the database.                                                             |
+| Fetch Data           | - Retrieves data from the database.                                                   |
+|                      | - Parses data into text.                                                              |
+| Use LLM for Answers  | - Utilizes a Large Language Model to generate answers.                                 |
+| Real Time            | - System handles real-time interactions.                                               |
+|                      | - Generates responses in real-time.                                                    |
+| Call Based Interaction | - System handles interactions initiated through calls.                                 |
+|                        | - Generates responses based on calls.                                                  |
+| UI Based Interaction   | - System handles interactions initiated through the user interface.                    |
+|                        | - Configures LLM settings.                                                             |
+|                        | - Fetches appropriate responses.                                                       |
+| End                    | - Indicates the end of the process.                                                    |
+
 ## Installation
 
 1. **Clone the repository:**
