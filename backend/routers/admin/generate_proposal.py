@@ -59,12 +59,13 @@ prompt=ChatPromptTemplate.from_template(
 
     """
 )
-summary=summarize_pdf("all_documents/")
-texts=get_user_texts()
-chain=LLMChain(llm=chat,prompt=prompt)
-md=chain.run({"user_queries":texts,"existing_proposal":summary})
-html=markdown_to_html_file(md)
-print(md)
+if __name__ == "__main__":
+    summary = summarize_pdf("all_documents/")
+    texts = get_user_texts()
+    chain = LLMChain(llm=chat, prompt=prompt)
+    md = chain.run({"user_queries": texts, "existing_proposal": summary})
+    html = markdown_to_html_file(md)
+    print(md)
 
-with open("all_documents/proposal.html", 'w', encoding='utf-8') as file:
-    file.write(html)
+    with open("all_documents/proposal.html", 'w', encoding='utf-8') as file:
+        file.write(html)
