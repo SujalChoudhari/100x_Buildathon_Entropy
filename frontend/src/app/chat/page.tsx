@@ -85,6 +85,9 @@ function page() {
 
           fill="#0099ff"
         />
+        <div className='flex justify-center py-4'>
+          <h1 className='text-5xl leading-relaxed tracking-wider font-extrabold'>AI Chat</h1>
+        </div>
         <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
         <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
       </div>
