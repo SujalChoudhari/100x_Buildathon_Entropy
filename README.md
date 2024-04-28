@@ -58,6 +58,7 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 |                        | - Fetches appropriate responses.                                                       |
 | End                    | - Indicates the end of the process.                                                    |
 
+
 ## Installation
 
 1. **Clone the repository:**
@@ -116,6 +117,8 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 - username: team
 - email: team@example.com
 - password: pass
+
+
 
 
 ## API Documentation
