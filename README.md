@@ -117,8 +117,16 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 - email: team@example.com
 - password: pass
 
+- Video link - https://youtu.be/L3zW_n1QM-U
+- Audio - <audio controls src="c:/Users/Lenovo/Downloads/1714278548949-d125fc71-cd30-4b1f-8ea7-d917f0464fc9.wav" title="Title"></audio>
 
-
+- Images 
+![alt text](<Screenshot 2024-04-28 223345.png>)
+![alt text](<Screenshot 2024-04-28 223410.png>)
+![alt text](<Screenshot 2024-04-28 223637.png>)
+![alt text](<Screenshot 2024-04-28 223842.png>)
+![alt text](<Screenshot 2024-04-28 223859.png>)
+![alt text](<Screenshot 2024-04-28 223918.png>)
 
 ## API Documentation
 
