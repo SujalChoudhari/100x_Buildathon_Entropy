@@ -12,7 +12,7 @@ export function VoiceCall() {
 
   const mobileRef = useRef<HTMLInputElement>(null);
   const templateRef = useRef<HTMLTextAreaElement>(null);
-  const [summary, setSummary] = useState<any>({});
+  const [summary, setSummary] = useState<any>(undefined);
   const callUser = async () => {
     const template = templateRef.current?.value;
     const mobile = mobileRef.current?.value;
@@ -41,13 +41,13 @@ export function VoiceCall() {
   }
 
   const getSummary = async () => {
-    toast.loading("Fetching Summary...");
+    const toastId = toast.loading("Fetching Summary...");
     const res = await axios.get("http://localhost:8000/admin/get_last_summary", {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
       }
     })
-
+    toast.dismiss(toastId);
     toast.success("Summary Fetched");
     setSummary(res.data);
   }
@@ -66,10 +66,7 @@ export function VoiceCall() {
 
           </div>
           <div className="flex items-center justify-between">
-            {/* <span className="text-gray-500 dark:text-gray-400">
-              Total mobile numbers:
-              <span className="font-medium">0</span>
-            </span> */}
+
           </div>
           <div className="grid grid-cols-[1fr_auto] items-center gap-2">
             <Textarea ref={templateRef} className="w-full text-lg" placeholder="Enter prompt" rows={10}>
@@ -82,28 +79,31 @@ export function VoiceCall() {
 
           </div>
           <button onClick={() => { callUser() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-            <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span>
-            <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span>
             Give a call
           </button>
         </div>
 
-        <div className="mt-8 space-y-2">
-          <h1 className="text-3xl mt-8 font-bold text-gray-900 dark:text-gray-100">Latest Call Summary</h1>
+        <div className="mt-16 space-y-2">
+          <h1 className="text-3xl mt-32 font-bold text-gray-900 dark:text-gray-100">Latest Call Summary</h1>
           <p className="text-gray-500 dark:text-gray-400">Last call summary will be shown here. (Read only)</p>
         </div>
-        <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-          Get Last Call Details
-        </button>
+        {!summary && <>
+          <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+            Get Last Call Details
+          </button></>}
 
-        <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} - {summary?.customer?.number}</h1>
-        <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-          <Link href={summary?.recordingUrl || ""}>
-            Download the recording of the call
-          </Link>
-        </button>
-        <Textarea readOnly className="text-lg " placeholder="Enter prompt" rows={10} value={summary?.summary}></Textarea>
-        <Textarea readOnly className="text-lg " placeholder="Enter prompt" rows={10} value={summary?.transcript}></Textarea>
+        {summary && <>
+          <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} - {summary?.customer?.number}</h1>
+          <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+            <Link href={summary?.recordingUrl || ""}>
+              Download the recording of the call
+            </Link>
+          </button>
+          <h1 className="text-2xl mt-16 font-bold text-gray-900 dark:text-gray-100">Summary</h1>
+          <Textarea readOnly className="text-lg " placeholder="Enter prompt" rows={10} value={summary?.summary}></Textarea>
+          <h1 className="text-2xl mt-16 font-bold text-gray-900 dark:text-gray-100">Transcript</h1>
+          <Textarea readOnly className="text-lg " placeholder="Enter prompt" rows={10} value={summary?.transcript}></Textarea>
+        </>}
       </div>
 
     </main>

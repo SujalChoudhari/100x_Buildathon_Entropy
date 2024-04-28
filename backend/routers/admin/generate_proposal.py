@@ -17,8 +17,14 @@ os.environ["LANGCHAIN_TRACING_V2"]="true"
 os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
 chat = ChatGroq(temperature=0, model_name="Llama3-8b-8192")
 def generate_proposal():
+    files = os.listdir("./input_documents")
+    if len(files) == 0:
+        print("No files found in input_documents folder.")
+        return {"message": "No files found in input_documents folder."}
+
     # Get the user's texts
     texts = get_user_texts()
+
 
     # Get the summary of the existing proposal
     summary = summarize_pdf("input_documents/")
@@ -51,6 +57,8 @@ def generate_proposal():
             f.write(response.content)
     else:
         print(f"Conversion to pdf failed with status code {response.status_code}")
+
+    return {"message": "Proposal generated successfully."}
 
 def summarize_pdf(path):
     loader = PyPDFDirectoryLoader(path)
