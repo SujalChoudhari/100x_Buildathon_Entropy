@@ -1,6 +1,7 @@
 import dotenv
 dotenv.load_dotenv()
-import os
+import os,json
+from utils.analytics import analytics_summary
 connection=os.getenv("CONNECTION_STRING")
 from pymongo import MongoClient
 
@@ -18,6 +19,6 @@ def get_analytics():
     documents = collection.find()
 
     # Convert the documents to a list and return it
-    return list(documents)
+    return analytics_summary
 
-print(get_analytics())
+# print(get_analytics())

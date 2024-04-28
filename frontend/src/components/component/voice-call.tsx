@@ -91,7 +91,7 @@ export function VoiceCall() {
           Get Last Call Details 
         </button>
         
-        <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer.name} - {summary?.customer.number}</h1>
+        <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} - {summary?.customer?.number}</h1>
         <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
           <Link href={summary?.recordingUrl || ""}>
             Download the recording of the call
