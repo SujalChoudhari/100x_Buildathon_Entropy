@@ -47,10 +47,11 @@ def generate_proposal():
     response = requests.post("https://md-to-pdf.fly.dev", data={"markdown": md})
     if response.status_code == 200:
         # Save the PDF
-        with open('input_documents/output.pdf', 'wb') as f:
+        with open('all_documents/proposal.pdf', 'wb') as f:
             f.write(response.content)
     else:
-        print(f"Request failed with status code {response.status_code}")
+        print(f"Conversion to pdf failed with status code {response.status_code}")
+
 def summarize_pdf(path):
     loader = PyPDFDirectoryLoader(path)
     docs = loader.load_and_split()
