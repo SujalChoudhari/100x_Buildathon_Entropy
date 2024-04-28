@@ -134,14 +134,6 @@ https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/85174767/d1cbf5
 ![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223859.png?raw=true)
 ![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223918.png?raw=true)
 
-![alt text](resources/Screenshot 2024-04-28 223637.png)
-
-![alt text](resources/Screenshot 2024-04-28 223842.png)
-
-![alt text](resources/Screenshot 2024-04-28 223859.png)
-
-![alt text](resources/Screenshot 2024-04-28 223918.png)
-
 
 ## API Documentation
 
