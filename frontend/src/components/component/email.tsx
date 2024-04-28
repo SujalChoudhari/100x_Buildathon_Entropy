@@ -26,7 +26,7 @@ export function EmailPage() {
       //   -d '[
       // ]'
 
-      toast.loading("Sending Email...");
+      const toasid = toast.loading("Sending Email...");
       const res = await axios.post(
         "http://localhost:8000/admin/send_bulk_email"
         + `?template=${encodeURIComponent(template || "")}`,
@@ -37,6 +37,7 @@ export function EmailPage() {
           "Content-Type": "application/json",
         }
       })
+      toast.dismiss(toasid);
       toast.success("Email(s) Sent");
       console.log('API call successful:', res);
     } catch (error) {

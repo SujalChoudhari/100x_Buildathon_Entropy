@@ -74,7 +74,7 @@ async def get_all_docs(_: str = Depends(is_admin)):
 async def send_bulk_email(
     template: str, email_list: List[str], _: str = Depends(is_admin)
 ):
-    send_mails(template, email_list)
+    return send_mails(template, email_list)
 
 
 class CallRequest(BaseModel):
