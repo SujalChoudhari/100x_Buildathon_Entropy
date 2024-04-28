@@ -34,11 +34,12 @@ Architechture:
    ```sh
    git clone https://github.com/SujalChoudhari/100x_Buildathon_Entropy.git
    
-2. **Navigate into the frontend directory:**
+2. **Run the frontend:**
 
    ```sh
    cd frontend
-3. **Navigate into the backend directory:**
+   npm install
+3. **Run the backend:**
 
       ```sh
    cd backend
