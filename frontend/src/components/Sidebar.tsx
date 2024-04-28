@@ -1,7 +1,8 @@
 "use client";
 
-import { BadgePercent, LogOut } from "lucide-react";
+import { BadgePercent, LogOut, StarIcon, Voicemail } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PropsWithChildren, useState } from "react";
 import { FaSalesforce } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
@@ -11,10 +12,12 @@ import {
   LuBuilding2,
   LuGalleryVertical,
   LuInbox,
+  LuMailSearch,
   LuSettings,
   LuUsers,
+  LuVoicemail,
 } from "react-icons/lu";
-import { TbChevronLeft, TbDirection } from "react-icons/tb";
+import { TbChevronLeft, TbDirection, TbGraph, TbGraphFilled } from "react-icons/tb";
 
 type SidebarItemProps = {
   isCollapsed: boolean;
@@ -30,6 +33,7 @@ export const SidebarItem = ({
   isCollapsed,
   className = "",
 }: PropsWithChildren<SidebarItemProps>) => {
+
   return (
     <div className={[`flex items-center gap-2`, className].join(" ")}>
       <div className="size-[16px] shrink-0">{leftSlot}</div>
@@ -48,7 +52,7 @@ export const SidebarItem = ({
 
 export const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-
+  const router = useRouter();
   return (
     <aside
       className={[
@@ -62,11 +66,11 @@ export const Sidebar = () => {
             isCollapsed={isCollapsed}
             className="px-2 py-1 border border-neutral-200 rounded-md"
             leftSlot={
-                <BadgePercent className="size-4 rounded-md"/>
+              <TbGraph className="size-4 rounded-md" />
             }
-            rightSlot={<TbDirection className="text-xl opacity-50" />}
+          // rightSlot={<StarIcon className="text-xl opacity-50" />}
           >
-            <span className="text-sm font-medium">Sales team</span>
+            <span className="text-sm font-medium">Team Dashboard</span>
           </SidebarItem>
           <div className="flex justify-end">
             <button
@@ -82,58 +86,76 @@ export const Sidebar = () => {
             </button>
           </div>
           <div className="flex flex-col gap-2">
-            <SidebarItem
+            {/* <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 border border-neutral-200 rounded-md bg-white"
               leftSlot={<LuBarChart4 />}
             >
               <span className="text-sm font-medium">Dashboard</span>
-            </SidebarItem>
-           
+            </SidebarItem> */}
+
           </div>
           <div className="py-4">
             <hr />
           </div>
           <div className="flex flex-col gap-2">
-          <Link href="/dashboard/pdf">
-            <SidebarItem
-              isCollapsed={isCollapsed}
-              className="px-2 py-1 opacity-70"
-              leftSlot={<FaFilePdf />}
-            >
-              <span className="text-sm font-medium">PDF Injestion</span>
-            </SidebarItem>
+            <Link href="/dashboard/pdf">
+              <SidebarItem
+                isCollapsed={isCollapsed}
+                className="px-2 py-1 opacity-70"
+                leftSlot={<FaFilePdf />}
+              >
+                <span className="text-sm font-medium">Update Documents</span>
+              </SidebarItem>
             </Link>
             <Link href="/dashboard">
-            <SidebarItem
-              isCollapsed={isCollapsed}
-              className="px-2 py-1 opacity-70"
-              leftSlot={<GrAnalytics />}
-            >
-              <span className="text-sm font-medium">Analytics</span>
-            </SidebarItem>
+              <SidebarItem
+                isCollapsed={isCollapsed}
+                className="px-2 py-1 opacity-70"
+                leftSlot={<GrAnalytics />}
+              >
+                <span className="text-sm font-medium">Analytics</span>
+              </SidebarItem>
             </Link>
             <Link href="/chat">
-            <SidebarItem
-              isCollapsed={isCollapsed}
-              className="px-2 py-1 opacity-70"
-              leftSlot={<LuUsers />}
-            >
-              <span className="text-sm font-medium">Sales Chatbot</span>
-            </SidebarItem>
+              <SidebarItem
+                isCollapsed={isCollapsed}
+                className="px-2 py-1 opacity-70"
+                leftSlot={<LuUsers />}
+              >
+                <span className="text-sm font-medium">Sales Chatbot</span>
+              </SidebarItem>
+            </Link>
+            <Link href="/dashboard/voice">
+              <SidebarItem
+                isCollapsed={isCollapsed}
+                className="px-2 py-1 opacity-70"
+                leftSlot={<LuVoicemail />}
+              >
+                <span className="text-sm font-medium">Agent Calls</span>
+              </SidebarItem>
+            </Link>
+            <Link href="/dashboard/email">
+              <SidebarItem
+                isCollapsed={isCollapsed}
+                className="px-2 py-1 opacity-70"
+                leftSlot={<LuMailSearch />}
+              >
+                <span className="text-sm font-medium">Mass Mail</span>
+              </SidebarItem>
             </Link>
           </div>
         </div>
-        
-            <SidebarItem
-            isCollapsed={isCollapsed}
-            className="px-2 py-1 opacity-70"
-            leftSlot={<LogOut className="size-4" />}
-            >
-            <span className="text-sm font-medium">Log Out</span>
-            </SidebarItem>
-            
-        </div>
-        </aside>
-    );
-    };
+
+        <SidebarItem
+          isCollapsed={isCollapsed}
+          className="px-2 py-1 opacity-70"
+          leftSlot={<LogOut className="size-4" />}
+        >
+          <button className="text-sm font-medium" onClick={() => { router.push("/login"); localStorage.removeItem("accessToken") }}>Log Out</button>
+        </SidebarItem>
+
+      </div>
+    </aside>
+  );
+};
