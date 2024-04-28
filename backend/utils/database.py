@@ -21,6 +21,10 @@ class Database:
         # Return only the last 'limit' sessions
         return user_sessions[-limit:]
     
+    def insert_call_chats(self, messages):
+        self.chats.insert_one(messages)
+
+
     def get_all_proposals(self):
         proposal_collection = self.db['proposal']
         proposals = proposal_collection.find()
