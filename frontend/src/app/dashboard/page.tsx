@@ -34,15 +34,13 @@ const Page = () => {
       }
       // cathc unauthorized error
       catch (error: any) {
-        if (error.response.status === 401) {
+        if (error?.response?.status === 401) {
           console.log("Unauthorized error")
           router.push('/login')
+        }else {
+          toast.error("Cannot fetch data")
         }
       }
-
-
-
-
     }
 
     loadAnalytics()
