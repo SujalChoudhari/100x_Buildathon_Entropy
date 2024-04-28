@@ -36,19 +36,19 @@ async def selected_document_list(filenames: List[str], _: str = Depends(is_admin
     copy_files_if_exist(filenames)
 
 # ingest the pdfs
-@router.post("/ingest")
+@router.get("/ingest")
 async def ingest_pdfs(
-    current_user: dict = Depends(get_current_user), _: str = Depends(is_admin)
+     _: str = Depends(is_admin)
 ):
-    await ingest(current_user)
+    await ingest("current_user")
     return {"message": "Ingested", "status": "Done"}
 
 
 @router.get("/generate_proposal")
 async def generate_proposal(
-    current_user: dict = Depends(get_current_user), _: str = Depends(is_admin)
+    _: str = Depends(is_admin)
 ):
-    generate_proposal(current_user)
+    generate_proposal("current_user")
     pass
 
 @router.get("/get_selected_docs")

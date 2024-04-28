@@ -59,3 +59,27 @@
       @apply bg-background text-foreground;
     }
   }
+
+
+.react-kanban-card-adder-button {
+  display: none;
+}
+
+/* 
+Classes to customise KanBan
+react-kanban-board
+react-kanban-card
+react-kanban-card-skeleton
+react-kanban-card--dragging
+react-kanban-card__description
+react-kanban-card__title
+react-kanban-column
+react-kanban-card-adder-form
+react-kanban-card-adder-button
+react-kanban-card-adder-form__title
+react-kanban-card-adder-form__description
+react-kanban-card-adder-form__button
+react-kanban-column-header
+react-kanban-column-header__button
+react-kanban-column-adder-button
+ */

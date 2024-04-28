@@ -65,23 +65,21 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
                 className="[background:radial-gradient(125%_125%_at_50%_10%,#ffffff_40%,#75edff_100%)] p-2.5 h-[150px] min-h-[150px] items-center flex flex-col rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
             >
 
-                <textarea
+                <p
                     className="
-        flex-grow
-        w-full resize-none border-none rounded bg-transparent text-black focus:outline-none
+         border-none rounded bg-transparent text-black focus:outline-none
         "
-                    value={task.content}
-                    autoFocus
-                    placeholder="Task content here"
-                    onBlur={toggleEditMode}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter" && e.shiftKey) {
-                            toggleEditMode();
-                        }
-                    }}
-                    onChange={(e) => updateTask(task.id, e.target.value)}
-                />
-                <div className="flex  flex-end gap-2">
+                    // onBlur={toggleEditMode}
+                    // onKeyDown={(e) => {
+                    //     if (e.key === "Enter" && e.shiftKey) {
+                    //         toggleEditMode();
+                    //     }
+                    // }}
+                    // onChange={(e) => updateTask(task.id, e.target.value)}
+                >
+                    {task.content}
+                </p>
+                {/* <div className="flex  flex-end gap-2">
                     <div>
                         <Avatar>
                             <AvatarImage src={task.userpfp} />
@@ -93,7 +91,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
                         <div className="mt-2 text-xs text-red-500">{task.role}</div>
                         <div className="text-sm">{task.userName}</div>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

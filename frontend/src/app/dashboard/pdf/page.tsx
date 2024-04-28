@@ -16,7 +16,11 @@ import { Label } from '@/components/ui/label';
 import { UploadCloudIcon } from 'lucide-react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
-import KanbanBoard from '@/components/KanbanBoard'
+// import KanbanBoard from '@/components/KanbanBoard'
+import { ControlledBoard, moveCard, KanbanBoard, OnDragEndNotification, Card } from '@caldwell619/react-kanban'
+import '@caldwell619/react-kanban/dist/styles.css' // import here for "builtin" styles
+import { useRouter } from 'next/navigation';
+
 
 type Pdf = {
     id: string;
@@ -25,10 +29,29 @@ type Pdf = {
 }
 
 function PDF() {
-    const [newPDFs, setNewPDFs] = useState<File[]>([]);
 
+    const initial: KanbanBoard<Card> = {
+        columns: [
+            {
+                id: 1,
+                title: 'All Files',
+                cards: [
+                ]
+            },
+            {
+                id: 2,
+                title: 'Selected PDFs',
+                cards: [
+                ]
+            },
+
+        ]
+    }
+    const [newPDFs, setNewPDFs] = useState<File[]>([]);
+    const [board, setBoard] = useState<KanbanBoard<Card>>(initial);
     const [allPdfs, setAllPdfs] = useState<string[]>([]);
     const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
+    const router = useRouter();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -36,6 +59,21 @@ function PDF() {
             setNewPDFs((prevPDFs) => [...prevPDFs, ...files]); // Add to the existing File array
         }
     };
+
+    const handleCardMove: OnDragEndNotification<Card> = (_card, source, destination) => {
+        if (source?.fromColumnId == destination?.toColumnId) {
+            return;
+        }
+        if (_card.title?.endsWith(".pdf")) {
+            setBoard((currentBoard) => {
+                return moveCard(currentBoard, source, destination)
+            })
+
+        }
+        else {
+            alert(`Only PDF files are allowed to be selected. ${_card.title} is not a PDF file.`);
+        }
+    }
 
 
     const uploadToCloud = async () => {
@@ -67,13 +105,9 @@ function PDF() {
         }
     };
 
-    const updateSelectedOnCloud = async () => {
-        if (!selectedPdfs || selectedPdfs.length === 0) {
-            console.warn("No documents to update.");
-            return;
-        }
-
+    const updateSelectedOnCloud = async (selectedPdfs: string[]) => {
         try {
+            console.log(selectedPdfs);
             const response = await axios.post("http://localhost:8000/admin/update_selected_docs", selectedPdfs, {
                 headers: {
                     "Content-Type": "application/json", // Proper content type for JSON
@@ -98,23 +132,93 @@ function PDF() {
 
 
     const updateAllDocs = async () => {
-        const response = await axios.get("http://localhost:8000/admin/get_all_docs", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        try {
+            const response = await axios.get("http://localhost:8000/admin/get_all_docs", {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                }
+            });
+            setAllPdfs(response.data);
+            console.log(response.data);
+            // unauthorized error
+        } catch (error: any) {
+            if (error.response.status === 401) {
+                console.log("Unauthorized error")
+                router.push('/login')
             }
+        }
+    }
+
+    const updateBoardBasedOnCards = () => {
+        setBoard(currentBoard => {
+            currentBoard.columns[1].cards = [
+
+            ]
+            selectedPdfs.map((file: any, index: number) => {
+                currentBoard.columns[1].cards.push({
+                    id: index,
+                    title: file,
+                    description: "Using file, Move to all Files to remove it"
+                })
+
+            })
+            return currentBoard;
         });
-        setAllPdfs(response.data);
-        console.log(response.data);
+
+        // all pdf
+        setBoard(currentBoard => {
+            currentBoard.columns[0].cards = [
+
+            ]
+            allPdfs.map((file: any, index: number) => {
+                if (!selectedPdfs.includes(file)) {
+                    currentBoard.columns[0].cards.push({
+                        id: index,
+                        title: file,
+                        description: "Unused file, Move to selected to use it"
+                    })
+                }
+            })
+            return currentBoard;
+        });
+    }
+
+    const ingest = async () => {
+        try {
+            const response = await axios.get("http://localhost:8000/admin/ingest", {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                }
+            });
+            console.log(response.data);
+            // unauthorized error
+        } catch (error: any) {
+            if (error.response?.status === 401) {
+                console.log("Unauthorized error")
+                router.push('/login')
+            }
+        }
     }
 
     const updateSelectedDocs = async () => {
-        const response = await axios.get("http://localhost:8000/admin/get_selected_docs", {
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        try {
+            const response = await axios.get("http://localhost:8000/admin/get_selected_docs", {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                }
+            });
+            setSelectedPdfs(response.data);
+            console.log(response.data);
+
+
+        }
+        // unauthorized error
+        catch (error: any) {
+            if (error.response.status === 401) {
+                console.log("Unauthorized error")
+                router.push('/login')
             }
-        });
-        setSelectedPdfs(response.data);
-        console.log(response.data);
+        }
     }
 
     useEffect(() => {
@@ -124,14 +228,33 @@ function PDF() {
         updateSelectedDocs();
     }, [])
 
+    useEffect(() => {
+        console.log(board);
+        const newList: string[] = []
+        board.columns[1].cards.map((card: any) => {
+            return newList.push(card.title)
+        })
+        console.log(newList)
+        setSelectedPdfs(newList);
+        updateSelectedOnCloud(newList);
+    }, [board])
+
+
+    useEffect(() => {
+        updateBoardBasedOnCards();
+    }, [allPdfs, selectedPdfs])
+
     return (
         <>
-            <div className="flex bg-background flex-col items-center rounded-xl justify-center max-w-[500px] w-full mx-auto m-10">
+            <div className="flex select-none bg-background flex-col items-center rounded-xl justify-center max-w-[500px] w-full mx-auto m-10">
                 <div className="max-w-[500px] w-full border border-slate-500 flex items-center bg-[#f0f0f0] flex-col p-5 rounded-xl">
                     <Label htmlFor="file-upload" className="bg-white rounded-xl relative flex flex-col items-center justify-center w-full p-6 cursor-pointer">
                         <div className="text-center">
                             <div className="max-w-min rounded-xl p-2 mx-auto border border-slate-300 ">
                                 <UploadCloudIcon size={20} />
+                                <p className='hidden'>
+                                    {selectedPdfs}
+                                </p>
                             </div>
                             <p className="mt-2 text-xs">
                                 <span className="font-semibold">Drag & Drop multiple Files</span>
@@ -147,7 +270,7 @@ function PDF() {
                     </Label>
                     <Input id="file-upload" className="hidden" type="file" accept="application/pdf" multiple onChange={handleFileChange} />
 
-                    
+
                     <button onClick={() => { uploadToCloud() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                         <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span>
                         <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span>
@@ -155,46 +278,20 @@ function PDF() {
                     </button>
                 </div>
             </div>
-            <Table>
-                <TableCaption>A list of your Selected</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[300px]">Pdfs</TableHead>
-                        {/* <TableHead>Size</TableHead> */}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {selectedPdfs.map((pdf) => (
-                        <TableRow key={pdf}>
-                            <TableCell className="font-medium">{pdf}</TableCell>
-                            {/* <TableCell>{pdf.size} bytes</TableCell> */}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            <Table>
-                <TableCaption>A list of your recent Pdfs</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[300px]">Pdfs</TableHead>
-                        {/* <TableHead>Size</TableHead> */}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {allPdfs.map((pdf) => (
-                        <TableRow key={pdf}>
-                            <TableCell className="font-medium">{pdf}</TableCell>
-                            {/* <TableCell>{pdf.size} bytes</TableCell> */}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
 
-     <div  id='kanban' className='w-[80vw] mt-24'>
-      
-      <h1 className=' ml-14 text-lg font-extrabold'>Pdfs Board</h1>
-      <KanbanBoard />
-    </div>
+
+            <div id='kanban' className='w-[80vw] mt-24 select-none'>
+
+                <h1 className=' ml-14 text-lg font-extrabold'>Pdfs Board</h1>
+                <button onClick={() => { ingest() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+                    {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
+                    {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
+                    Save Changes
+                </button>
+                {/* <KanbanBoard /> */}
+                <ControlledBoard onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
+
+            </div>
         </>
     );
 }
