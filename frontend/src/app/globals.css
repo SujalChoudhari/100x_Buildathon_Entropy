@@ -1,8 +1,8 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -51,11 +51,155 @@
 }
 
 
-  @layer base {
-    * {
-      @apply border-border;
-    }
-    body {
-      @apply bg-background text-foreground;
-    }
+@layer base {
+  * {
+    @apply border-border;
   }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+.react-kanban-card-adder-button {
+  display: none;
+}
+
+.react-kanban-column
+{
+  background-color: #00192e8e !important;
+}
+
+.react-kanban-column-header
+{
+  color: white;
+}
+
+.react-kanban-card{
+  background-color: #00192e8e !important;
+  color: #ffffffdd;
+  border: 1px solid #00031f;
+  border-radius: 24px;
+}
+
+.react-kanban-card-adder-form__button
+{
+  display: none !important;
+}
+
+/* 
+Classes to customise KanBan
+react-kanban-board
+react-kanban-card
+react-kanban-card-skeleton
+react-kanban-card--dragging
+react-kanban-card__description
+react-kanban-card__title
+react-kanban-column
+react-kanban-card-adder-form
+react-kanban-card-adder-button
+react-kanban-card-adder-form__title
+react-kanban-card-adder-form__description
+react-kanban-card-adder-form__button
+react-kanban-column-header
+react-kanban-column-header__button
+react-kanban-column-adder-button
+ */
+
+#content {
+
+  background-color: #4e6bff28;
+  /* Light gray background */
+  padding: 20px;
+  /* Spacing around content */
+  border-radius: 8px;
+  /* Rounded corners */
+  font-family: Arial, sans-serif;
+  /* Font style */
+  font-size: 16px;
+  /* Base text size */
+  line-height: 1.5;
+  /* Line spacing */
+  color: #333;
+  /* Text color */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Soft shadow */
+}
+
+#content * {
+  color: #d9efff;
+}
+
+/* Headings within #content */
+#content h1 {
+  font-size: 2em;
+  /* Larger size for main headings */
+  font-weight: bold;
+  /* Bold text */
+  color: #ffffff;
+  /* Darker shade */
+}
+
+#content h2 {
+  font-size: 1.75em;
+  /* Smaller than h1 */
+  font-weight: bold;
+  /* Bold text */
+  color: #8ca7ff;
+  /* Dark gray */
+}
+
+#content h3 {
+  font-size: 1.5em;
+  /* Even smaller */
+  font-weight: bold;
+  /* Bold text */
+  color: #8ca7ff;
+  /* Slightly lighter gray */
+}
+
+/* Links within #content */
+#content a {
+  color: #4dff79;
+  /* Blue links */
+  text-decoration: none;
+  /* No underline by default */
+}
+
+#content a:hover {
+  text-decoration: underline;
+  /* Underline on hover */
+}
+
+/* Tables within #content */
+#content table {
+  border-collapse: collapse;
+  /* Merge border lines */
+  width: 100%;
+  /* Use full width of parent */
+  margin-top: 10px;
+  /* Space before tables */
+}
+
+#content th,
+#content td {
+  border: 1px solid #939393;
+  /* Light gray border */
+  padding: 10px;
+  /* Padding for cells */
+  text-align: left;
+  /* Left-align text */
+}
+
+#content th {
+  background-color: #387eff30;
+  /* Light gray for headers */
+  font-weight: bold;
+  /* Bold text for headers */
+}
+
+#content tr:nth-child(even) {
+  background-color: #5a7bffa5;
+  /* Alternating row colors */
+}

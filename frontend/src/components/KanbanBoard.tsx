@@ -54,7 +54,6 @@ function KanbanBoard() {
       className="
         m-auto
         flex
-       
         w-full
         items-center
         mt-10

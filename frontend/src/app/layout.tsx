@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"
+import  { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >{children}
+          <Toaster gutter={8} toastOptions={{
+            position: "bottom-right",
+           
+            style: {
+              background: "#33336677",
+              color:"white",
+              marginBottom: "24px",
+              marginRight: "24px"
+            }
+          }} />
+
+        </ThemeProvider>
+      </body>
+
     </html>
   );
 }
