@@ -50,7 +50,7 @@ Architechture:
 
 1. **Run the frontend:**
    
-   After installation navigate to the frontend directory.
+   - After installation navigate to the frontend directory.
    Run the following command to start the application:
 
     ```sh
@@ -59,8 +59,8 @@ Architechture:
     Open your web browser and go to http://localhost:3000 to access the application
 2. **Run the backend:**
    
-   After installation navigate to the backend directory.
-   Locate the `.env.example` file.
+   - After installation navigate to the backend directory.
+   - Locate the `.env.example` file.
    - Rename `.env.example` to `.env`.
    - Open the `.env` file in a text editor and fill in the required values for the variables.
 
