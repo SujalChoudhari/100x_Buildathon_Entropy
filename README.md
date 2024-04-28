@@ -67,12 +67,6 @@ Architechture:
 
     ```sh
     python main.py
-    ``
-     
-
-   
-
-   
 
 ## API Documentation
 
