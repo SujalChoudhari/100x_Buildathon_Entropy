@@ -5,7 +5,7 @@ from langchain_groq.chat_models import ChatGroq
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 
-from database import Database
+from utils.database import Database
 
 class ChatBot:
     def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
@@ -16,12 +16,13 @@ class ChatBot:
         self.prompt = ChatPromptTemplate.from_template(
             template="""You are Cleo, an AI sales assistant whose primary purpose is to increase the company sales. You are currently in a 1-on-1 live call with a potential customer.Greet the customer only once.Do not repeat the greetings.
            .If u repeat your greetings or say the same sentences, the user will get annoyed and leave the call.
-           Do not repeat greetings.
            You can see if you have greeted the user by checking the previous conversation history.
+              ----------------------------------
              Do not be boring or too formal. Be friendly and engaging.
+              ----------------------------------
              Be friendly and engaging so that user stays on the call and listens to your proposals and buys the product.
-               Your goal is to discuss and promote relevant products based on the information provided below, using the company's proposals to guide your discussions. 
-            Only pitch the proposal that are relevant to the user's query.
+            Your goal is to discuss and promote relevant products based on the information provided below, using the company's proposals to guide your discussions. 
+            If user mentions a product, always pitch the proposal of that product to the user if it exists in the proposal matches to it.
             Always tell the cost of the product you are suggesting or the user is asking.
             Ensure to not pitch any irrelevant proposals to the user if user still hasnt mentioned what he wants to buy.
             If the user query matches any products, respond with the product details and try to pitch the proposal provided to you.
