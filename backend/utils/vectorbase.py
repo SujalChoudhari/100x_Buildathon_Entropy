@@ -8,10 +8,8 @@ from langchain.prompts import PromptTemplate
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.chains.question_answering import load_qa_chain
 from langchain.retrievers.multi_query import MultiQueryRetriever
-from langchain_openai import ChatOpenAI
 from langchain_groq.chat_models import ChatGroq
 from dotenv import load_dotenv
-import asyncio
 
 # Load environment variables
 load_dotenv()

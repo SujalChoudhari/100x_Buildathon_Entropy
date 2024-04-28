@@ -35,9 +35,9 @@ def generate_proposal():
     # Convert the proposal to HTML
     html = markdown_to_html_file(md)
 
-    # Save the proposal as a Markdown file
-    with open("all_documents/proposal.md", 'w', encoding='utf-8') as file:
-        file.write(md)
+    # # Save the proposal as a Markdown file
+    # with open("all_documents/proposal.md", 'w', encoding='utf-8') as file:
+    #     file.write(md)
 
     # Save the proposal as an HTML file
     with open("all_documents/proposal.html", 'w', encoding='utf-8') as file:
@@ -74,7 +74,7 @@ prompt=ChatPromptTemplate.from_template(
     The proposal should contain the following at minimum:
     1) Details about the Company
     2)Clients
-    3) Our Solution
+    3)Our Solution
     4)Benefits of us 
     5)Pricing 
     6)Timeline(optional)

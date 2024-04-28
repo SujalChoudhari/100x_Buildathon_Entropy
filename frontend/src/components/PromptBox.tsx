@@ -18,6 +18,7 @@ import { Button } from './ui/button';
 // import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Input } from './ui/input';
+import toast from 'react-hot-toast';
 
 function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }: { onSubmitPressed: any, animatePrompt: boolean, setAnimatePrompt: any, timeMs: any }) {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -37,13 +38,13 @@ function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }:
                     inputRef.current.value = transcript;
                     onSubmitClicked();
                 }
-                // toast.success("Voice Recognized")
+                toast.success("Voice Recognized")
             };
 
             recognition.onerror = (event: any) => {
                 console.error('Speech recognition error:', event.error);
                 setIsListening(false);
-                // toast.error(`Error: ${event.error}. Try moving to a quite place.`)
+                toast.error(`Error: ${event.error}. Try moving to a quite place.`)
             };
 
             recognition.onend = () => {
@@ -62,7 +63,6 @@ function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }:
         const curr = inputRef.current;
         if (curr && curr.value) {
             onSubmitPressed(curr.value ?? '');
-            // toast.success("Quering API")
             curr.value = '';
         }
     };
@@ -79,9 +79,9 @@ function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }:
                 <div className="bg-background space-y-4 flex flex-row items-center gap-2  justify-center border-t px-4  shadow-lg sm:rounded-xl sm:border md:py-4 ">
 
                     <div className='flex items-center gap-4 flex-col'>
-                       
-                        <button onClick={() => { setIsListening(!isListening); /*toast.success("Start Speaking") */ }} className='inline-flex h-12 animate-background-shine items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50'>
-                        <Mic size={15} />
+
+                        <button onClick={() => { setIsListening(!isListening); toast.success("Start Speaking") }} className='inline-flex h-12 animate-background-shine items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50'>
+                            <Mic size={15} />
                         </button>
 
 

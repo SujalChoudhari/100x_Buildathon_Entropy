@@ -53,8 +53,9 @@ function page() {
     const userInput = input.trim();
     try {
       toast.success("Sending Input...");
+      setChatMessages(prevMessages => [...prevMessages, userInput]);
       const response = await axios.post('http://localhost:8000/chat/response?query=' + encodeURIComponent(userInput));
-      setChatMessages(prevMessages => [...prevMessages, userInput, response.data.response]);
+      setChatMessages(prevMessages => [...prevMessages, response.data.response]);
       console.log(response.data);
 
       // Convert and speak the first 50 words of the response
