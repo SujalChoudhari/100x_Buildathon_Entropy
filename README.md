@@ -119,7 +119,7 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 
 ## Demo:
 - Video link - https://youtu.be/k3JLvRpqUhI
-- Audio - <audio controls src="c:/Users/Lenovo/Downloads/1714278548949-d125fc71-cd30-4b1f-8ea7-d917f0464fc9.wav" title="Title"></audio>
+- Audio - <audio controls src="1714278548949-d125fc71-cd30-4b1f-8ea7-d917f0464fc9.wav" title="Title"></audio>
 
 - Images 
 ![alt text](<Screenshot 2024-04-28 223345.png>)
