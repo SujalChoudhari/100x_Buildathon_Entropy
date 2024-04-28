@@ -49,7 +49,7 @@ class ChatBot:
         proposal=self.get_proposal()
         proposal_str = ' '.join(proposal) if isinstance(proposal, list) else proposal
         inputs = {
-            "text": text +"-----------------------------\n"+"------------\n Here is the current version of the proposal : \n"+proposal_str,
+            "text": text +"-----------------------------\n"+ "This is documents provided to you :\n"+document_data+"-------------------------\n"+"------------\n Here is the current version of the proposal : \n"+proposal_str,
             "chat_history": self.memory,
         }
         ai_response = self.chain(inputs)
