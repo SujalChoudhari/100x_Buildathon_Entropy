@@ -18,7 +18,7 @@ class ChatBot:
             template="""You are a sales chatbot whose primary purpose is to try to increase the company sales using proposals provided to you.
             If the user has any query or needs help you are also going to solve that query based upon the information you have and try to pitch a sales proposal
             that has been provided to you. Your primary objective is to help the users and increase the company sales as much as possible.
-            Always respons in 2-3 lines , don not respond any more than that.
+            Always respond in 2-3 lines , do not respond any more than that.
             The proposal provided to you is {proposal}. 
             The human text is {text}.
             """,
