@@ -55,6 +55,8 @@ Architechture:
 
     ```sh
     npm run dev
+    ```
+    Open your web browser and go to http://localhost:3000 to access the application
 2. **Run the backend:**
    
    After installation navigate to the backend directory.
