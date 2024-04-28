@@ -309,7 +309,7 @@ function PDF() {
 
                 <h1 className=' ml-14 text-lg font-extrabold text-white'>Pdfs Board</h1>
                 <h1 className=' ml-14 text-lg font-extrabold text-white'>Move HTML Proposals to (View Proposal) board to render below</h1>
-                <button onClick={() => { ingest() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+                <button onClick={() => { ingest() }} className="mt-4 mx-auto text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                     {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
                     {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
                     Save Changes
@@ -320,7 +320,7 @@ function PDF() {
 
                 {loadedHTML && <>
                     <div className='w-[80vw] mt-24 flex justify-center items-center flex-col'>
-                        <h1 className=' ml-14 text-3xl font-extrabold'>Loaded Proposals (View Only)</h1>
+                        <h1 className=' ml-14 text-3xl font-extrabold text-white'>Loaded Proposals (View Only)</h1>
                         <div id='content' className='w-[50vw] text-justify' dangerouslySetInnerHTML={{ __html: loadedHTML }} />
                     </div></>}
 
