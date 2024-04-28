@@ -35,8 +35,6 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
    Architechture Diagram
 ![WhatsApp Image 2024-04-28 at 10 49 01 PM](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/128281067/dce4d192-fb6a-4c67-b4a2-6821a36757c7)
 
-Certainly, here's a table format for the simplified breakdown:
-
 | Component            | Functionality                                                                        |
 |----------------------|--------------------------------------------------------------------------------------|
 | Admin Interface      | - Uploads embeddings to the database.                                                |
