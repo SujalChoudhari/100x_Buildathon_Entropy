@@ -19,16 +19,16 @@ export function EmailPage() {
 
     try {
       // curl -X 'POST' \
-      //   'http://localhost:8000/admin/send_bulk_email?template=HI' \
+      //   'https://one00x-buildathon-entropy.onrender.com/admin/send_bulk_email?template=HI' \
       //   -H 'accept: application/json' \
       //   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBleGFtcGxlLmNvbSIsImV4cCI6MTcxNDMwMjI4N30.e1EA9To-yZ0MU7980VN15NCUFbujjxOzMZiuXOjKMqQ' \
       //   -H 'Content-Type: application/json' \
       //   -d '[
       // ]'
 
-      toast.loading("Sending Email...");
+      const toasid = toast.loading("Sending Email...");
       const res = await axios.post(
-        "http://localhost:8000/admin/send_bulk_email"
+        "https://one00x-buildathon-entropy.onrender.com/admin/send_bulk_email"
         + `?template=${encodeURIComponent(template || "")}`,
         email?.split(","), {
         headers: {
@@ -37,6 +37,7 @@ export function EmailPage() {
           "Content-Type": "application/json",
         }
       })
+      toast.dismiss(toasid);
       toast.success("Email(s) Sent");
       console.log('API call successful:', res);
     } catch (error) {

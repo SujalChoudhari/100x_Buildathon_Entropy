@@ -71,7 +71,7 @@ function PDF() {
     const loadHTML = async (name: string) => {
         if (name == "") return;
         toast.success("Loading HTML Preview of " + name + "...");
-        const res = await axios.get("http://localhost:8000/admin/get_html_from_file?file_name=" + name, {
+        const res = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_html_from_file?file_name=" + name, {
             headers: {
                 Accept: "application/json",
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -122,7 +122,7 @@ function PDF() {
 
             try {
                 // Send a POST request for each file
-                const response = await axios.post("http://localhost:8000/admin/upload_pdf", formData, {
+                const response = await axios.post("https://one00x-buildathon-entropy.onrender.com/admin/upload_pdf", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "Accept": "application/json",
@@ -145,7 +145,7 @@ function PDF() {
     const updateSelectedOnCloud = async (selectedPdfs: string[]) => {
         try {
             console.log(selectedPdfs);
-            const response = await axios.post("http://localhost:8000/admin/update_selected_docs", selectedPdfs, {
+            const response = await axios.post("https://one00x-buildathon-entropy.onrender.com/admin/update_selected_docs", selectedPdfs, {
                 headers: {
                     "Content-Type": "application/json", // Proper content type for JSON
                     "Accept": "application/json", // Accepting JSON response
@@ -170,7 +170,7 @@ function PDF() {
 
     const updateAllDocs = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/admin/get_all_docs", {
+            const response = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_all_docs", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken"),
                 }
@@ -219,30 +219,46 @@ function PDF() {
         });
     }
 
-    const ingest = async () => {
-        try {
-            toast.success("Re Training Model. This will take some time...");
-            const response = await axios.get("http://localhost:8000/admin/ingest", {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    const ingest = () => {
+
+
+        // Create the Promise for the axios request
+        const ingestPromise = axios.get("https://one00x-buildathon-entropy.onrender.com/admin/ingest", {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            }
+        });
+
+        // Use toast.promise to display loading, success, and error messages
+        toast.promise(
+            ingestPromise,
+            {
+                loading: 'Re-training model. This might take a while...',
+                success: 'Model re-trained successfully!',
+                error: 'Error re-training model. Please try again.',
+            }
+        );
+
+        // Handle the Promise result with .then() and .catch()
+        ingestPromise
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                // Handle unauthorized error (401) specifically
+                if (error.response?.status === 401) {
+                    toast.error("Login needed. Redirecting...");
+                    console.log("Unauthorized error");
+                    router.push('/login'); // Redirect to login page
                 }
             });
-            toast.dismiss()
-            console.log(response.data);
-            toast.success("Model re-trained successfully");
-            // unauthorized error
-        } catch (error: any) {
-            if (error.response?.status === 401) {
-                toast.error("Login Needed. Redirecting...");
-                console.log("Unauthorized error")
-                router.push('/login')
-            }
-        }
-    }
 
+        // Return the Promise to maintain flexibility in chaining or external handling
+        return ingestPromise;
+    };
     const updateSelectedDocs = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/admin/get_selected_docs", {
+            const response = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_selected_docs", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken"),
                 }
@@ -320,13 +336,11 @@ function PDF() {
             </div>
 
 
-            <div id='kanban' className='w-[80vw] mt-24 select-none'>
+            <div id='kanban' className='w-[80vw] mt-32 select-none'>
 
-                <h1 className=' ml-14 text-lg font-extrabold text-white'>Pdfs Board</h1>
+                <h1 className=' ml-14 mt-16 text-3xl font-extrabold text-white'>Pdfs Board</h1>
                 <h1 className=' ml-14 text-lg font-extrabold text-white'>Move HTML Proposals to (View Proposal) board to render below</h1>
-                <button onClick={() => { ingest() }} className="mt-4 mx-auto text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-                    {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
-                    {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
+                <button onClick={() => { ingest() }} className="my-16 mx-auto text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                     Save Changes
                 </button>
                 {/* <KanbanBoard /> */}

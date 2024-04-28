@@ -17,6 +17,7 @@ from .upload import (
 from .ingest import ingest
 from .sendbulk import send_mails
 from .call import call, get_latest_summary
+from .generate_proposal import generate_proposal as generate_proposal_from_docs
 
 router = APIRouter(
     prefix="/admin",
@@ -55,8 +56,8 @@ async def ingest_pdfs(_: str = Depends(is_admin)):
 
 @router.get("/generate_proposal")
 async def generate_proposal(_: str = Depends(is_admin)):
-    generate_proposal("current_user")
-    pass
+    return generate_proposal_from_docs()
+
 
 
 @router.get("/get_selected_docs")
@@ -73,7 +74,7 @@ async def get_all_docs(_: str = Depends(is_admin)):
 async def send_bulk_email(
     template: str, email_list: List[str], _: str = Depends(is_admin)
 ):
-    send_mails(template, email_list)
+    return send_mails(template, email_list)
 
 
 class CallRequest(BaseModel):

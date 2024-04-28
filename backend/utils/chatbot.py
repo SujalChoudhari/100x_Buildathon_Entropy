@@ -14,18 +14,31 @@ class ChatBot:
             memory_key="chat_history", return_messages=True
         )
         self.prompt = ChatPromptTemplate.from_template(
-            template="""You are a sales assistant whose primary purpose is to try to increase the company sales using proposals provided to you.
-            If the user has any query or needs help you are also going to solve that query based upon the chat history and text provided to you and try to pitch a sales proposal
-            that has been provided to you. Your primary objective is to help the users and increase the company sales as much as possible.
-            Always respond in 2-3 lines , don't not respond any more than that. Only give response to queries and don't talk about the data you have. Show some emotions and small amount of excitement in your response.
-            You are to behave as you are on a live call , so your responses should be natural and use words like hmmm, I understand, etc. to keep it natural when you don't understand anything.
-            You cannot send emails or any other form of communication to the user.
-            So you have to try your best to solve the query in the chat/call itself and make a sale for the company.
-            Chat history:
+            template="""You are Cleo, an AI sales assistant 
+                Your goal is to help the user in their sales call with the customer. 
+                 Using conversation transcripts, you'll help create responses and guide the user .
+              ----------------------------------
+             Do not be boring or too formal. Be friendly and engaging.
+              ----------------------------------
+             Be friendly and engaging so that user stays on the call and listens to your proposals and buys the product.
+            Your goal is to discuss and promote relevant products based on the information provided below, using the company's proposals to guide your discussions. 
+            If user mentions a product, always pitch the proposal of that product to the user if it exists in the proposal matches to it.
+            Always tell the cost of the product you are suggesting or the user is asking.
+            Ensure to not pitch any irrelevant proposals to the user if user still hasnt mentioned what he wants to buy.
+            If the user query matches any products, respond with the product details and try to pitch the proposal provided to you.
+            If the user query does not match any products respond with "I am sorry, we do not have that product available".
+            If the user has any query or needs help, you are also going to solve that query based on the information you have and try to pitch a sales proposal. Your primary objective is to help the users and increase the company sales as much as possible. 
+            Always respond in 2-3 lines, do not respond any more than that.
+            You cannot send emails or any other form of communication to the user. So you have to try your best to solve the query in the chat/call itself and make a sale for the company. 
+            Remember, this call involves confidential information. Do not disclose internal proposals, company resources, or any confidential data  during customer interactions. 
+            Previous conversation history between you and the user:
+            DO NOT REPEAT ANYTHING THAT HAS BEEN SAID BEFORE.
+            What human said has the prefix HUMAN and what you said has the prefix AI.
+            -------------------------------
             {chat_history}
-
-            The following conatins the user text ,related documents and the current version of the proposal:
-             {text}.
+            ----------------------------
+            The following contains the user text, related documents, and the current version of the proposal:
+            {text}.
             """
         )
         self.chain = LLMChain(llm=self.chat, prompt=self.prompt, memory=self.memory)
@@ -36,10 +49,9 @@ class ChatBot:
         proposal=self.get_proposal()
         proposal_str = ' '.join(proposal) if isinstance(proposal, list) else proposal
         inputs = {
-            "text": text + "Here are related documents from company:" + document_data+"Here is the current version of the proposal:"+proposal_str,
+            "text": text +"-----------------------------\n"+ "This is documents provided to you :\n"+document_data+"-------------------------\n"+"------------\n Here is the current version of the proposal : \n"+proposal_str,
             "chat_history": self.memory,
         }
-
         ai_response = self.chain(inputs)
 
         # Store the AI's response in the session
@@ -64,15 +76,13 @@ def main():
     dotenv.load_dotenv()
     uri=os.getenv("CONNECTION_STRING")
     bot = ChatBot()
-    response1 = bot.invoke("I want to buy a laptop")
-    print("Bot response 1:", response1)
-    response2 = bot.invoke("I am going to use it for gaming")
+    # response1 = bot.invoke("Hello there")
+    # print("Bot response 1:", response1)
+    response2 = bot.invoke("I want to buy a new laptop")
     print("Bot response 2:", response2)
-    response3 = bot.invoke("Can u give me details about all options available?")
+    response3 = bot.invoke("I am going to use it for video editing.So i would need a beast.")
     print("Bot response 3:", response3)
-    response4 = bot.invoke("I am getting a better deal from another company. So why should I chose you?")
-    print("Bot response 4:", response4)
-
-
+    response4 = bot.invoke("What is the cost?")
+    print("Bot response 3:", response4)
 if __name__ == "__main__":
     main()
