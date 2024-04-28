@@ -1,5 +1,23 @@
-from utils.analytics import analytics_summary
+import dotenv
+dotenv.load_dotenv()
+import os
+connection=os.getenv("CONNECTION_STRING")
+from pymongo import MongoClient
 
 def get_analytics():
+    # Create a client
+    client = MongoClient(connection)
 
-    return analytics_summary
+    # Connect to your database
+    db = client['entropy']
+
+    # Select your collection
+    collection = db['analytics_summary']
+
+    # Fetch all documents from the collection
+    documents = collection.find()
+
+    # Convert the documents to a list and return it
+    return list(documents)
+
+print(get_analytics())

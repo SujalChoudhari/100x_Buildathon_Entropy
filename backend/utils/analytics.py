@@ -1,6 +1,9 @@
 # Filtering key data to send to the frontend
 import uuid
-
+from pymongo import MongoClient
+import dotenv
+dotenv.load_dotenv()
+import os
 
 analytics_summary = {
     "averagePos": {
@@ -130,3 +133,9 @@ analytics_summary = {
         },
     ],
 }
+ 
+connection_string = os.getenv("CONNECTION_STRING")
+client = MongoClient(connection_string)
+db = client['entropy']
+collection = db['analytics_summary']
+collection.insert_one(analytics_summary)
