@@ -71,7 +71,7 @@ function PDF() {
     const loadHTML = async (name: string) => {
         if (name == "") return;
         toast.success("Loading HTML Preview of " + name + "...");
-        const res = await axios.get("http://localhost:8000/admin/get_html_from_file?file_name=" + name, {
+        const res = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_html_from_file?file_name=" + name, {
             headers: {
                 Accept: "application/json",
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -122,7 +122,7 @@ function PDF() {
 
             try {
                 // Send a POST request for each file
-                const response = await axios.post("http://localhost:8000/admin/upload_pdf", formData, {
+                const response = await axios.post("https://one00x-buildathon-entropy.onrender.com/admin/upload_pdf", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "Accept": "application/json",
@@ -145,7 +145,7 @@ function PDF() {
     const updateSelectedOnCloud = async (selectedPdfs: string[]) => {
         try {
             console.log(selectedPdfs);
-            const response = await axios.post("http://localhost:8000/admin/update_selected_docs", selectedPdfs, {
+            const response = await axios.post("https://one00x-buildathon-entropy.onrender.com/admin/update_selected_docs", selectedPdfs, {
                 headers: {
                     "Content-Type": "application/json", // Proper content type for JSON
                     "Accept": "application/json", // Accepting JSON response
@@ -170,7 +170,7 @@ function PDF() {
 
     const updateAllDocs = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/admin/get_all_docs", {
+            const response = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_all_docs", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken"),
                 }
@@ -223,7 +223,7 @@ function PDF() {
 
 
         // Create the Promise for the axios request
-        const ingestPromise = axios.get("http://localhost:8000/admin/ingest", {
+        const ingestPromise = axios.get("https://one00x-buildathon-entropy.onrender.com/admin/ingest", {
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             }
@@ -258,7 +258,7 @@ function PDF() {
     };
     const updateSelectedDocs = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/admin/get_selected_docs", {
+            const response = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_selected_docs", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken"),
                 }

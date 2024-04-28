@@ -91,7 +91,7 @@ const LogIn = () => {
     // @ts-ignore
     const password = passRef.current.value || '';
     try {
-      const response = await axios.post('http://localhost:8000/token',
+      const response = await axios.post('https://one00x-buildathon-entropy.onrender.com/token',
         {
           username: email, // form_data.username
           password: password  // form_data.password

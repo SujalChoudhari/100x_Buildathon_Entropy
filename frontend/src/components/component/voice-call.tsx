@@ -19,7 +19,7 @@ export function VoiceCall() {
     toast.loading("Calling...");
     try {
       const response = await axios.post(
-        "http://localhost:8000/admin/call",
+        "https://one00x-buildathon-entropy.onrender.com/admin/call",
         {
           mobile: mobile,
           template: template,
@@ -42,7 +42,7 @@ export function VoiceCall() {
 
   const getSummary = async () => {
     const toastId = toast.loading("Fetching Summary...");
-    const res = await axios.get("http://localhost:8000/admin/get_last_summary", {
+    const res = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/get_last_summary", {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
       }

@@ -23,7 +23,7 @@ const Page = () => {
   useEffect(() => {
     const loadAnalytics = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/admin/analytics", {
+        const response = await axios.get("https://one00x-buildathon-entropy.onrender.com/admin/analytics", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           }
@@ -48,7 +48,7 @@ const Page = () => {
 
   const generateProposal = () => {
     // Create the Promise for the axios request
-    const proposalPromise = axios.get("http://localhost:8000/admin/generate_proposal", {
+    const proposalPromise = axios.get("https://one00x-buildathon-entropy.onrender.com/admin/generate_proposal", {
       headers: {
         "accept": "application/json",
         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
