@@ -1,28 +1,35 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import ChatArea from '@/components/chat';
+import React, { useEffect, useState } from 'react';
 import PromptBox from '@/components/PromptBox';
 import axios from 'axios';
 import Chat from '@/components/chat';
-import { Vortex } from '@/components/ui/vortex';
-import { useSearchParams } from 'next/navigation';
 import { Spotlight } from '@/components/ui/Spotlight';
 import toast from 'react-hot-toast';
+import { Speaker, Volume } from 'lucide-react';
+import { FaVolumeMute } from 'react-icons/fa';
+import { FaVolumeHigh } from 'react-icons/fa6';
 
-
-function page() {
-
+function ChatPage() {
   const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [animatePrompt, setAnimatePrompt] = useState(false);
   const [timeMs, setTimeMs] = useState(null);
-  const params = useSearchParams();
+  const [textToSpeechEnabled, setTextToSpeechEnabled] = useState(false); // New toggle state variable
+
+  const toggleTextToSpeech = () => {
+    setTextToSpeechEnabled(!textToSpeechEnabled);
+  };
 
   const speak = async (text: string) => {
-    const elevenLabsAPIKey = "dea5c8ae694beb960e7c16aac4eecb91"; // Store your API key securely
-    toast.success("Text to Speech Synthesizing...");
+    if (!textToSpeechEnabled) {
+      toast.success("Thanks for keeping the TTS off. You are saving the planet!");
+      return;
+    }
+
+    const elevenLabsAPIKey = "47b9509274f2a9b8975cb58779828433"; // Remember to keep your API key secure
+    const t1 = toast.loading("Text to Speech Synthesizing...");
     try {
       const response = await axios.post(
-        'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', // Replace YOUR_VOICE_ID with the ID of the voice you want to use
+        'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', // Replace with your voice ID
         { text },
         {
           headers: {
@@ -33,12 +40,11 @@ function page() {
         }
       );
 
-      // Create a Blob from the audio data
       const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
       const audioURL = URL.createObjectURL(audioBlob);
-
-      // Create an HTML5 audio element and play the audio
       const audio = new Audio(audioURL);
+
+      toast.dismiss(t1);
       toast.success("Text to Speech is Playing");
       audio.play();
     } catch (error) {
@@ -47,53 +53,54 @@ function page() {
     }
   };
 
-
-  // Example usage within onInputSent function
   const onInputSent = async (input: string) => {
     const userInput = input.trim();
+    const t2 = toast.loading("Agent Thinking. Beep! Boop!");
     try {
-      toast.success("Sending Input...");
       setChatMessages(prevMessages => [...prevMessages, userInput]);
-      const response = await axios.post('http://localhost:8000/chat/response?query=' + encodeURIComponent(userInput));
-      setChatMessages(prevMessages => [...prevMessages, response.data.response]);
-      console.log(response.data);
+      const response = await axios.post(
+        'https://one00x-buildathon-entropy.onrender.com/chat/response?query=' + encodeURIComponent(userInput)
+      );
 
-      // Convert and speak the first 50 words of the response
-      speak(response.data.response);
-      // Check if response.data.time_ms exists and set it
+      setChatMessages(prevMessages => [...prevMessages, response.data.response]);
+      speak(response.data.response); // Speech synthesis
+
       if (response.data.time_ms) {
         setTimeMs(response.data.time_ms);
       }
-      toast.success(`Agent replied`)
+
+      toast.dismiss(t2);
+      toast.success("Agent replied");
     } catch (error) {
+      toast.dismiss(t2);
       console.error('Error sending input:', error);
-      toast.error("Failed to send Input. Try Again")
+      toast.error("Failed to send Input. Try Again");
     }
   };
 
-
-  useEffect(() => {
-    console.log(params)
-  })
-
-
   return (
-    <>
-
-      <div className="h-screen flex flex-col">
-        <Spotlight
-
-          fill="#0099ff"
-        />
-        <div className='flex justify-center py-4'>
-          <h1 className='text-5xl leading-relaxed tracking-wider font-extrabold'>AI Chat</h1>
-        </div>
-        <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
-        <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
+    <div className="h-screen flex flex-col">
+      <Spotlight fill="#0099ff" />
+      <div className='flex justify-center py-4'>
+        <h1 className='text-5xl leading-relaxed tracking-wider font-extrabold'>AI Chat</h1>
       </div>
 
-    </>
-  )
+
+      <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
+      <div className='flex justify-center items-center'>
+        <div className='flex w-[30lvw] justify-end items-center ' title='Please use the TTS sparingly, The quota is not sufficient for larger uses'>
+          <h1 className='px-4 text-gray-400'>Speak Output</h1>
+          <button
+            onClick={toggleTextToSpeech} // Toggles the state
+            className={`px-4 py-2 rounded-lg text-white border-2 border-gray-400/50 ${textToSpeechEnabled ? 'bg-blue-900/50' : 'bg-blue-950/50'
+              } rounded transition duration-200`}
+          >
+            {textToSpeechEnabled ? <FaVolumeHigh /> : <FaVolumeMute />}
+          </button></div>
+      </div>
+      <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
+    </div>
+  );
 }
 
-export default page
+export default ChatPage;

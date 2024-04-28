@@ -91,7 +91,7 @@ const LogIn = () => {
     // @ts-ignore
     const password = passRef.current.value || '';
     try {
-      const response = await axios.post('http://localhost:8000/token',
+      const response = await axios.post('https://one00x-buildathon-entropy.onrender.com/token',
         {
           username: email, // form_data.username
           password: password  // form_data.password
@@ -243,7 +243,7 @@ const LogIn = () => {
             </div>
             {/*  */}
             <div className="text-[12px] text-blue-100/50 font-light text-center">
-              Don't have a account?{" "}
+              Don&apos;t have a account?{" "}
               <a className="text-white/80" href="/signup">
                 Signup
               </a>

@@ -48,7 +48,7 @@ const SalesCountry = ({ className, analytics, ...props }: any) => {
           ))}
         </div>
 
-        <div className="w-full h-full vectorMap relative">
+        <div className="w-full h-full vectorMap bg-blue-500/70 p-4 rounded-md relative">
           <VectorMap {...worldMap} />
         </div>
       </div>
