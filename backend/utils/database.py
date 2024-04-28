@@ -21,22 +21,22 @@ class Database:
         # Return only the last 'limit' sessions
         return user_sessions[-limit:]
     
+    def get_all_proposals(self):
+        proposal_collection = self.db['proposal']
+        proposals = proposal_collection.find()
+        return list(proposals)
+    
     def get_texts_by_user_id(self, user_id):
-    # Get the existing document
         doc = self.chats.find_one()
-
-        # Filter the sessions by user ID
         sessions = doc.get('sessions', [])
         user_sessions = [session for session in sessions if session['user'] == user_id]
-
-        # Extract the text from each session
         user_texts = [session['message'] for session in user_sessions]
 
         return user_texts
     
     def save_proposal(self, proposal_data):
-        
         proposal_collection = self.db['proposal']
+        proposal_collection.delete_many({})
         proposal_collection.insert_one(proposal_data)
 
     def append_session(self, session):
