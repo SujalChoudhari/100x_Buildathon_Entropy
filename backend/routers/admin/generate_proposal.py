@@ -44,7 +44,7 @@ prompt=ChatPromptTemplate.from_template(
     5)Pricing 
     6)Timeline(optional)
     7)Next steps(should contain contact details and other necessary information)
-    Feel free to add any other details that you think are necessary.
+    You should add any other details that you think should be necessary.
     The generated proposal should be in markdown format.
     You should use headers ,emphasis,list, images and tables wherever they are required to make the proposal more readable.
     While you are listing products make sure they are tabulated and have proper headings.
