@@ -4,21 +4,41 @@ import os
 
 dotenv.load_dotenv()
 
-def handle_call(phone_number, name):
+def handle_call(phone_number, name, system_prompt):
+    payload = {"assistant": {
+        "transcriber": {"provider": "deepgram"},
+        "model": {
+            "provider": "openai",
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {
+                    "role": "assistant",
+                    "content": system_prompt
+                }
+            ]
+        },
+        "voice": {
+            "provider": "azure",
+            "voiceId": "emma"
+        },
+        "firstMessage": "Hello, this is Cleo from Entropy. How can I assist you today?",
+        "endCallFunctionEnabled": True,
+        "endCallMessage": "Happy to help! Goodbye!"
+    },
+    "customer": {"number": phone_number, "name": name},
+        "phoneNumber": {
+        "twilioAuthToken": os.getenv("TWILIO_AUTH_TOKEN"),
+        "twilioAccountSid": os.getenv("TWILIO_ACCOUNT_SID"),
+        "twilioPhoneNumber": os.getenv("TWILIO_PHONE_NUMBER"),
+         }
+    }
+
     url = "https://api.vapi.ai/call/phone"
     headers = {
     "Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}",
     "Content-Type": "application/json"
     }
-    payload = {
-    "assistantId": "84f7f221-5260-4133-881f-ebf169be0b2f",
-    "customer": {"number": phone_number, "name": name},
-    "phoneNumber": {
-        "twilioAuthToken": os.getenv("TWILIO_AUTH_TOKEN"),
-        "twilioAccountSid": os.getenv("TWILIO_ACCOUNT_SID"),
-        "twilioPhoneNumber": os.getenv("TWILIO_PHONE_NUMBER"),
-    }
-}
+
     response = requests.request("POST", url, json=payload, headers=headers)
     print(response.text)
     # return "Will be called shortly!"
@@ -35,3 +55,4 @@ def latest_summary():
     else:
         return "Error!"
 
+# handle_call("+918291025964", "Surabhi", "system_prompt")
