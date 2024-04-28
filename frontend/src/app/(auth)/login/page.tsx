@@ -7,6 +7,7 @@ import Image from "next/image";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 
 const Stars = ({ x, y }: { x: number; y: number }) => {
   return (
@@ -85,7 +86,9 @@ const LogIn = () => {
   const mailRef = useRef(null);
   const passRef = useRef(null);
   const onLoginClick = async () => {
+    // @ts-ignore
     const email = mailRef.current.value || '';
+    // @ts-ignore
     const password = passRef.current.value || '';
     try {
       const response = await axios.post('http://localhost:8000/token',
@@ -105,6 +108,7 @@ const LogIn = () => {
       console.log('Token type:', token_type);
 
       // navigate to dashboard in next js
+      toast.success("Login Successful. Redirecting...");
       router.push('/dashboard')
 
     } catch (error: any) {
@@ -112,12 +116,15 @@ const LogIn = () => {
         // The request was made and the server responded with a status code
         console.error('Error:', error.response.status);
         console.error('Details:', error.response.data);
+        toast.error("Credentials not valid. Try Again");
       } else if (error.request) {
         // The request was made but no response was received
         console.error('No response received:', error.request);
+        toast.error("Server Refused to connect. Try Again");
       } else {
         // Something happened in setting up the request that triggered an Error
         console.error('Request setup error:', error.message);
+        toast.error("Server Refused to connect. Try Again");
       }
 
       throw error; // Re-throw the error for further handling if needed

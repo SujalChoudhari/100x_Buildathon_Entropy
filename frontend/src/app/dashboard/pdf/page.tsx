@@ -21,6 +21,7 @@ import { ControlledBoard, moveCard, KanbanBoard, OnDragEndNotification, Card } f
 import '@caldwell619/react-kanban/dist/styles.css' // import here for "builtin" styles
 import { useRouter } from 'next/navigation';
 import { Spotlight } from '@/components/ui/Spotlight';
+import toast from 'react-hot-toast';
 
 
 type Pdf = {
@@ -69,15 +70,16 @@ function PDF() {
 
     const loadHTML = async (name: string) => {
         if (name == "") return;
+        toast.success("Loading HTML Preview of " + name + "...");
         const res = await axios.get("http://localhost:8000/admin/get_html_from_file?file_name=" + name, {
             headers: {
                 Accept: "application/json",
                 Authorization: "Bearer " + localStorage.getItem("accessToken"),
             }
         })
-
         setLoadedHTML(res.data)
-        console.log(res.data)
+
+        toast.success("HTML Preview Loaded");
     }
 
     const handleCardMove: OnDragEndNotification<Card> = (_card, source, destination) => {
@@ -87,17 +89,20 @@ function PDF() {
         if (destination?.toColumnId == 2) {
             if (_card.title?.endsWith("html")) {
                 loadHTML(_card.title || "");
+                return
             }
+            toast.error("Can only render html proposals.")
             return
         }
         if (_card.title?.endsWith(".pdf") && (destination?.toColumnId == 0 || destination?.toColumnId == 1)) {
+            toast.success("Moved file");
             setBoard((currentBoard) => {
                 return moveCard(currentBoard, source, destination)
             })
 
         }
         else {
-            alert(`Only PDF files are allowed to be selected. ${_card.title} is not a PDF file.`);
+            toast.error(`Only PDF files are allowed to be selected. ${_card.title} is not a PDF file.`);
         }
     }
 
@@ -105,11 +110,13 @@ function PDF() {
     const uploadToCloud = async () => {
         if (!newPDFs.length) {
             console.warn("No PDF files to upload.");
+            toast.error("No PDF files to upload.");
             return;
         }
 
         for (const pdfFile of newPDFs) {
             // Create form data for this single PDF file
+            toast.success("Uploading " + pdfFile.name + "...");
             const formData = new FormData();
             formData.append("pdf_file", pdfFile, pdfFile.name); // Append the File object with the correct key and filename
 
@@ -124,9 +131,13 @@ function PDF() {
                 });
 
                 console.log("File uploaded successfully:", response.data);
+
+                toast.success("File uploaded successfully: " + pdfFile.name);
                 updateAllDocs();
             } catch (error: any) {
                 console.error("Error uploading PDF:", error.response ? error.response.data : error.message); // Improved error handling
+                toast.dismiss()
+                toast.error("Error uploading PDF: " + pdfFile.name);
             }
         }
     };
@@ -210,15 +221,19 @@ function PDF() {
 
     const ingest = async () => {
         try {
+            toast.success("Re Training Model. This will take some time...");
             const response = await axios.get("http://localhost:8000/admin/ingest", {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("accessToken"),
                 }
             });
+            toast.dismiss()
             console.log(response.data);
+            toast.success("Model re-trained successfully");
             // unauthorized error
         } catch (error: any) {
             if (error.response?.status === 401) {
+                toast.error("Login Needed. Redirecting...");
                 console.log("Unauthorized error")
                 router.push('/login')
             }
@@ -315,7 +330,7 @@ function PDF() {
                     Save Changes
                 </button>
                 {/* <KanbanBoard /> */}
-                <ControlledBoard  onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
+                <ControlledBoard onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
                 {/* Render the loaded html */}
 
                 {loadedHTML && <>

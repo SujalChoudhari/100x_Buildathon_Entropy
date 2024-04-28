@@ -14,6 +14,7 @@ import ToDoList from "@/components/analytics/to-do-list";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const [analytics, setAnalytics] = useState<any>(undefined);
@@ -27,8 +28,8 @@ const Page = () => {
             Authorization: "Bearer " + localStorage.getItem("accessToken"),
           }
         })
+        toast.success("Analytics loaded from server")
         setAnalytics(response.data)
-        console.log(response.data)
 
       }
       // cathc unauthorized error

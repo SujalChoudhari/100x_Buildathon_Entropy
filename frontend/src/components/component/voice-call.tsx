@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 // User can add mo no, which will be called by the agent.
 export function VoiceCall() {
@@ -15,7 +16,7 @@ export function VoiceCall() {
   const callUser = async () => {
     const template = templateRef.current?.value;
     const mobile = mobileRef.current?.value;
-
+    toast.loading("Calling...");
     try {
       const response = await axios.post(
         "http://localhost:8000/admin/call",
@@ -31,19 +32,23 @@ export function VoiceCall() {
         }
       );
 
+      toast.success("Call Initiated");
       console.log('API call successful:', response);
     } catch (error) {
       console.error('API call failed:', error);
+      toast.error("Call Failed. Try Again later");
     }
   }
 
   const getSummary = async () => {
+    toast.loading("Fetching Summary...");
     const res = await axios.get("http://localhost:8000/admin/get_last_summary", {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
       }
     })
 
+    toast.success("Summary Fetched");
     setSummary(res.data);
   }
 
@@ -88,9 +93,9 @@ export function VoiceCall() {
           <p className="text-gray-500 dark:text-gray-400">Last call summary will be shown here. (Read only)</p>
         </div>
         <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-          Get Last Call Details 
+          Get Last Call Details
         </button>
-        
+
         <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} - {summary?.customer?.number}</h1>
         <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
           <Link href={summary?.recordingUrl || ""}>

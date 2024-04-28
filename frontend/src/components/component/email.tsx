@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import axios from "axios"
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 // User can add mailid, which will be sent email to.
 export function EmailPage() {
@@ -25,6 +26,7 @@ export function EmailPage() {
       //   -d '[
       // ]'
 
+      toast.loading("Sending Email...");
       const res = await axios.post(
         "http://localhost:8000/admin/send_bulk_email"
         + `?template=${encodeURIComponent(template || "")}`,
@@ -35,6 +37,7 @@ export function EmailPage() {
           "Content-Type": "application/json",
         }
       })
+      toast.success("Email(s) Sent");
       console.log('API call successful:', res);
     } catch (error) {
       console.error('API call failed:', error);

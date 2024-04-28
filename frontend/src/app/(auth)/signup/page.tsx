@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 
 const Stars = ({ x, y }: { x: number; y: number }) => {
   return (
@@ -85,7 +86,9 @@ const Register = () => {
   const mailRef = useRef(null);
   const passRef = useRef(null);
   const onSignupClick = async () => {
+    // @ts-ignore
     const email = mailRef.current.value || '';
+    // @ts-ignore
     const password = passRef.current.value || '';
     try {
       const response = await axios.post('http://localhost:8000/register', {
@@ -98,15 +101,16 @@ const Register = () => {
       console.log('Response:', response.data);
 
       router.push('/login')
+      toast.success("Sign Up Successful. Login to Continue");
       return response.data; // Return the registration details
 
     } catch (error: any) {
       if (error.response) {
         console.error('Error:', error.response.status, error.response.data);
-        throw new Error(`Signup failed: ${error.response.data.detail}`);
+        toast.error("Credentials not valid. Try Again");
       } else {
         console.error('Request error:', error.message);
-        throw new Error('An error occurred during signup');
+        toast.error("Server Refused to connect. Try Again");
       }
     }
 
