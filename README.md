@@ -31,6 +31,8 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
    - Sales Proposal Generation: The AI Sales Assistant generates effective sales proposals based on previous chats, analytics and company documents. The proposal can be viewed in HTML          form on dashboard as well as pdf form to be downloaded by the company.
    - Analytics: The admin can view all the analytics of the companies customers and interaction.
 2. **Architechture:**
+
+   Architechture Diagram
 ![WhatsApp Image 2024-04-28 at 10 49 01 PM](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/128281067/dce4d192-fb6a-4c67-b4a2-6821a36757c7)
 
 ## Installation
