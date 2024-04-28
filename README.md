@@ -34,12 +34,15 @@ Architechture:
    ```sh
    git clone https://github.com/SujalChoudhari/100x_Buildathon_Entropy.git
    
-2. **Run the frontend:**
+2. **Install dependancies for the frontend:**
 
    ```sh
    cd frontend
+   
    npm install
-3. **Run the backend:**
+3. **Install dependancies for the backend:**
 
       ```sh
    cd backend
+
+   pip install -r requirements.txt
