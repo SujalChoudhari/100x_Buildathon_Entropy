@@ -1,10 +1,13 @@
+import asyncio
 from dotenv import load_dotenv
 import bcrypt
 from pydantic import BaseModel, EmailStr
 from utils.database import Database
+from utils.chatbot import ChatBot
 from routers.admin.generate_proposal import summarize_pdf
 load_dotenv()
 
+cb = ChatBot()
 from fastapi import FastAPI, Depends, HTTPException, status
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
@@ -132,6 +135,7 @@ async def secure_endpoint(current_user: dict = Depends(read_users_me)):
 async def root():
     return {"message": "Hello World"}
 
+asyncio.run(cb.invoke("Hello", ""))
 
 # Run the server
 if __name__ == "__main__":

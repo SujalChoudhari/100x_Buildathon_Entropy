@@ -5,7 +5,6 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_groq.chat_models import ChatGroq
 from langchain.globals import set_llm_cache
 from langchain.cache import InMemoryCache
-import pypandoc
 set_llm_cache(InMemoryCache())
 from langchain.chains import LLMChain
 from utils.markdown_to_html import markdown_to_html_file
@@ -74,7 +73,7 @@ prompt=ChatPromptTemplate.from_template(
     The proposal should contain the following at minimum:
     1) Details about the Company
     2)Clients
-    3) Our Solution
+    3)Our Solution
     4)Benefits of us 
     5)Pricing 
     6)Timeline(optional)
