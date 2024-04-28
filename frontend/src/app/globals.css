@@ -66,6 +66,28 @@
   display: none;
 }
 
+.react-kanban-column
+{
+  background-color: #00192e8e !important;
+}
+
+.react-kanban-column-header
+{
+  color: white;
+}
+
+.react-kanban-card{
+  background-color: #00192e8e !important;
+  color: #ffffffdd;
+  border: 1px solid #ffffff86;
+  border-radius: 24px;
+}
+
+.react-kanban-card-adder-form__button
+{
+  display: none !important;
+}
+
 /* 
 Classes to customise KanBan
 react-kanban-board
@@ -86,7 +108,7 @@ react-kanban-column-adder-button
  */
 
 #content {
-  
+
   background-color: #4e6bff28;
   /* Light gray background */
   padding: 20px;
@@ -104,9 +126,11 @@ react-kanban-column-adder-button
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   /* Soft shadow */
 }
+
 #content * {
   color: #d9efff;
 }
+
 /* Headings within #content */
 #content h1 {
   font-size: 2em;
