@@ -1,10 +1,11 @@
 import requests
 import dotenv
 import os
+from database import Database
 
 dotenv.load_dotenv()
 
-def handle_call(phone_number, name, system_prompt):
+async def handle_call(phone_number, name, system_prompt):
     payload = {"assistant": {
         "transcriber": {"provider": "deepgram"},
         "model": {
@@ -43,16 +44,26 @@ def handle_call(phone_number, name, system_prompt):
     print(response.text)
     # return "Will be called shortly!"
 
-def latest_summary():
+async def user_messages_latest():
     url = "https://api.vapi.ai/call"
     headers = {"Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"}
     response = requests.get(url, headers=headers)
     
     if response.status_code == 200:
         res = response.json()
-        print(res[0]["summary"])
-        return res[0]["summary"]
+        user_msg = []
+        for message in res[0]["messages"]:
+            if message["role"] == "user":
+                user_msg.append(message["message"])
+        return user_msg
     else:
         return "Error!"
 
-# handle_call("+918291025964", "Surabhi", "system_prompt")
+async def insert_user_message_db():
+    db = Database("entropy")
+    user_msg = await user_messages_latest()
+    arr = []
+    for msg in user_msg:
+        arr.append({"user": "human", "message": msg})
+    print(arr)
+    db.insert_call_chats({"sessions": arr})

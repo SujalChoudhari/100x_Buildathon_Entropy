@@ -19,3 +19,6 @@ class Database:
         filter_query = {"endpoint": endpoint}
         update_operation = {"$inc": {"count": 1}}
         self.endpoints.update_one(filter_query, update_operation, upsert=True)
+
+    def insert_call_chats(self, messages):
+        self.chats.insert_one(messages)
