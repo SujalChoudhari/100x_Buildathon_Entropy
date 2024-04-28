@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 import bcrypt
 from pydantic import BaseModel, EmailStr
-
+from utils.database import Database
+from routers.admin.generate_proposal import summarize_pdf
 load_dotenv()
 
 from fastapi import FastAPI, Depends, HTTPException, status
@@ -40,6 +41,8 @@ app.include_router(admin_router)
 # Token endpoint for login
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    db = Database("entropy")
+    await db.update_endpoint("/token")
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -47,7 +50,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             detail="Invalid username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token_expires = timedelta(minutes=30)
+    access_token_expires = timedelta(minutes=360)
     access_token = create_access_token(
         data={"sub": user["email"]}, expires_delta=access_token_expires
     )
@@ -62,6 +65,8 @@ class UserRegister(BaseModel):
 @app.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(user: UserRegister):
     # Check if the username already exists
+    db = Database("entropy")
+    await db.update_endpoint("/register")
     if user.username in users_db:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -88,6 +93,8 @@ async def register_user(user: UserRegister):
 # Endpoint to get the current user based on the token
 @app.get("/me")
 async def read_users_me(token: str = Depends(oauth2_scheme)):
+    db = Database("entropy")
+    await db.update_endpoint("/me")
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
@@ -116,6 +123,8 @@ async def read_users_me(token: str = Depends(oauth2_scheme)):
 # Endpoint to check user type
 @app.get("/secure-route")
 async def secure_endpoint(current_user: dict = Depends(read_users_me)):
+    db = Database("entropy")
+    await db.update_endpoint("/secure-route")
     return {"message": f"Hello, {current_user['username']}!"}
 
 

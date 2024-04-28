@@ -1,7 +1,8 @@
 from fastapi import Depends, Request
 from fastapi.routing import APIRouter
-
 from utils.chatbot import ChatBot
+from utils.database import Database
+
 from .response import respond
 
 router = APIRouter(
@@ -29,5 +30,23 @@ async def check():
 
 @router.post("/response")
 async def response(query: str, chatbot=Depends(get_chatbot)):
+    db = Database("entropy")
+    await db.update_endpoint("/chat/response")
+    print(query)
     query = query.strip()
     return {"response": await respond(chatbot,query)}
+
+
+@router.get("/close_session")
+async def close_session(request: Request):
+
+    current_chatbot = get_chatbot(request)
+    # Remove the ChatBot for the current session
+    session_id = request.session.get("session_id")
+    if session_id in chatbots:
+        del chatbots[session_id]
+
+    if current_chatbot is not None:
+        await current_chatbot.append_session(session_id)
+
+    return {"message": "Session closed"}

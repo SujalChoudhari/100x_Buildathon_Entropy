@@ -1,6 +1,7 @@
 "use client";
 
-import { BadgePercent, LogOut } from "lucide-react";
+import { BadgePercent, LogOut, Voicemail } from "lucide-react";
+import Link from "next/link";
 import { PropsWithChildren, useState } from "react";
 import { FaSalesforce } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
@@ -12,6 +13,7 @@ import {
   LuInbox,
   LuSettings,
   LuUsers,
+  LuVoicemail,
 } from "react-icons/lu";
 import { TbChevronLeft, TbDirection } from "react-icons/tb";
 
@@ -94,6 +96,7 @@ export const Sidebar = () => {
             <hr />
           </div>
           <div className="flex flex-col gap-2">
+          <Link href="/dashboard/pdf">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -101,6 +104,8 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">PDF Injestion</span>
             </SidebarItem>
+            </Link>
+            <Link href="/dashboard">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
@@ -108,13 +113,25 @@ export const Sidebar = () => {
             >
               <span className="text-sm font-medium">Analytics</span>
             </SidebarItem>
+            </Link>
+            <Link href="/chat">
             <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 opacity-70"
               leftSlot={<LuUsers />}
             >
-              <span className="text-sm font-medium">User Chatbot</span>
+              <span className="text-sm font-medium">Sales Chatbot</span>
             </SidebarItem>
+            </Link>
+            <Link href="/dashboard/voice">
+            <SidebarItem
+              isCollapsed={isCollapsed}
+              className="px-2 py-1 opacity-70"
+              leftSlot={<LuVoicemail/>}
+            >
+              <span className="text-sm font-medium">Voice Call</span>
+            </SidebarItem>
+            </Link>
           </div>
         </div>
         
