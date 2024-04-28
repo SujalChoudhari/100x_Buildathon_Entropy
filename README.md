@@ -24,7 +24,6 @@ Architechture:
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Demonstration Video](#demonstration-video)
-- [GitHub Repository (Source code)](#github-repository-source-code)
 - [License](#license)
 
 ## Installation
