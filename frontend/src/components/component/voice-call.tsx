@@ -57,7 +57,7 @@ export function VoiceCall() {
         </div>
         <div className="space-y-4">
           <div className="grid grid-cols-[1fr_auto] items-center gap-2">
-            <Input ref={mobileRef} className="w-full" placeholder="Enter mobile number" type="tel" />
+            <Input ref={mobileRef} className="w-full" placeholder="+919876543210" type="tel" />
 
           </div>
           <div className="flex items-center justify-between">

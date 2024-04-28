@@ -68,7 +68,7 @@ Your Team
   const name = `{name}`
   const id = `{id}`
   return (
-    <main className="flex flex-col items-center h-full mt-10  ">
+    <main className="flex flex-col items-center h-full mt-10  text-white">
 
       <div className="max-w-4xl w-full space-y-6 px-4">
         <div className="space-y-2">
