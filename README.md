@@ -48,7 +48,20 @@ Architechture:
 
 ## Usage
 
+1. **Run the frontend:**
+   
+   After installation navigate to the frontend directory.
+   Run the following command to start the application:
 
+    ```sh
+    npm run dev
+2. **Run the backend:**
+   
+   After installation navigate to the backend directory.
+   
+   
+
+   
 
 ## API Documentation
 
