@@ -16,6 +16,8 @@ Key Features:
 3. Document Analysis: The AI Sales Assistant possesses the capability to analyze documents provided by customers, such as PDF files, to extract essential information required for drafting sales proposals. This feature eliminates manual data entry tasks and accelerates the proposal generation process by automatically capturing pertinent details.
 4. Information Gap Analysis: To further enhance the accuracy and completeness of sales proposals, the assistant performs information gap analysis. By identifying any missing details or inconsistencies in the gathered data, the assistant prompts users to provide additional information necessary for completing the proposal accurately.
 
+Architechture:
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -30,6 +32,6 @@ Key Features:
 1. **Clone the repository:**
 
    ```sh
-   git clone https://github.com/yourusername/yourproject.git
+   git clone https://github.com/SujalChoudhari/100x_Buildathon_Entropy.git
 
 
