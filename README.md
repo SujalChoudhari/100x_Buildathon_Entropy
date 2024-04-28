@@ -140,4 +140,5 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 - Pinecone 
 - Llama-3
 ## Demonstration Video
+- Video link - https://youtu.be/k3JLvRpqUhI
 
