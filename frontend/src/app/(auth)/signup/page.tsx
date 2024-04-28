@@ -91,7 +91,7 @@ const Register = () => {
     // @ts-ignore
     const password = passRef.current.value || '';
     try {
-      const response = await axios.post('http://localhost:8000/register', {
+      const response = await axios.post('https://one00x-buildathon-entropy.onrender.com/register', {
         username: email,  // User's desired username
         email: email,        // User's email address
         password: password,  // User's plain text password

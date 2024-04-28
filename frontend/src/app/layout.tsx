@@ -25,9 +25,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >{children}
-          <Toaster gutter={8} toastOptions={{
+          <Toaster gutter={8} reverseOrder={true} toastOptions={{
             position: "bottom-right",
-           
+            
             style: {
               background: "#33336677",
               color:"white",
