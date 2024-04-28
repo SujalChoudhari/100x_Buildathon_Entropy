@@ -220,7 +220,7 @@ function PDF() {
     }
 
     const ingest = () => {
-        
+
 
         // Create the Promise for the axios request
         const ingestPromise = axios.get("http://localhost:8000/admin/ingest", {
@@ -336,13 +336,11 @@ function PDF() {
             </div>
 
 
-            <div id='kanban' className='w-[80vw] mt-24 select-none'>
+            <div id='kanban' className='w-[80vw] mt-32 select-none'>
 
-                <h1 className=' ml-14 text-lg font-extrabold text-white'>Pdfs Board</h1>
+                <h1 className=' ml-14 mt-16 text-3xl font-extrabold text-white'>Pdfs Board</h1>
                 <h1 className=' ml-14 text-lg font-extrabold text-white'>Move HTML Proposals to (View Proposal) board to render below</h1>
-                <button onClick={() => { ingest() }} className="mt-4 mx-auto text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-                    {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
-                    {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
+                <button onClick={() => { ingest() }} className="my-16 mx-auto text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                     Save Changes
                 </button>
                 {/* <KanbanBoard /> */}
