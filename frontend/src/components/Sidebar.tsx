@@ -179,11 +179,11 @@ export const Sidebar = () => {
         <SidebarItem
           isCollapsed={isCollapsed}
           className="px-2 py-1 opacity-70"
-          leftSlot={<LogOut className="size-4" />}
+          leftSlot={<LogOut className="size-4 text-white" />}
           name="Logout"
           onClick={() => handleItemClick("Logout")}
         >
-          <button className="text-sm font-medium" onClick={() => { router.push("/login"); localStorage.removeItem("accessToken") }}>Log Out</button>
+          <button className="text-sm font-medium text-white" onClick={() => { router.push("/login"); localStorage.removeItem("accessToken") }}>Log Out</button>
         </SidebarItem>
         {/* <Link href="/dashboard/voice">
             <SidebarItem
