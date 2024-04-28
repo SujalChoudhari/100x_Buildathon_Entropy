@@ -47,9 +47,51 @@ const Page = () => {
 
     loadAnalytics()
   }, [])
+
+  const generateProposal = () => {
+    // Create the Promise for the axios request
+    const proposalPromise = axios.get("http://localhost:8000/admin/generate_proposal", {
+      headers: {
+        "accept": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+      }
+    });
+
+    // Use toast.promise to handle loading, success, and error cases
+    toast.promise(
+      proposalPromise,
+      {
+        loading: 'Generating proposal... This may take a while.',
+        success: 'Proposal generated successfully!',
+        error: 'Failed to generate proposal. Please try again.',
+      }
+    );
+
+    // Return the Promise
+    return proposalPromise;
+  };
+
+  // Example usage
+  const promisedGeneration = () => {
+    generateProposal()
+      .then((res) => {
+        console.log("Proposal generation response:", res.data);
+      })
+      .catch((error) => {
+        console.error("Error generating proposal:", error);
+      });
+  }
   return (<>
     {analytics && (
       <div className="grid grid-cols-12 gap-7 w-full">
+        <div className="col-span-12 my-6 flex justify-center flex-col">
+          <button onClick={() => { promisedGeneration() }} className="mt-4 mx-auto text-xl text-center flex justify-center group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+            {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
+            {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
+            Generate New Proposal
+          </button>
+          <span className="text-center mt-6 text-zinc-300">The new proposal will be generated based on the existing data, chats and analytics.</span>
+        </div>
         <AveragePositions analytics={analytics.averagePos} className="col-span-12 lg:col-span-4" />
         <Analytics analytics={analytics.analytics} className="col-span-12 lg:col-span-8" />
 

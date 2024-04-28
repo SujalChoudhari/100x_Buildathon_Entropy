@@ -219,27 +219,43 @@ function PDF() {
         });
     }
 
-    const ingest = async () => {
-        try {
-            toast.success("Re Training Model. This will take some time...");
-            const response = await axios.get("http://localhost:8000/admin/ingest", {
-                headers: {
-                    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    const ingest = () => {
+        
+
+        // Create the Promise for the axios request
+        const ingestPromise = axios.get("http://localhost:8000/admin/ingest", {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            }
+        });
+
+        // Use toast.promise to display loading, success, and error messages
+        toast.promise(
+            ingestPromise,
+            {
+                loading: 'Re-training model. This might take a while...',
+                success: 'Model re-trained successfully!',
+                error: 'Error re-training model. Please try again.',
+            }
+        );
+
+        // Handle the Promise result with .then() and .catch()
+        ingestPromise
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                // Handle unauthorized error (401) specifically
+                if (error.response?.status === 401) {
+                    toast.error("Login needed. Redirecting...");
+                    console.log("Unauthorized error");
+                    router.push('/login'); // Redirect to login page
                 }
             });
-            toast.dismiss()
-            console.log(response.data);
-            toast.success("Model re-trained successfully");
-            // unauthorized error
-        } catch (error: any) {
-            if (error.response?.status === 401) {
-                toast.error("Login Needed. Redirecting...");
-                console.log("Unauthorized error")
-                router.push('/login')
-            }
-        }
-    }
 
+        // Return the Promise to maintain flexibility in chaining or external handling
+        return ingestPromise;
+    };
     const updateSelectedDocs = async () => {
         try {
             const response = await axios.get("http://localhost:8000/admin/get_selected_docs", {

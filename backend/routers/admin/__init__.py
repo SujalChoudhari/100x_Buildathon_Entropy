@@ -56,8 +56,8 @@ async def ingest_pdfs(_: str = Depends(is_admin)):
 
 @router.get("/generate_proposal")
 async def generate_proposal(_: str = Depends(is_admin)):
-    generate_proposal_from_docs()
-    pass
+    return generate_proposal_from_docs()
+
 
 
 @router.get("/get_selected_docs")
