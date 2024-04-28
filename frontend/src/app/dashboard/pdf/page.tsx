@@ -33,18 +33,23 @@ function PDF() {
     const initial: KanbanBoard<Card> = {
         columns: [
             {
-                id: 1,
+                id: 0,
                 title: 'All Files',
                 cards: [
                 ]
             },
             {
-                id: 2,
+                id: 1,
                 title: 'Selected PDFs',
                 cards: [
                 ]
             },
-
+            {
+                id: 2,
+                title: 'View Proposals',
+                cards: [
+                ]
+            },
         ]
     }
     const [newPDFs, setNewPDFs] = useState<File[]>([]);
@@ -52,6 +57,7 @@ function PDF() {
     const [allPdfs, setAllPdfs] = useState<string[]>([]);
     const [selectedPdfs, setSelectedPdfs] = useState<string[]>([]);
     const router = useRouter();
+    const [loadedHTML, setLoadedHTML] = useState<any>(undefined);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -60,11 +66,30 @@ function PDF() {
         }
     };
 
+    const loadHTML = async (name: string) => {
+        if (name == "") return;
+        const res = await axios.get("http://localhost:8000/admin/get_html_from_file?file_name=" + name, {
+            headers: {
+                Accept: "application/json",
+                Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            }
+        })
+
+        setLoadedHTML(res.data)
+        console.log(res.data)
+    }
+
     const handleCardMove: OnDragEndNotification<Card> = (_card, source, destination) => {
         if (source?.fromColumnId == destination?.toColumnId) {
             return;
         }
-        if (_card.title?.endsWith(".pdf")) {
+        if (destination?.toColumnId == 2) {
+            if (_card.title?.endsWith("html")) {
+                loadHTML(_card.title || "");
+            }
+            return
+        }
+        if (_card.title?.endsWith(".pdf") && (destination?.toColumnId == 0 || destination?.toColumnId == 1)) {
             setBoard((currentBoard) => {
                 return moveCard(currentBoard, source, destination)
             })
@@ -168,7 +193,6 @@ function PDF() {
         // all pdf
         setBoard(currentBoard => {
             currentBoard.columns[0].cards = [
-
             ]
             allPdfs.map((file: any, index: number) => {
                 if (!selectedPdfs.includes(file)) {
@@ -283,6 +307,7 @@ function PDF() {
             <div id='kanban' className='w-[80vw] mt-24 select-none'>
 
                 <h1 className=' ml-14 text-lg font-extrabold'>Pdfs Board</h1>
+                <h1 className=' ml-14 text-lg font-extrabold'>Move HTML Proposals to (View Proposal) board to render below</h1>
                 <button onClick={() => { ingest() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                     {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
                     {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
@@ -290,8 +315,17 @@ function PDF() {
                 </button>
                 {/* <KanbanBoard /> */}
                 <ControlledBoard onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
+                {/* Render the loaded html */}
+
+                {loadedHTML && <>
+                    <div className='w-[80vw] mt-24 flex justify-center items-center flex-col'>
+                        <h1 className=' ml-14 text-3xl font-extrabold'>Loaded Proposals (View Only)</h1>
+                        <div id='content' className='w-[50vw] text-justify' dangerouslySetInnerHTML={{ __html: loadedHTML }} />
+                    </div></>}
 
             </div>
+
+
         </>
     );
 }

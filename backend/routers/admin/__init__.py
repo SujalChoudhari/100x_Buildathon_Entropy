@@ -1,6 +1,8 @@
 # routers/admin.py
 import base64
-from fastapi import APIRouter, Depends, Request, UploadFile
+import os
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from utils.auth import oauth2_scheme, is_admin, get_current_user
 from typing import List
@@ -87,3 +89,16 @@ async def call_user(request: CallRequest, _: str = Depends(is_admin)):
 @router.get("/get_last_summary")
 async def get_last_summary(_: str = Depends(is_admin)):
     return get_latest_summary()
+
+
+@router.get("/get_html_from_file", response_class=HTMLResponse)
+async def get_html_from_file(file_name: str, _: str = Depends(is_admin)):
+    file_path = "all_documents/" + file_name
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+
+    # Read the file content in binary mode
+    with open(file_path, "rb") as file:
+        html_content = file.read()
+
+    return html_content
