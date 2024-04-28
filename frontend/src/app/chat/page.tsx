@@ -1,21 +1,17 @@
 "use client";
 import React, { useEffect, useState } from 'react'
-import ChatArea from '@/components/chat';
 import PromptBox from '@/components/PromptBox';
 import axios from 'axios';
 import Chat from '@/components/chat';
-import { Vortex } from '@/components/ui/vortex';
-import { useSearchParams } from 'next/navigation';
 import { Spotlight } from '@/components/ui/Spotlight';
 import toast from 'react-hot-toast';
 
 
-function page() {
+function ChatPage() {
 
   const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [animatePrompt, setAnimatePrompt] = useState(false);
   const [timeMs, setTimeMs] = useState(null);
-  const params = useSearchParams();
 
   const speak = async (text: string) => {
     const elevenLabsAPIKey = "dea5c8ae694beb960e7c16aac4eecb91"; // Store your API key securely
@@ -72,11 +68,6 @@ function page() {
   };
 
 
-  useEffect(() => {
-    console.log(params)
-  })
-
-
   return (
     <>
 
@@ -96,4 +87,4 @@ function page() {
   )
 }
 
-export default page
+export default ChatPage

@@ -243,7 +243,7 @@ const LogIn = () => {
             </div>
             {/*  */}
             <div className="text-[12px] text-blue-100/50 font-light text-center">
-              Don't have a account?{" "}
+              Don&apos;t have a account?{" "}
               <a className="text-white/80" href="/signup">
                 Signup
               </a>
