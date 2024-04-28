@@ -11,6 +11,7 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 - [Setup](#setup)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
+- [Tech Stack](#tech-stack)
 - [Demonstration Video](#demonstration-video)
 
 ## Overview and Architecture
@@ -120,6 +121,8 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 ## API Documentation
 
 - Link: https://one00x-buildathon-entropy.onrender.com/docs
+
+## Tech Stack
 
 ## Demonstration Video
 
