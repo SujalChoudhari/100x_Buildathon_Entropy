@@ -217,8 +217,8 @@ app = FastAPI(
     openapi_tags=openapi_tags,
     version="1.0.0",
     contact={
-        "name": "Sujal Choudhari",
-        "url": "https://sujal.xyz",
+        "name": "Team Entropy",
+        "url": "https://github.com/SujalChoudhari/100x_Buildathon_Entropy",
     },
 )
 
