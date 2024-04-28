@@ -33,5 +33,12 @@ Architechture:
 
    ```sh
    git clone https://github.com/SujalChoudhari/100x_Buildathon_Entropy.git
+   
+2. **Navigate into the frontend directory:**
 
+   ```sh
+   cd frontend
+3. **Navigate into the backend directory:**
 
+      ```sh
+   cd backend
