@@ -90,6 +90,8 @@ const LogIn = () => {
     const email = mailRef.current.value || '';
     // @ts-ignore
     const password = passRef.current.value || '';
+
+    const t1 = toast.loading("Attempting to Log In");
     try {
       const response = await axios.post('https://one00x-buildathon-entropy.onrender.com/token',
         {
@@ -129,6 +131,8 @@ const LogIn = () => {
 
       throw error; // Re-throw the error for further handling if needed
     }
+
+    toast.dismiss(t1);
 
   }
   return (
