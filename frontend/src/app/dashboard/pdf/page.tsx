@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { ControlledBoard, moveCard, KanbanBoard, OnDragEndNotification, Card } from '@caldwell619/react-kanban'
 import '@caldwell619/react-kanban/dist/styles.css' // import here for "builtin" styles
 import { useRouter } from 'next/navigation';
+import { Spotlight } from '@/components/ui/Spotlight';
 
 
 type Pdf = {

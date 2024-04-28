@@ -79,17 +79,9 @@ function PromptBox({ onSubmitPressed, animatePrompt, setAnimatePrompt, timeMs }:
                 <div className="bg-background space-y-4 flex flex-row items-center gap-2  justify-center border-t px-4  shadow-lg sm:rounded-xl sm:border md:py-4 ">
 
                     <div className='flex items-center gap-4 flex-col'>
-                        <button onClick={() => { setIsListening(!isListening); /*toast.success("Start Speaking") */ }} >
-                            <div className="relative inline-flex  group">
-                                <div
-                                    className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt">
-                                </div>
-                                <a href="#" title="Get quote now"
-                                    className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-                                    role="button">
-                                    <Mic size={15} />
-                                </a>
-                            </div>
+                       
+                        <button onClick={() => { setIsListening(!isListening); /*toast.success("Start Speaking") */ }} className='inline-flex h-12 animate-background-shine items-center justify-center rounded-md border border-gray-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50'>
+                        <Mic size={15} />
                         </button>
 
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Chat from '@/components/chat';
 import PromptBox from '@/components/PromptBox';
+import { Spotlight } from '@/components/ui/Spotlight';
 
 function page() {
 
@@ -59,6 +60,7 @@ function page() {
 
   return (
     <div>
+      
       <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
       <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
     </div>

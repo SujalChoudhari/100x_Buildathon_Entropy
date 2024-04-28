@@ -24,6 +24,8 @@ type SidebarItemProps = {
   leftSlot?: React.ReactNode;
   rightSlot?: React.ReactNode;
   className?: string;
+  name: string;
+  onClick: () => void;
 };
 
 export const SidebarItem = ({
@@ -32,10 +34,13 @@ export const SidebarItem = ({
   rightSlot,
   isCollapsed,
   className = "",
+
+  name,
+  onClick,
 }: PropsWithChildren<SidebarItemProps>) => {
 
   return (
-    <div className={[`flex items-center gap-2`, className].join(" ")}>
+    <div className={[`flex items-center gap-2`, className].join(" ")} onClick={onClick}>
       <div className="size-[16px] shrink-0">{leftSlot}</div>
       <div
         className={[
@@ -52,7 +57,13 @@ export const SidebarItem = ({
 
 export const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(""); // State to track the selected item
+
+  const handleItemClick = (name: string) => {
+    setSelectedItem(name);
+  };
   const router = useRouter();
+
   return (
     <aside
       className={[
@@ -68,9 +79,11 @@ export const Sidebar = () => {
             leftSlot={
               <TbGraph className="size-4 rounded-md" />
             }
-          // rightSlot={<StarIcon className="text-xl opacity-50" />}
+            rightSlot={<TbDirection className="text-xl opacity-50" />}
+            name="Sales team"
+            onClick={() => handleItemClick("Sales team")}
           >
-            <span className="text-sm font-medium">Team Dashboard</span>
+            <span className={`text-sm font-medium ${selectedItem === "Sales team" ? "text-white" : ""}`}>Sales team</span>
           </SidebarItem>
           <div className="flex justify-end">
             <button
@@ -86,13 +99,15 @@ export const Sidebar = () => {
             </button>
           </div>
           <div className="flex flex-col gap-2">
-            {/* <SidebarItem
+            <SidebarItem
               isCollapsed={isCollapsed}
               className="px-2 py-1 border border-neutral-200 rounded-md bg-white"
               leftSlot={<LuBarChart4 />}
+              name="Sales team"
+              onClick={() => handleItemClick("Sales team")}
             >
-              <span className="text-sm font-medium">Dashboard</span>
-            </SidebarItem> */}
+              <span className="text-sm  font-medium">Dashboard</span>
+            </SidebarItem>
 
           </div>
           <div className="py-4">
@@ -102,58 +117,93 @@ export const Sidebar = () => {
             <Link href="/dashboard/pdf">
               <SidebarItem
                 isCollapsed={isCollapsed}
-                className="px-2 py-1 opacity-70"
-                leftSlot={<FaFilePdf />}
+                className="px-2 py-1  border-neutral-200 rounded-md"
+                leftSlot={<FaFilePdf className="text-white" />}
+                rightSlot={<TbDirection className="text-xl opacity-50" />}
+                name="PDF Injestion"
+                onClick={() => handleItemClick("PDF Injestion")}
               >
-                <span className="text-sm font-medium">Update Documents</span>
+                <span className={`text-sm font-medium ${selectedItem === "PDF Injestion" ? "text-white" : ""}`}>PDF Injestion</span>
               </SidebarItem>
             </Link>
             <Link href="/dashboard">
               <SidebarItem
                 isCollapsed={isCollapsed}
-                className="px-2 py-1 opacity-70"
-                leftSlot={<GrAnalytics />}
+                className="px-2 py-1  border-neutral-200 rounded-md"
+                leftSlot={<GrAnalytics className="text-white" />}
+                rightSlot={<TbDirection className="text-xl opacity-50" />}
+                name="Analytics"
+                onClick={() => handleItemClick("Analytics")}
               >
-                <span className="text-sm font-medium">Analytics</span>
+                <span className={`text-sm font-medium ${selectedItem === "Analytics" ? "text-white" : ""}`}>Analytics</span>
               </SidebarItem>
             </Link>
             <Link href="/chat">
               <SidebarItem
                 isCollapsed={isCollapsed}
-                className="px-2 py-1 opacity-70"
-                leftSlot={<LuUsers />}
+                className="px-2 py-1  border-neutral-200 rounded-md"
+                leftSlot={<LuUsers className="text-white" />}
+                rightSlot={<TbDirection className="text-xl opacity-50" />}
+                name="Sales Chatbot"
+                onClick={() => handleItemClick("Sales Chatbot")}
               >
-                <span className="text-sm font-medium">Sales Chatbot</span>
+                <span className={`text-sm font-medium ${selectedItem === "Sales Chatbot" ? "text-white" : ""}`}>Sales Chatbot</span>
               </SidebarItem>
             </Link>
+
             <Link href="/dashboard/voice">
               <SidebarItem
                 isCollapsed={isCollapsed}
                 className="px-2 py-1 opacity-70"
-                leftSlot={<LuVoicemail />}
+                leftSlot={<LuVoicemail className="text-white"/>}
+                name="Agent Calls"
+                onClick={() => handleItemClick("Agent Calls")}
               >
-                <span className="text-sm font-medium">Agent Calls</span>
+                <span className={`text-sm font-medium ${selectedItem === "Agent Calls" ? "text-white" : ""}`}>Agent Calls</span>
               </SidebarItem>
             </Link>
             <Link href="/dashboard/email">
               <SidebarItem
                 isCollapsed={isCollapsed}
                 className="px-2 py-1 opacity-70"
-                leftSlot={<LuMailSearch />}
+                leftSlot={<LuMailSearch className="text-white"/>}
+                name="Mass Mail"
+                onClick={() => handleItemClick("Mass Mail")}
               >
-                <span className="text-sm font-medium">Mass Mail</span>
+              <span className={`text-sm font-medium ${selectedItem === "Mass Mail" ? "text-white" : ""}`}>Mass Mail</span>
               </SidebarItem>
             </Link>
+
           </div>
         </div>
-
         <SidebarItem
           isCollapsed={isCollapsed}
           className="px-2 py-1 opacity-70"
           leftSlot={<LogOut className="size-4" />}
+          name="Logout"
+          onClick={() => handleItemClick("Logout")}
         >
           <button className="text-sm font-medium" onClick={() => { router.push("/login"); localStorage.removeItem("accessToken") }}>Log Out</button>
         </SidebarItem>
+        {/* <Link href="/dashboard/voice">
+            <SidebarItem
+              isCollapsed={isCollapsed}
+              className="px-2 py-1 opacity-70"
+              leftSlot={<LuVoicemail/>}
+            >
+              <span className="text-sm font-medium">Voice Call</span>
+            </SidebarItem>
+            </Link>
+          </div>
+        </div>
+        
+            <SidebarItem
+            isCollapsed={isCollapsed}
+            className="px-2 py-1 opacity-70"
+            leftSlot={<LogOut className="size-4" />}
+            >
+            <span className="text-sm font-medium">Log Out</span>
+            </SidebarItem> */}
 
       </div>
     </aside>

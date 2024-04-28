@@ -6,6 +6,7 @@ import axios from 'axios';
 import Chat from '@/components/chat';
 import { Vortex } from '@/components/ui/vortex';
 import { useSearchParams } from 'next/navigation';
+import { Spotlight } from '@/components/ui/Spotlight';
 
 
 function page() {
@@ -67,16 +68,16 @@ function page() {
 
   return (
     <>
-    <Vortex 
-    backgroundColor='#FFFFFF'
-    baseColor={[0,0,0]}
-    rangeRadius={4}
-      >
+    
     <div className="h-screen flex flex-col">
+    <Spotlight
+        
+        fill="#0099ff"
+      />
       <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />
       <PromptBox onSubmitPressed={onInputSent} animatePrompt={animatePrompt} setAnimatePrompt={setAnimatePrompt} timeMs={timeMs} />
     </div>
-    </Vortex>
+    
     </>
   )
 }
