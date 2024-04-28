@@ -119,14 +119,27 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 
 ## Demo:
 - Video link - https://youtu.be/k3JLvRpqUhI
+- Call Audio (Recorded) 
 
 
-- Images 
-![alt text](resources/Screenshot 2024-04-28 223345.png)
-![alt text](resources/Screenshot 2024-04-28 223410.png)
+https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/85174767/d1cbf54e-7aef-4fd7-9001-93f5903e25e9
+
+
+- Images
+
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223345.png?raw=true)
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223410.png?raw=true)
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223637.png?raw=true)
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223842.png?raw=true)
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223859.png?raw=true)
+![img](https://github.com/SujalChoudhari/100x_Buildathon_Entropy/blob/dev/resources/Screenshot%202024-04-28%20223918.png?raw=true)
+
 ![alt text](resources/Screenshot 2024-04-28 223637.png)
+
 ![alt text](resources/Screenshot 2024-04-28 223842.png)
+
 ![alt text](resources/Screenshot 2024-04-28 223859.png)
+
 ![alt text](resources/Screenshot 2024-04-28 223918.png)
 
 ## API Documentation
@@ -141,4 +154,3 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 - Llama-3
 ## Demonstration Video
 - Video link - https://youtu.be/k3JLvRpqUhI
-
