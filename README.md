@@ -21,14 +21,15 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 
    **Key Features:**
 
-   - Voice Activation: The AI Sales Assistant supports both voice and text inputs, enabling seamless interaction during live conversations such as meetings and phone calls. This feature       ensures accessibility and ease of use for sales representatives, allowing them to gather information and generate proposals in real-time.
+   - Voice Activation: The AI Sales Assistant supports both voice and text inputs, enabling seamless interaction during live conversations such as meetings and phone calls.
    - Interactive Engagement: Through intelligent questioning, the AI assistant engages with users to gather relevant customer data necessary for creating tailored sales proposals. By          dynamically adapting its queries based on the context of the conversation, the assistant ensures that no critical details are overlooked.
    - Document Analysis: The AI Sales Assistant possesses the capability to analyze documents provided by customers, such as PDF files, to extract essential information required for             drafting sales proposals. This feature eliminates manual data entry tasks and accelerates the proposal generation process by automatically capturing pertinent details.
    - Information Gap Analysis: To further enhance the accuracy and completeness of sales proposals, the assistant performs information gap analysis. By identifying any missing details         or  inconsistencies in the gathered data, the assistant prompts users to provide additional information necessary for completing the proposal accurately.
    - AI Voice Call: The AI Sales Assistant also offers an AI Voice Call feature, enabling communication between the assistant and the customer. With AI Voice Call, the AI Sales                Assistant proficiently pitches products and addresses customer queries with precision. Call summary, transcript and audio-recording is also accesible which is further stored and          used by the assistant. This streamlined process ensures efficient communication and empowers sales representatives to engage with customers effectively, fostering meaningful             interactions and driving sales growth.
    - Bulk Email Forwarding: Admin can send emails to multiple recipients with just a few clicks, streamlining communication and saving valuable time. Customers are informed about the          latest products and offerings of the company.
    - Context Aware Retrieval Chatbot: The chatbot has the capability that dynamically adapts responses based on the context of the conversation, ensuring relevant and accurate                 information delivery. It leverages retrieval augmented generation to retrieve pertinent data of the user as well as the company data, enhancing user engagement and satisfaction          while streamlining interactions.
-   - Sales Proposal Generation: 
+   - Sales Proposal Generation: The AI Sales Assistant generates effective sales proposals based on previous chats, analytics and company documents. The proposal can be viewed in HTML          form on dashboard as well as pdf form to be downloaded by the company.
+   - Analytics: The admin can view all the analytics of the companies customers and interaction.
 2. **Architechture:**
 
 ## Installation
