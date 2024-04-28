@@ -16,7 +16,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [analytics, setAnalytics] = useState<any>({});
+  const [analytics, setAnalytics] = useState<any>(undefined);
   const router = useRouter()
 
   useEffect(() => {

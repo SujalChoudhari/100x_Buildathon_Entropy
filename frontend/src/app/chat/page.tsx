@@ -5,6 +5,7 @@ import PromptBox from '@/components/PromptBox';
 import axios from 'axios';
 import Chat from '@/components/chat';
 import { Vortex } from '@/components/ui/vortex';
+import { useSearchParams } from 'next/navigation';
 
 
 function page() {
@@ -12,7 +13,7 @@ function page() {
   const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [animatePrompt, setAnimatePrompt] = useState(false);
   const [timeMs, setTimeMs] = useState(null);
-
+  const params = useSearchParams();
 
   const speak = async (text: string, wordsToConvert: number = 50) => {
     // Split the text into words
@@ -59,9 +60,17 @@ function page() {
   };
 
 
+  useEffect(()=>{
+    console.log(params)
+  })
+
+
   return (
     <>
-    <Vortex
+    <Vortex 
+    backgroundColor='#FFFFFF'
+    baseColor={[0,0,0]}
+    rangeRadius={4}
       >
     <div className="h-screen flex flex-col">
       <Chat chatData={chatMessages.map((message, index) => ({ isUser: index % 2 === 0, message }))} />

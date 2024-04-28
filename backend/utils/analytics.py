@@ -133,7 +133,6 @@ analytics_summary = {
         },
     ],
 }
-
 # connection_string = os.getenv("CONNECTION_STRING")
 # client = MongoClient(connection_string)
 # db = client['entropy']
