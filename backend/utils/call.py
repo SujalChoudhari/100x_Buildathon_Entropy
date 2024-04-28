@@ -47,12 +47,8 @@ def latest_summary():
     url = "https://api.vapi.ai/call"
     headers = {"Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"}
     response = requests.get(url, headers=headers)
-    
-    if response.status_code == 200:
-        res = response.json()
-        print(res[0]["summary"])
-        return res[0]["summary"]
-    else:
-        return "Error!"
-
+    for call in response.json():
+        if "summary" in call:
+            print(call["summary"])
+            return call
 # handle_call("+918291025964", "Surabhi", "system_prompt")
