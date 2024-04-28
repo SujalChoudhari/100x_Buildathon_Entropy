@@ -60,7 +60,10 @@ Architechture:
 2. **Run the backend:**
    
    After installation navigate to the backend directory.
-   
+   Locate the `.env.example` file.
+   - Rename `.env.example` to `.env`.
+   - Open the `.env` file in a text editor and fill in the required values for the variables.
+
    
 
    
