@@ -16,28 +16,34 @@ function page() {
   const [timeMs, setTimeMs] = useState(null);
   const params = useSearchParams();
 
-  const speak = async (text: string, wordsToConvert: number = 50) => {
-    // Split the text into words
-    const words = text.split(' ');
-    // Take the first N words
-    const wordsToSpeak = words.slice(0, wordsToConvert).join(' ');
-
-    // Check if the SpeechSynthesis API is available
-    if ('speechSynthesis' in window) {
-      // Create a new SpeechSynthesisUtterance instance
-      const utterance = new SpeechSynthesisUtterance(wordsToSpeak);
-
-      // Set the voice and language
-      // Note: You might need to select a voice that matches the language of your text
-      // This is just an example, you might want to set it dynamically based on your application's needs
-      utterance.lang = 'en-US';
-
-      // Speak the text
-      window.speechSynthesis.speak(utterance);
-    } else {
-      console.error('SpeechSynthesis API is not supported in this browser.');
+  const speak = async (text:string) => {
+    const elevenLabsAPIKey ="dea5c8ae694beb960e7c16aac4eecb91"; // Store your API key securely
+  
+    try {
+      const response = await axios.post(
+        'https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', // Replace YOUR_VOICE_ID with the ID of the voice you want to use
+        { text },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'xi-api-key': elevenLabsAPIKey,
+          },
+          responseType: 'arraybuffer', // Get raw audio data
+        }
+      );
+  
+      // Create a Blob from the audio data
+      const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
+      const audioURL = URL.createObjectURL(audioBlob);
+  
+      // Create an HTML5 audio element and play the audio
+      const audio = new Audio(audioURL);
+      audio.play();
+    } catch (error) {
+      console.error('Error synthesizing speech:', error);
     }
   };
+  
 
   // Example usage within onInputSent function
   const onInputSent = async (input: string) => {
@@ -48,7 +54,7 @@ function page() {
       console.log(response.data);
 
       // Convert and speak the first 50 words of the response
-      speak(response.data.response, 50);
+      speak(response.data.response);
       // Check if response.data.time_ms exists and set it
       if (response.data.time_ms) {
         setTimeMs(response.data.time_ms);
