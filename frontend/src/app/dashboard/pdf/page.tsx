@@ -272,16 +272,16 @@ function PDF() {
     return (
         <>
             <div className="flex select-none bg-background flex-col items-center rounded-xl justify-center max-w-[500px] w-full mx-auto m-10">
-                <div className="max-w-[500px] w-full border border-slate-500 flex items-center bg-[#f0f0f0] flex-col p-5 rounded-xl">
-                    <Label htmlFor="file-upload" className="bg-white rounded-xl relative flex flex-col items-center justify-center w-full p-6 cursor-pointer">
-                        <div className="text-center">
-                            <div className="max-w-min rounded-xl p-2 mx-auto border border-slate-300 ">
+                <div className="max-w-[500px] w-full border border flex items-center bg-[#00000 ] flex-col p-5 rounded-xl">
+                    <Label htmlFor="file-upload" className="bg-black rounded-xl relative flex flex-col items-center justify-center w-full p-6 cursor-pointer">
+                        <div className="text-center text-white">
+                            <div className="max-w-min rounded-xl  p-2 mx-auto border border-slate-300 ">
                                 <UploadCloudIcon size={20} />
                                 <p className='hidden'>
                                     {selectedPdfs}
                                 </p>
                             </div>
-                            <p className="mt-2 text-xs">
+                            <p className="mt-2 text-xs ">
                                 <span className="font-semibold">Drag & Drop multiple Files</span>
                             </p>
                             <div className="mt-1 text-xs">
@@ -307,15 +307,15 @@ function PDF() {
 
             <div id='kanban' className='w-[80vw] mt-24 select-none'>
 
-                <h1 className=' ml-14 text-lg font-extrabold'>Pdfs Board</h1>
-                <h1 className=' ml-14 text-lg font-extrabold'>Move HTML Proposals to (View Proposal) board to render below</h1>
+                <h1 className=' ml-14 text-lg font-extrabold text-white'>Pdfs Board</h1>
+                <h1 className=' ml-14 text-lg font-extrabold text-white'>Move HTML Proposals to (View Proposal) board to render below</h1>
                 <button onClick={() => { ingest() }} className="mt-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
                     {/* <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span> */}
                     {/* <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span> */}
                     Save Changes
                 </button>
                 {/* <KanbanBoard /> */}
-                <ControlledBoard onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
+                <ControlledBoard  onCardDragEnd={handleCardMove}>{board}</ControlledBoard>
                 {/* Render the loaded html */}
 
                 {loadedHTML && <>
