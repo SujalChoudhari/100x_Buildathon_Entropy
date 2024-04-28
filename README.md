@@ -142,6 +142,7 @@ https://github.com/SujalChoudhari/100x_Buildathon_Entropy/assets/85174767/d1cbf5
 
 ![alt text](resources/Screenshot 2024-04-28 223918.png)
 
+
 ## API Documentation
 
 - Link: https://one00x-buildathon-entropy.onrender.com/docs
