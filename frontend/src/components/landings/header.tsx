@@ -35,6 +35,14 @@ const Header = ({ className, ...props }: Props) => {
           </button>
 
         </Link>
+        <Link href="/chat">
+          <button className="ml-8 mt-4 group relative rounded-lg border-2 border-white bg-blue-900 px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+            <span className="absolute left-0 top-0 size-full rounded-md border border-dashed border-red-50 shadow-inner shadow-white/30 group-active:shadow-white/10"></span>
+            <span className="absolute left-0 top-0 size-full rotate-180 rounded-md border-red-50 shadow-inner shadow-black/30 group-active:shadow-black/10"></span>
+            Try now
+          </button>
+
+        </Link>
 
 
         
