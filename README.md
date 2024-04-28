@@ -16,6 +16,7 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 
 ## Overview and Architecture
 
+**Overview:**
 In response to the challenges faced by sales teams in gathering comprehensive customer data and generating tailored sales proposals efficiently, we propose the development of an AI-powered Sales Assistant. This assistant leverages advanced language models (LLMs) and speech recognition technologies to streamline the sales process, enhance customer engagements, and improve the accuracy and effectiveness of sales proposals.
 
 Key Features:
@@ -25,7 +26,7 @@ Key Features:
 3. Document Analysis: The AI Sales Assistant possesses the capability to analyze documents provided by customers, such as PDF files, to extract essential information required for drafting sales proposals. This feature eliminates manual data entry tasks and accelerates the proposal generation process by automatically capturing pertinent details.
 4. Information Gap Analysis: To further enhance the accuracy and completeness of sales proposals, the assistant performs information gap analysis. By identifying any missing details or inconsistencies in the gathered data, the assistant prompts users to provide additional information necessary for completing the proposal accurately.
 
-Architechture:
+**Architechture:**
 
 ## Installation
 
