@@ -27,6 +27,10 @@ def summarize_pdf(path):
 def get_user_texts():
     db=Database("entropy")
     return db.get_texts_by_user_id("human")
+
+def save_proposal(proposal_data):
+    db=Database("entropy")
+    db.save_proposal(proposal_data)
 print(get_user_texts())
 prompt=ChatPromptTemplate.from_template(
     template="""You are working at a company as head of sales . Your primary purose is to try to increase the company sales by generating 
@@ -59,13 +63,13 @@ prompt=ChatPromptTemplate.from_template(
 
     """
 )
+
 if __name__ == "__main__":
-    summary = summarize_pdf("all_documents/")
+    summary = summarize_pdf("input_documents/")
     texts = get_user_texts()
     chain = LLMChain(llm=chat, prompt=prompt)
     md = chain.run({"user_queries": texts, "existing_proposal": summary})
+    save_proposal({"proposal": md})
     html = markdown_to_html_file(md)
-    print(md)
-
     with open("all_documents/proposal.html", 'w', encoding='utf-8') as file:
         file.write(html)

@@ -33,6 +33,12 @@ class Database:
         user_texts = [session['message'] for session in user_sessions]
 
         return user_texts
+    
+    def save_proposal(self, proposal_data):
+        
+        proposal_collection = self.db['proposal']
+        proposal_collection.insert_one(proposal_data)
+
     def append_session(self, session):
         # If there's no document, create one with an empty list
         if self.chats.count_documents({}) == 0:
@@ -47,6 +53,8 @@ class Database:
 
         # Update the document
         self.chats.update_one({}, {'$set': {'sessions': sessions}})
+
+    
 
     async def update_endpoint(self, endpoint):
         filter_query = {"endpoint": endpoint}
