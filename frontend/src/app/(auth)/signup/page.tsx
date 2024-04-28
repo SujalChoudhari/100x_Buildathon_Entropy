@@ -90,6 +90,8 @@ const Register = () => {
     const email = mailRef.current.value || '';
     // @ts-ignore
     const password = passRef.current.value || '';
+
+    const t1 = toast.loading("Attempting to Sign Up");
     try {
       const response = await axios.post('https://one00x-buildathon-entropy.onrender.com/register', {
         username: email,  // User's desired username
@@ -113,6 +115,8 @@ const Register = () => {
         toast.error("Server Refused to connect. Try Again");
       }
     }
+
+    toast.dismiss(t1);
 
   }
   return (
