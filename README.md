@@ -51,7 +51,7 @@ Architechture:
 1. **Run the frontend:**
    
    - After installation navigate to the frontend directory.
-   Run the following command to start the application:
+   - Run the following command to start the frontend:
 
     ```sh
     npm run dev
@@ -63,7 +63,12 @@ Architechture:
    - Locate the `.env.example` file.
    - Rename `.env.example` to `.env`.
    - Open the `.env` file in a text editor and fill in the required values for the environment variables.
-   - 
+   - Run the following command to start the backend:
+
+    ```sh
+    python main.py
+    ``
+     
 
    
 
