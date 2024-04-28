@@ -19,8 +19,9 @@ Key Features:
 Architechture:
 
 ## Table of Contents
-
+- [Overview and Architecture](#overview-and-architechture)
 - [Installation](#installation)
+- [Setup](#setup)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Demonstration Video](#demonstration-video)
@@ -46,7 +47,7 @@ Architechture:
 
    pip install -r requirements.txt
 
-## Usage
+## Setup
 
 1. **Run the frontend:**
    
@@ -67,6 +68,7 @@ Architechture:
 
     ```sh
     python main.py
+## Usage
 
 ## API Documentation
 
