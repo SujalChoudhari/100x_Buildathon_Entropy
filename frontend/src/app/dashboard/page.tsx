@@ -105,8 +105,8 @@ const Page = () => {
         <RecentLeads analytics={analytics.users} className="col-span-12 lg:col-span-8" />
         <ToDoList className="col-span-12 lg:col-span-4" />
 
-        <TopPerforming className="col-span-12 lg:col-span-6" />
-        <TopQueries analytics={analytics.queries} className="col-span-12 lg:col-span-6" />
+        {/* <TopPerforming className="col-span-12 lg:col-span-6" />
+        <TopQueries analytics={analytics.queries} className="col-span-12 lg:col-span-6" /> */}
       </div>
     )}
   </>
