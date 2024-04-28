@@ -17,6 +17,7 @@ CLEO is a revolutionary tool designed to streamline the sales process by gatheri
 ## Overview and Architecture
 
 **Overview:**
+
 In response to the challenges faced by sales teams in gathering comprehensive customer data and generating tailored sales proposals efficiently, we propose the development of an AI-powered Sales Assistant. This assistant leverages advanced language models (LLMs) and speech recognition technologies to streamline the sales process, enhance customer engagements, and improve the accuracy and effectiveness of sales proposals.
 
 Key Features:
