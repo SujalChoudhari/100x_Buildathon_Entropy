@@ -12,7 +12,7 @@ from pymongo import MongoClient
 from langchain.memory import ConversationBufferWindowMemory
 class ChatBot:
     def __init__(self, temperature=0, model_name="Llama3-8b-8192"):
-        self.chat = ChatGroq(temperature=temperature, model_name=model_name,api_key="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")
+        self.chat = ChatGroq(temperature=temperature, model_name=model_name)
         self.memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
         self.prompt = ChatPromptTemplate.from_template(
             template="""You are a sales chatbot whose primary purpose is to try to increase the company sales using proposals provided to you.
