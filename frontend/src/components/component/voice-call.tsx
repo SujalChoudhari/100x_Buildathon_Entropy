@@ -62,7 +62,7 @@ export function VoiceCall() {
         </div>
         <div className="space-y-4">
           <div className="grid grid-cols-[1fr_auto] items-center gap-2">
-            <Input ref={mobileRef} className="w-full" placeholder="+919876543210" type="tel" />
+            <Input ref={mobileRef} className="w-full" placeholder="+917777123123" type="tel" />
 
           </div>
           <div className="flex items-center justify-between">
@@ -78,7 +78,7 @@ export function VoiceCall() {
             </Textarea>
 
           </div>
-          <button onClick={() => { callUser() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+          <button onClick={() => { toast.error("Disabled for Public Demo"); /*callUser()*/ }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
             Give a call
           </button>
         </div>
@@ -93,9 +93,10 @@ export function VoiceCall() {
           </button></>}
 
         {summary && <>
-          <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} - {summary?.customer?.number}</h1>
-          <button onClick={() => { getSummary() }} className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
-            <Link href={summary?.recordingUrl || ""}>
+          <h1 className="text-2xl mt-8 font-bold text-gray-900 dark:text-gray-100">Customer:  {summary?.customer?.name} </h1>
+          <button className="mt-4 mb-4 group relative rounded-lg border-2 border-white bg-black px-5 py-1 font-medium text-white duration-1000 hover:shadow-lg hover:shadow-blue-500/50">
+            {/* <Link href={summary?.recordingUrl || ""}> */}
+            <Link href={"#"} onClick={() => { toast.error("Disabled for Public Demo, due to privacy reasons") }}>
               Download the recording of the call
             </Link>
           </button>

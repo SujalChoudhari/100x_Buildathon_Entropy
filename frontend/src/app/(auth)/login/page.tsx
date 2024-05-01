@@ -111,7 +111,11 @@ const LogIn = () => {
 
       // navigate to dashboard in next js
       toast.success("Login Successful. Redirecting...");
-      router.push('/dashboard')
+      if (email.includes('admin')) {
+        router.push('/dashboard')
+        return;
+      }
+      router.push('/chat')
 
     } catch (error: any) {
       if (error.response) {
